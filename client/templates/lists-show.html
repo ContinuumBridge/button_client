@@ -45,13 +45,28 @@
       {{/if}}
 
       <form class="js-todo-new todo-new input-symbol">
-        <input type="text" placeholder="Type to add new tasks">
-        <span class="icon-add js-todo-add"></span>
+          <!--<span class="icon-add js-todo-add"></span>-->
+          <button class="js-item-add btn-sm btn-default" type="submit">Add button</button>
       </form>
     </nav>
 
-
-    <div class="content-scrollable list-items">
+    <table class="item-list table table-striped">
+      <thead>
+          <tr>
+          <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+            <td class="col-md-1">Active</td>
+            <td class="col-md-2">ID</td>
+            <td class="col-md-2">Name</td>
+            <td class="col-md-2">Email</td>
+            <td class="col-md-2">SMS</td>
+            <td class="col-md-2">State</td>
+            <td class="col-md-2">Signal</td>
+            <td class="col-md-1"></td>
+          <!--</div>-->
+          </tr>
+      </thead>
+      <tbody>
+      <!--<div class="content-scrollable list-items">-->
       {{#if todosReady}}
         {{#with _id}} {{! Establish new data context with only the '_id'
                           field. This way, when the 'incompleteCount' field
@@ -60,16 +75,17 @@
             {{> todosItem}}
           {{else}}
             <div class="wrapper-message">
-              <div class="title-message">No tasks here</div>
-              <div class="subtitle-message">Add new tasks using the field above</div>
+              <div class="title-message">No buttons here</div>
+              <div class="subtitle-message">Add new buttons using the button above</div>
             </div>
           {{/each}}
         {{/with}}
       {{else}}
           <div class="wrapper-message">
-            <div class="title-message">Loading tasks...</div>
+            <div class="title-message">Loading buttons...</div>
           </div>
       {{/if}}
-    </div>
+      </tbody>
+    </table>
   </div>
 </template>

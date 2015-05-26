@@ -61,10 +61,12 @@ var saveList = function(list, template) {
 
 var deleteList = function(list) {
   // ensure the last public list cannot be deleted.
+  /*
   if (! list.userId && Lists.find({userId: {$exists: false}}).count() === 1) {
     return alert("Sorry, you cannot delete the final public list!");
   }
-  
+  */
+
   var message = "Are you sure you want to delete the list " + list.name + "?";
   if (confirm(message)) {
     // we must remove each item individually from the client
@@ -89,9 +91,11 @@ var toggleListPrivacy = function(list) {
     Lists.update(list._id, {$unset: {userId: true}});
   } else {
     // ensure the last public list cannot be made private
+    /*
     if (Lists.find({userId: {$exists: false}}).count() === 1) {
       return alert("Sorry, you cannot make the final public list private!");
     }
+    */
 
     Lists.update(list._id, {$set: {userId: Meteor.userId()}});
   }
@@ -151,14 +155,47 @@ Template.listsShow.events({
   'click .js-delete-list': function(event, template) {
     deleteList(this, template);
   },
-  
+
+  /*
   'click .js-todo-add': function(event, template) {
     template.$('.js-todo-new input').focus();
   },
+  */
 
-  'submit .js-todo-new': function(event) {
+  'click .js-item-add': function(event) {
+
+    var self = this;
+
     event.preventDefault();
 
+    var modalBody = Template.addItemModal.renderFunction().value;
+    console.log('modal body', modalBody);
+    bootbox.addItem({
+      title: "Add a button",
+      value: modalBody,
+      callback: function(result) {
+        if (result === null) {
+          //Example.show("Prompt dismissed");
+        } else {
+          console.log('submitted', result);
+          console.log('Todos', Todos);
+          console.log('self._id', self._id);
+          Todos.insert({
+            listId: self._id,
+            id: result.id,
+            name: result.name,
+            email: result.email,
+            sms: result.sms,
+            active: true,
+            createdAt: new Date()
+          });
+          Lists.update(this._id, {$inc: {incompleteCount: 1}});
+          //Example.show("Hi <b>"+result+"</b>");
+        }
+      }
+    });
+    //$('#add-item-modal').modal()
+    /*
     var $input = $(event.target).find('[type=text]');
     if (! $input.val())
       return;
@@ -171,5 +208,6 @@ Template.listsShow.events({
     });
     Lists.update(this._id, {$inc: {incompleteCount: 1}});
     $input.val('');
+    */
   }
 });

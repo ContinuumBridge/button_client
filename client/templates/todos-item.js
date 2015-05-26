@@ -37,7 +37,11 @@ Template.todosItem.events({
   // we don't flood the server with updates (handles the event at most once 
   // every 300ms)
   'keyup input[type=text]': _.throttle(function(event) {
-    Todos.update(this._id, {$set: {text: event.target.value}});
+    console.log('edit event', event);
+    var data = {};
+    data[event.target.id] = event.target.value;
+    Todos.update(this._id, {$set: data});
+    //Todos.update(this._id, {$set: {text: event.target.value}});
   }, 300),
   
   // handle mousedown otherwise the blur handler above will swallow the click

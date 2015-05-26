@@ -9,3 +9,10 @@ insecure
 less
 iron:router@0.9.4
 accounts-password
+nemo64:bootstrap
+cwohlman:bootboxjs
+mizzao:bootboxjs
+meteorhacks:npm
+
+
+npm-container
