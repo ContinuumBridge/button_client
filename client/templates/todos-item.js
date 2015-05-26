@@ -1,6 +1,6 @@
 var EDITING_KEY = 'EDITING_TODO_ID';
 
-Template.todosItem.helpers({
+Template.buttonsItem.helpers({
   checkedClass: function() {
     return this.checked && 'checked';
   },
@@ -9,10 +9,10 @@ Template.todosItem.helpers({
   }
 });
 
-Template.todosItem.events({
+Template.buttonsItem.events({
   'change [type=checkbox]': function(event) {
     var checked = $(event.target).is(':checked');
-    Todos.update(this._id, {$set: {checked: checked}});
+    Buttons.update(this._id, {$set: {checked: checked}});
     Lists.update(this.listId, {$inc: {incompleteCount: checked ? -1 : 1}});
   },
   
@@ -40,14 +40,14 @@ Template.todosItem.events({
     console.log('edit event', event);
     var data = {};
     data[event.target.id] = event.target.value;
-    Todos.update(this._id, {$set: data});
-    //Todos.update(this._id, {$set: {text: event.target.value}});
+    Buttons.update(this._id, {$set: data});
+    //Buttons.update(this._id, {$set: {text: event.target.value}});
   }, 300),
   
   // handle mousedown otherwise the blur handler above will swallow the click
   // on iOS, we still require the click event so handle both
   'mousedown .js-delete-item, click .js-delete-item': function() {
-    Todos.remove(this._id);
+    Buttons.remove(this._id);
     if (! this.checked)
       Lists.update(this.listId, {$inc: {incompleteCount: -1}});
   }

@@ -41,7 +41,7 @@ Meteor.startup(function () {
         incompleteCount: list.items.length});
 
       _.each(list.items, function(text) {
-        Todos.insert({listId: list_id,
+        Buttons.insert({listId: list_id,
                       text: text,
                       createdAt: new Date(timestamp)});
         timestamp += 1; // ensure unique timestamp.

@@ -44,8 +44,8 @@
         </div>
       {{/if}}
 
-      <form class="js-todo-new todo-new input-symbol">
-          <!--<span class="icon-add js-todo-add"></span>-->
+      <form class="js-button-new button-new input-symbol">
+          <!--<span class="icon-add js-button-add"></span>-->
           <button class="js-item-add btn-sm btn-default" type="submit">Add button</button>
       </form>
     </nav>
@@ -67,12 +67,12 @@
       </thead>
       <tbody>
       <!--<div class="content-scrollable list-items">-->
-      {{#if todosReady}}
+      {{#if buttonsReady}}
         {{#with _id}} {{! Establish new data context with only the '_id'
                           field. This way, when the 'incompleteCount' field
                           changes, we don't re-render the list contents }}
-          {{#each todos this}}
-            {{> todosItem}}
+          {{#each buttons this}}
+            {{> buttonsItem}}
           {{else}}
             <div class="wrapper-message">
               <div class="title-message">No buttons here</div>

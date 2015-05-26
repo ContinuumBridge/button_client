@@ -37,12 +37,12 @@ Template.listsShow.helpers({
     return Session.get(EDITING_KEY);
   },
 
-  todosReady: function() {
-    return Router.current().todosHandle.ready();
+  buttonsReady: function() {
+    return Router.current().buttonsHandle.ready();
   },
 
-  todos: function(listId) {
-    return Todos.find({listId: listId}, {sort: {createdAt : -1}});
+  buttons: function(listId) {
+    return Buttons.find({listId: listId}, {sort: {createdAt : -1}});
   }
 });
 
@@ -70,8 +70,8 @@ var deleteList = function(list) {
   var message = "Are you sure you want to delete the list " + list.name + "?";
   if (confirm(message)) {
     // we must remove each item individually from the client
-    Todos.find({listId: list._id}).forEach(function(todo) {
-      Todos.remove(todo._id);
+    Buttons.find({listId: list._id}).forEach(function(button) {
+      Buttons.remove(button._id);
     });
     Lists.remove(list._id);
 
@@ -157,8 +157,8 @@ Template.listsShow.events({
   },
 
   /*
-  'click .js-todo-add': function(event, template) {
-    template.$('.js-todo-new input').focus();
+  'click .js-button-add': function(event, template) {
+    template.$('.js-button-new input').focus();
   },
   */
 
@@ -178,9 +178,9 @@ Template.listsShow.events({
           //Example.show("Prompt dismissed");
         } else {
           console.log('submitted', result);
-          console.log('Todos', Todos);
+          console.log('Buttons', Buttons);
           console.log('self._id', self._id);
-          Todos.insert({
+          Buttons.insert({
             listId: self._id,
             id: result.id,
             name: result.name,
@@ -200,7 +200,7 @@ Template.listsShow.events({
     if (! $input.val())
       return;
     
-    Todos.insert({
+    Buttons.insert({
       listId: this._id,
       text: $input.val(),
       checked: false,

@@ -23,11 +23,11 @@
         </div>
       {{/if}}
 
-      <div class="list-todos">
+      <div class="list-buttons">
         <a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>
 
         {{#each lists}}
-          <a href="{{pathFor 'listsShow'}}" class="list-todo {{activeListClass}}" title="{{name}}">
+          <a href="{{pathFor 'listsShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
             {{#if userId}}
               <!--<span class="icon-lock"></span>-->
             {{/if}}

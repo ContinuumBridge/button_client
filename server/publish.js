@@ -10,8 +10,8 @@ Meteor.publish('privateLists', function() {
   }
 });
 
-Meteor.publish('todos', function(listId) {
+Meteor.publish('buttons', function(listId) {
   check(listId, String);
 
-  return Todos.find({listId: listId});
+  return Buttons.find({listId: listId});
 });
