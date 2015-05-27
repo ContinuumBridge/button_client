@@ -49,6 +49,35 @@ The name of the bridge that is currently receiving advertising messages from the
 
 Web-App/Client API
 ------------------
+(This section will be expanded).
+A REST interface will be implemented, either over HTTP or using JSON over a TCP socket. It is assumed in the following that the bridge-app client is the client and the web-app is the server.
+
+    GET <>
+    {
+        "buttons": [
+            {
+               "id": "button id",
+               "enable": true|false,
+               "name": "button name",
+               "email": "email addresses",
+               "sms": "phone numbers"
+            }
+        [
+    }
+
+    PATCH <>
+    {
+        "buttons": [
+            {
+                "id": "button id",
+                "state": "inactive|pressed|disconnected",
+                "signal": "0..5",
+                "bid": "the id of the bridge that the button is connected to"
+            }
+        [
+    }
+ 
+ In the first revision, a GET will return the entire contents of the buttons database; a PATCH can be used to update the values of one of more buttons.
 
 Bridge-App Client
 -----------------
