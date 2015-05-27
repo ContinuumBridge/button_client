@@ -120,7 +120,7 @@ Template.appBody.events({
   },
 
   'click .js-new-list': function() {
-    var list = {name: Lists.defaultName(), incompleteCount: 0};
+    var list = {name: Lists.defaultName(), incompleteCount: 0, userId: Meteor.userId()};
     list._id = Lists.insert(list);
 
     Router.go('listsShow', list);

@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "jrpc2": {
+      "version": "http://registry.npmjs.org/jrpc2/-/jrpc2-1.0.1.tgz",
+      "dependencies": {
+        "async": {
+          "version": "http://registry.npmjs.org/async/-/async-0.9.2.tgz"
+        },
+        "xtend": {
+          "version": "http://registry.npmjs.org/xtend/-/xtend-4.0.0.tgz"
+        }
+      }
+    }
+  }
+}
