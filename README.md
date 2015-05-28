@@ -70,8 +70,8 @@ A REST interface will be implemented, either over HTTP or using JSON over a TCP 
         ]
     }
 
-    PUT <>
-    A PATCH request is a PUT using the "$set" field
+    PATCH <>
+    To perform a PATCH request, make a PUT request and specify data to updat in the "$set" field.
     http://54.76.157.10:3005/api/buttons/<button _id ie. LgZgdk7jQdbfcDTBH>
     Request:
     {
