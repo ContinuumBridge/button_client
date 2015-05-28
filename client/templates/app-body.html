@@ -19,12 +19,12 @@
       {{else}}
         <div class="btns-group">
           <a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
-          <a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>
+          <!--<a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>-->
         </div>
       {{/if}}
 
       <div class="list-buttons">
-        <a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>
+        <!--<a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>-->
 
         {{#each lists}}
           <a href="{{pathFor 'listsShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
