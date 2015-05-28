@@ -2,118 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a9cac5b-ecd0-4492-b556-601db52b9304" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Light-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Regular-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/apple-touch-icon-precomposed.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/favicon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-29x29.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-29x29@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-36x36.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-40x40.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-40x40@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-48x48.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-50x50.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-50x50@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-57x57.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-57x57@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-60x60.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-60x60@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-72x72.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-72x72@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-76x76.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-76x76@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/icons/icon-96x96.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-1024x768.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-1024x768@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-1280x720.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-200x320.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-320x200.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-320x480.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-320x480@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-320x568@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-480x320.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-480x800.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-720x1280.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-768x1024.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-768x1024@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/splash/splash-800x480.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/icon/todos.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/.finished-upgraders" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/npm-container/.npm/package/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/.id" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Light-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Light-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Light-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Regular-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Regular-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/font/OpenSans-Regular-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/npm-container/.npm/package/README" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/add-item.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/add-item.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/api.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/app-body.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/app-body.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/app-not-found.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/app-not-found.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/auth-join.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/auth-join.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/auth-signin.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/auth-signin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/auth.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/base.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/bootstrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/button.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/icon/buttons.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/deployment/cb_supervisord.conf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/collections.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/custom.bootstrap.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/custom.bootstrap.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/custom.bootstrap.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/custom.bootstrap.mixins.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/fontface.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/form.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/head.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/helpers.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/icon.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/npm-container/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/lib/jquery.touchwipe.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/layout.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/lesshat.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/link.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/list-items.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/lists-show.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/lists-show.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/lists-show.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/loading.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/loading.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/img/logo-todos.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/main.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/menu.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/message.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile-config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/nav.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/notification.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/npm-container/.npm/package/npm-shrinkwrap.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages/npm-container/package.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/packages.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/packages" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/platforms" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/server/publish.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/release" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/reset.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/router.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/globals/table.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/text.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/todos-item.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/templates/todos-item.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/icon/todos.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/icon/todos.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/icon/todos.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/typography.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/stylesheets/util/variables.import.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.meteor/versions" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="button_client.iws" />
@@ -223,8 +111,8 @@
           <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/README.md">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.62457335" vertical-offset="1753" max-vertical-offset="2090">
-                  <caret line="88" column="16" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
+                <state vertical-scroll-proportion="-1.778157" vertical-offset="1709" max-vertical-offset="2134">
+                  <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
                   <folding />
                 </state>
               </provider>
@@ -558,7 +446,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -903,8 +791,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62457335" vertical-offset="1753" max-vertical-offset="2090">
-          <caret line="88" column="16" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="16" />
+        <state vertical-scroll-proportion="-1.778157" vertical-offset="1709" max-vertical-offset="2134">
+          <caret line="54" column="39" selection-start-line="54" selection-start-column="39" selection-end-line="54" selection-end-column="39" />
           <folding />
         </state>
       </provider>
