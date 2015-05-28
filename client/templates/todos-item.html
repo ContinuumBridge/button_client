@@ -3,8 +3,8 @@
   <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
     <td class="col-md-1">
       <label class="checkbox">
-        <input type="checkbox" checked="{{checked}}" class="table-input active" name="checked">
-        <span class="checkbox-custom"></span>
+        <input type="checkbox" checked="{{enabled}}" class="table-input" name="enabled">
+        <!--<span class="checkbox-custom"></span>-->
       </label>
     </td>
     <td class="col-md-2"><input type="text" value="{{id}}" id="id" class="table-input" placeholder="ID"></td>
@@ -13,7 +13,8 @@
     <td class="col-md-2"><input type="text" value="{{sms}}" id="sms" class="table-input" placeholder="SMS"></td>
     <td class="col-md-2"><input type="text" value="{{state}}" id="state" class="table-input" placeholder="State"></td>
     <td class="col-md-2"><input type="text" value="{{signal}}" id="signal" class="table-input" placeholder="Signal"></td>
-    <td class="col-md-1">
+    <td class="col-md-2"><input type="text" value="{{bridge}}" id="bridge" class="table-input" placeholder="Bridge"></td>
+    <td class="col-md-1 delete-item-wrapper">
       <a class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></a>
     </td>
   <!--</div>-->

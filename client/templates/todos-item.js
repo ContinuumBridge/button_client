@@ -12,8 +12,9 @@ Template.buttonsItem.helpers({
 Template.buttonsItem.events({
   'change [type=checkbox]': function(event) {
     var checked = $(event.target).is(':checked');
-    Buttons.update(this._id, {$set: {checked: checked}});
-    Lists.update(this.listId, {$inc: {incompleteCount: checked ? -1 : 1}});
+    console.log('checkbox checked', checked);
+    Buttons.update(this._id, {$set: {enabled: checked}});
+    //Lists.update(this.listId, {$inc: {incompleteCount: checked ? -1 : 1}});
   },
   
   'focus input[type=text]': function(event) {

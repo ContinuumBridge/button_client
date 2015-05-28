@@ -182,11 +182,11 @@ Template.listsShow.events({
           console.log('self._id', self._id);
           Buttons.insert({
             listId: self._id,
+            enabled: true,
             id: result.id,
             name: result.name,
             email: result.email,
             sms: result.sms,
-            active: true,
             createdAt: new Date()
           });
           Lists.update(this._id, {$inc: {incompleteCount: 1}});
