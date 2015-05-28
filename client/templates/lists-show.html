@@ -1,0 +1,94 @@
+<template name="listsShow">
+  <div class="page lists-show">
+    <nav class="js-title-nav">
+      {{#if editing}}
+        <form class="js-edit-form list-edit-form">
+          <input type="text" name="name" value="{{name}}">
+          <div class="nav-group right">
+            <a href="#" class="js-cancel nav-item"><span class="icon-close js-cancel" title="Cancel"></span></a>
+          </div>
+        </form>
+      {{else}}
+        <div class="nav-group">
+          <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+        </div>
+
+        <h1 class="js-edit-list title-page"><span class="title-wrapper">{{name}}</span> <!--<span class="count-list">{{incompleteCount}}</span>--></h1>
+
+        <div class="nav-group right">
+          <div class="nav-item options-mobile">
+            <select class="list-edit">
+              <option disabled selected>Select an action</option>
+              {{#if userId}}
+                <option value="public">Make Public</option>
+              {{else}}
+                <option value="private">Make Private</option>
+              {{/if}}
+              <option value="delete">Delete</option>
+            </select>
+            <span class="icon-cog"></span>
+          </div>
+          <div class="options-web">
+            <!--
+            <a class="js-toggle-list-privacy nav-item">
+              {{#if userId}}
+                <span class="icon-lock" title="Make list public"></span>
+              {{else}}
+                <span class="icon-unlock" title="Make list private"></span>
+              {{/if}}
+            </a>
+
+            <a class="js-delete-list nav-item">
+              <span class="icon-trash" title="Delete list"></span>
+            </a>
+            -->
+          </div>
+        </div>
+      {{/if}}
+
+      <form class="js-button-new button-new input-symbol">
+          <!--<span class="icon-add js-button-add"></span>-->
+          <button class="js-item-add btn-sm btn-default" type="submit">Add button</button>
+      </form>
+    </nav>
+
+    <table class="item-list table table-striped">
+      <thead>
+          <tr>
+          <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+            <td class="col-md-1">Enabled</td>
+            <td class="col-md-2">ID</td>
+            <td class="col-md-2">Name</td>
+            <td class="col-md-2">Email</td>
+            <td class="col-md-2">SMS</td>
+            <td class="col-md-2">State</td>
+            <td class="col-md-2">Signal</td>
+            <td class="col-md-2">Bridge</td>
+            <td class="col-md-1"></td>
+          <!--</div>-->
+          </tr>
+      </thead>
+      <tbody>
+      <!--<div class="content-scrollable list-items">-->
+      {{#if buttonsReady}}
+        {{#with _id}} {{! Establish new data context with only the '_id'
+                          field. This way, when the 'incompleteCount' field
+                          changes, we don't re-render the list contents }}
+          {{#each buttons this}}
+            {{> buttonsItem}}
+          {{else}}
+            <div class="wrapper-message">
+              <div class="title-message">No buttons here</div>
+              <div class="subtitle-message">Add new buttons using the button above</div>
+            </div>
+          {{/each}}
+        {{/with}}
+      {{else}}
+          <div class="wrapper-message">
+            <div class="title-message">Loading buttons...</div>
+          </div>
+      {{/if}}
+      </tbody>
+    </table>
+  </div>
+</template>
