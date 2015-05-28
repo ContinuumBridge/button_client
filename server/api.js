@@ -25,7 +25,10 @@ if (Meteor.isServer) {
                 // If the function returns false the action will be canceled, if you return true the action will take place.
                 POST: undefined,    // function(obj, requestMetadata, returnObject) {return true/false;},
                 GET: function(objs, requestMetadata, returnObject) {return true;},
-                PUT: function(obj, newValues, requestMetadata, returnObject) {return true;},
+                PUT: function(obj, newValues, requestMetadata, returnObject) {
+                    return true;
+                    //console.log('put obj', obj, 'newValues', newValues, 'returnObject', returnObject);
+                },
                 DELETE: undefined   // function(obj, requestMetadata, returnObject) {return true/false;}
             },
             after: {  // This methods, if defined, will be called after the POST/GET/PUT/DELETE actions are performed on the collection.
