@@ -155,11 +155,14 @@ def postButtonStatus(status, id):
 
 def getButtons():
     global buttons
-    logger.debug("getButtons")
-    headers = {"X-Auth-Token": config["buttonsKey"]}
-    r = requests.get(config["buttonsURL"], headers=headers)
-    buttons = json.loads(r.content)
-    logger.debug("buttons: %s", json.dumps(buttons, indent=4))
+    try:
+        logger.debug("getButtons")
+        headers = {"X-Auth-Token": config["buttonsKey"]}
+        r = requests.get(config["buttonsURL"], headers=headers)
+        buttons = json.loads(r.content)
+        logger.debug("buttons: %s", json.dumps(buttons, indent=4))
+    except Exception as ex:
+        logger.warning("getButton problem, type: %s, exception: %s", str(type(ex)), str(ex.args))
 
 def readConfigLoop():
     logger.debug("readConfigLoop")
