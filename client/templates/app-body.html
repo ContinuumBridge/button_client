@@ -1,20 +1,11 @@
 <template name="appBody">
   <div id="container" class="{{menuOpen}} {{cordova}}">
 
+    <img id="logo" src="/img/logo-cb-white.png"/>
     <section id="menu">
       {{#if currentUser}}
         <div class="btns-group-vertical">
-          <a href="#" class="js-user-menu btn-secondary">
-            {{#if userMenuOpen}}
-              <span class="icon-arrow-up"></span>
-              {{else}}
-              <span class="icon-arrow-down"></span>
-            {{/if}}
-            {{emailLocalPart}}
-          </a>
-          {{#if userMenuOpen}}
             <a class="js-logout btn-secondary">Logout</a>
-          {{/if}}
         </div>
       {{else}}
         <div class="btns-group">
