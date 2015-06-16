@@ -36,6 +36,7 @@ CB_LOGFILE            = HOME + "/button_client_files/app_client.log"
 CB_ADDRESS            = "portal.continuumbridge.com"
 CB_LOGGING_LEVEL      = "DEBUG"
 CONFIG_READ_INTERVAL  = 10.0
+SSID_LOOKUP           = [-86, -83, -80, -77, -65]
  
 logger = logging.getLogger('Logger')
 logger.setLevel(CB_LOGGING_LEVEL)
@@ -156,19 +157,26 @@ def postButtonStatus(status, id):
 def getButtons():
     global buttons
     try:
-        logger.debug("getButtons")
+        #logger.debug("getButtons")
         headers = {"X-Auth-Token": config["buttonsKey"]}
         r = requests.get(config["buttonsURL"], headers=headers)
         buttons = json.loads(r.content)
-        logger.debug("buttons: %s", json.dumps(buttons, indent=4))
+        #logger.debug("buttons: %s", json.dumps(buttons, indent=4))
     except Exception as ex:
         logger.warning("getButton problem, type: %s, exception: %s", str(type(ex)), str(ex.args))
 
 def readConfigLoop():
-    logger.debug("readConfigLoop")
+    #logger.debug("readConfigLoop")
     readConfig(True)
     getButtons()
     configLoop = reactor.callLater(CONFIG_READ_INTERVAL, readConfigLoop)
+
+def ssidToNumber(ssid):
+    for s in SSID_LOOKUP:
+        if ssid < s:
+            return SSID_LOOKUP.index(s) + 1
+            break
+    return 5
 
 class ClientWSFactory(ReconnectingClientFactory, WebSocketClientFactory):
     maxDelay = 60
@@ -227,6 +235,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
             logger.info("Connected to ContinuumBridge")
         else:
             bid = msg["source"].split("/")[0]
+            logger.debug("onMessage, bid: " + str(bid) + ", config_bridges: " + str(config["bridges"]))
             if bid not in config["bridges"]:
                 return
             found = False
@@ -250,65 +259,96 @@ class ClientWSProtocol(WebSocketClientProtocol):
                 reactor.callInThread(self.sendAck, ack)
 
     def processBody(self, body, bid):
-        try:
-            #logger.debug("body: %s", str(body))
+        if True:
+        #try:
+            logger.debug("body: %s", str(body))
             if "a" not in body:  # "a" is an ack message
                 for b in buttons:
-                    #logger.debug("onMessage for b in buttons, b: %s, body[b]: %s", str(b), str(body))
+                    logger.debug("onMessage for b in buttons, b: %s, body[b]: %s", str(b), str(body["b"]))
                     if str(body["b"]) == b["id"]:
                         if b["enabled"]:
-                            changed = False
-                            if "c" in body:
-                                if b["id"] in self.buttonStates:
-                                    if body["c"] != self.buttonStates[b["id"]]["connected"]:
-                                        self.buttonStates[b["id"]]["connected"] = body["c"]
-                                        changed = True
-                                else:
-                                    self.buttonStates[b["id"]] = {
+                            changed = None
+                            if "c" in body:  # "c" should always be in the body
+                                if b["id"] in self.buttonStates:  # Already have record of button
+                                    if bid in self.buttonStates[b["id"]]:
+                                        if body["c"] != self.buttonStates[b["id"]][bid]["connected"]:
+                                                self.buttonStates[b["id"]][bid]["connected"] = body["c"]
+                                                self.buttonStates[b["id"]][bid]["timeStamp"] = time.time()
+                                                self.buttonStates[b["id"]][bid]["niceTime"] = nicetime(time.time())
+                                                changed = bid
+                                    else:  # Button not seen by bridge bid before, create entry
+                                        self.buttonStates[b["id"]][bid] = {
+                                            "connected": body["c"],
+                                            "state": "cleared",
+                                            "timeStamp": time.time(),
+                                            "niceTime":  nicetime(time.time()),
+                                            "signal": 0
+                                        }
+                                        changed = bid
+                                else:  # New button, create entry in dict
+                                    self.buttonStates[b["id"]] = {}
+                                    self.buttonStates[b["id"]][bid] = {
                                         "connected": body["c"],
-                                        "state": "inactive",
-                                        "bid": bid,
-                                        "ssid": 0
+                                        "state": "cleared",
+                                        "timeStamp": time.time(),
+                                        "niceTime":  nicetime(time.time()),
+                                        "signal": 0
                                     }
-                                    changed = True
+                                    changed = bid
                             if "s" in body:
                                 if body["s"] == 1:
-                                    alert = b["name"] + " activated"
-                                    self.buttonStates[b["id"]]["state"] = "pressed"
+                                    alert = b["name"] + " pressed"
+                                    self.buttonStates[b["id"]][bid]["state"] = "pressed"
                                 elif body["s"] == 0:
                                     alert = b["name"] + " cleared"
-                                    self.buttonStates[b["id"]]["state"] = "inactive"
-                                subject =  alert
+                                    self.buttonStates[b["id"]][bid]["state"] = "cleared"
                                 if "email" in b:
                                     if b["email"] != "":
+                                        subject = alert + " at " +  nicetime(time.time())
                                         reactor.callInThread(sendMail, b["email"], subject, alert)
                                 if "sms" in b:
                                     if b["sms"] != "":
                                         reactor.callInThread(sendSMS, alert, b["sms"])
-                                changed = True
+                                changed = bid
                             if "p" in body:
-                                if bid == self.buttonStates[b["id"]]["bid"]:
-                                    self.buttonStates[b["id"]]["ssid"] = body["p"]
-                                    changed = True
-                                elif body["p"] > self.buttonStates[b["id"]]["ssid"]:
-                                    self.buttonStates[b["id"]]["ssid"] = body["p"]
-                                    self.buttonStates[b["id"]]["bid"] = bid
-                                    changed = True
+                                signal = ssidToNumber(body["p"]) 
+                                if signal != self.buttonStates[b["id"]][bid]["signal"]:
+                                    self.buttonStates[b["id"]][bid]["signal"] = signal
+                                    changed = bid
                             if changed:
+                                logger.debug("changed bridge: " + str(changed))
                                 logger.debug("State changed: %s", str(json.dumps(self.buttonStates, indent=4)))
-                                state = ("disconnected" if not self.buttonStates[b["id"]]["connected"] else self.buttonStates[b["id"]]["state"])
+                                signal = -200
+                                loudestBridge = None
+                                connected = False
+                                for bridge in self.buttonStates[b["id"]]:
+                                    if self.buttonStates[b["id"]][bridge]["signal"] > signal:
+                                        signal = self.buttonStates[b["id"]][bridge]["signal"]
+                                        loudestBridge = bridge
+                                    if self.buttonStates[b["id"]][bridge]["connected"]:
+                                        connected = True
+                                state = self.buttonStates[b["id"]][changed]["state"]
                                 status = {
                                     "$set": {
-                                        "state": state,
-                                        "signal": self.buttonStates[b["id"]]["ssid"],
-                                        "bridge": bid
+                                        "state": "No signal" if not connected else state,
+                                        "signal": signal,
+                                        "bridge": loudestBridge
                                     }
                                 }
                                 logger.debug("Posting: %s", str(json.dumps(status, indent=4)))
                                 reactor.callInThread(postButtonStatus, status, b["_id"])
                         break
-        except Exception as ex:
-            logger.warning("onmessage. Problem processing message body, type: %s, exception: %s", str(type(ex)), str(ex.args))
+        #except Exception as ex:
+        #    logger.warning("onmessage. Problem processing message body, type: %s, exception: %s", str(type(ex)), str(ex.args))
+
+    """
+    def monitor(self):
+        now = time.time()
+        for b in buttons:
+            if b["enabled"]:
+                for bridge in buttonStates[b["id"]]:
+                    if now - buttonStates[b["id"]][bridge]["timeStamp"] > WATCHDOG_TIME:
+    """
 
 if __name__ == '__main__':
     readConfig(True)
