@@ -31,7 +31,7 @@ from twisted.internet.protocol import ReconnectingClientFactory
 config                = {}
 buttons               = []
 HOME                  = os.path.expanduser("~")
-CONFIG_FILE           = HOME + "/button_client_files/app_client.config"
+CONFIG_FILE           = HOME + "/button_client/app_client/app_client.config"
 CB_LOGFILE            = HOME + "/button_client_files/app_client.log"
 CB_ADDRESS            = "portal.continuumbridge.com"
 CB_LOGGING_LEVEL      = "DEBUG"
