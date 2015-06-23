@@ -42,7 +42,7 @@ Template.listsShow.helpers({
   },
 
   buttons: function(listId) {
-    return Buttons.find({listId: listId}, {sort: {createdAt : -1}});
+    return Buttons.find({listId: listId}, {sort: {name : 1}});
   }
 });
 

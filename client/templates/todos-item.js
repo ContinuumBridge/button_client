@@ -6,6 +6,9 @@ Template.buttonsItem.helpers({
   },
   editingClass: function() {
     return Session.equals(EDITING_KEY, this._id) && 'editing';
+  },
+  stateColour: function() {
+    return this.state == 'Pressed' ? 'green' : '';
   }
 });
 
