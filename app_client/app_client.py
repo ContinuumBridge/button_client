@@ -34,12 +34,12 @@ buttons               = []
 buttonStates          = {}
 HOME                  = os.path.expanduser("~")
 CONFIG_FILE           = HOME + "/button_client/app_client/app_client.config"
-CB_LOGFILE            = HOME + "/button_client_files/app_client.log"
+CB_LOGFILE            = HOME + "/button_client/app_client/app_client.log"
 CB_ADDRESS            = "portal.continuumbridge.com"
 CB_LOGGING_LEVEL      = "DEBUG"
 CONFIG_READ_INTERVAL  = 10.0
-WATCHDOG_TIME         = 60 * 1  # If not heard about a button for this time, consider it disconnected
-MONITOR_INTERVAL      = 60      # How often to run watchdog code
+WATCHDOG_TIME         = 2000     # If not heard about a button for this time, consider it disconnected
+MONITOR_INTERVAL      = 60       # How often to run watchdog code
 SSID_LOOKUP           = [-89, -85, -80, -75, -65]
  
 logger = logging.getLogger('Logger')
@@ -123,7 +123,8 @@ def sendSMS(messageBody, to):
            logger.warning("sendSMS, unable to send message %s to: %s, type %s, exception: %s", messageBody, str(to), type(ex), str(ex.args))
 
 def authorise():
-    try:
+    if True:
+    #try:
         auth_url = "http://" + CB_ADDRESS + "/api/client/v1/client_auth/login/"
         auth_data = '{"key": "' + config["cid_key"] + '"}'
         auth_headers = {'content-type': 'application/json'}
@@ -132,13 +133,15 @@ def authorise():
         sessionID = response.cookies['sessionid']
         ws_url = "ws://" + CB_ADDRESS + ":7522/"
         return cbid, sessionID, ws_url
-    except Exception as ex:
-        logger.warning("Unable to authorise with server, type: %s, exception: %s", str(type(ex)), str(ex.args))
+    #except Exception as ex:
+    #    logger.warning("Unable to authorise with server, type: %s, exception: %s", str(type(ex)), str(ex.args))
     
 def readConfig(forceRead=False):
-    try:
+    if True:
+    #try:
+        global config
+        oldconfig = config
         if time.time() - os.path.getmtime(CONFIG_FILE) < 600 or forceRead:
-            global config
             with open(CONFIG_FILE, 'r') as f:
                 newConfig = json.load(f)
                 logger.info( "Read button_client.config")
@@ -150,8 +153,13 @@ def readConfig(forceRead=False):
                 elif c.lower in ("false", "f", "0"):
                     config[c] = False
             #logger.info("Read new config: " + json.dumps(config, indent=4))
-    except Exception as ex:
-        logger.warning("Problem reading button_client.config, type: %s, exception: %s", str(type(ex)), str(ex.args))
+            if config != oldconfig:
+                return True
+            else:
+                return False
+    #except Exception as ex:
+    #    logger.warning("Problem reading button_client.config, type: %s, exception: %s", str(type(ex)), str(ex.args))
+        return False
 
 def postButtonStatus(state, signal, bridge, id):
     try:
@@ -203,12 +211,6 @@ def getButtons():
     except Exception as ex:
         logger.warning("getButton problem, type: %s, exception: %s", str(type(ex)), str(ex.args))
 
-def readConfigLoop():
-    #logger.debug("readConfigLoop")
-    readConfig(True)
-    getButtons()
-    configLoop = reactor.callLater(CONFIG_READ_INTERVAL, readConfigLoop)
-
 def ssidToNumber(ssid):
     for s in SSID_LOOKUP:
         if ssid < s:
@@ -238,6 +240,8 @@ class ClientWSProtocol(WebSocketClientProtocol):
         signal.signal(signal.SIGTERM, self.signalHandler)  # For catching SIGTERM
         self.stopping = False
         self.foundButton = False
+        self.connectedBridges = []
+    	self.readConfigLoop()
         l = task.LoopingCall(self.monitor)
         l.start(MONITOR_INTERVAL)
 
@@ -246,8 +250,15 @@ class ClientWSProtocol(WebSocketClientProtocol):
         self.stopping = True
         reactor.stop()
 
-    def sendAck(self, ack):
-        self.sendMessage(json.dumps(ack))
+    def readConfigLoop(self):
+        #logger.debug("readConfigLoop")
+        if readConfig(True):
+            self.updateUUIDs()
+        getButtons()
+        configLoop = reactor.callLater(CONFIG_READ_INTERVAL, self.readConfigLoop)
+
+    def sendToBridge(self, message):
+        self.sendMessage(json.dumps(message))
 
     def onConnect(self, response):
         logger.debug("Server connected: %s", str(response.peer))
@@ -265,6 +276,9 @@ class ClientWSProtocol(WebSocketClientProtocol):
             logger.info("Message received: %s", json.dumps(msg, indent=4))
         except Exception as ex:
             logger.warning("onmessage. Unable to load json, type: %s, exception: %s", str(type(ex)), str(ex.args))
+        if not "source" in msg:
+            logger.warning("button_client. onmessage. message without source")
+            return
         if not "body" in msg:
             logger.warning("button_client. onmessage. message without body")
             return
@@ -293,13 +307,22 @@ class ClientWSProtocol(WebSocketClientProtocol):
                                 ]
                       }
                 #logger.debug("onMessage ack: %s", str(json.dumps(ack, indent=4)))
-                reactor.callInThread(self.sendAck, ack)
+                reactor.callInThread(self.sendToBridge, ack)
 
     def processBody(self, body, bid):
         if True:
         #try:
             logger.debug("body: %s", str(body))
+            self.foundButton = True
             if "a" not in body:  # "a" is an ack message
+                if "status" in body:
+                    if bid not in config["bridges"]:
+                        logger.warning("Unknown bridge trying to initialise: %s", bid)
+                    else:
+                        if bid not in self.connectedBridges:
+                            self.initBridge(bid)
+                            logger.info("New bridge: %s, connectedBridges: %s", bid, self.connectedBridges)
+                    return
                 for b in buttons:
                     if str(body["b"]) == b["id"]:
                         if b["enabled"]:
@@ -325,7 +348,6 @@ class ClientWSProtocol(WebSocketClientProtocol):
                                         "signal": -200
                                     }
                                     changed = bid
-                                    self.foundButton = True
                                 buttonStates[b["id"]][bid]["timeStamp"] = time.time()
                                 buttonStates[b["id"]][bid]["niceTime"] = nicetime(time.time())
                             if "s" in body:
@@ -333,7 +355,8 @@ class ClientWSProtocol(WebSocketClientProtocol):
                                 changed = bid
                                 if buttonStates[b["id"]][bid]["state"] != buttonStates[b["id"]]["reported"]["state"]:
                                     buttonStates[b["id"]]["reported"]["state"] = buttonStates[b["id"]][bid]["state"]
-                                    if buttonStates[b["id"]]["reported"]["state"] != b["state"] and b["state"] != "Waiting" and b["state"] != "No signal":
+                                    if buttonStates[b["id"]]["reported"]["state"] != b["state"] and b["state"] != "Waiting" and b["state"] != "No signal" \
+                                        and buttonStates[b["id"]]["reported"]["state"] != "Disconnected":
                                         alert = b["name"] + (" pressed" if buttonStates[b["id"]]["reported"]["state"] == "Pressed" else " cleared")
                                         if "email" in b:
                                             if b["email"] != "":
@@ -371,35 +394,68 @@ class ClientWSProtocol(WebSocketClientProtocol):
         logger.debug("monitor")
         if self.foundButton:  # Don't do anything unless we know about at least one button
             now = time.time()
+            bridgeList = []
             for b in buttons:
                 changed = False
                 if b["enabled"]:
                     if b["id"] in buttonStates:
+                        #logger.debug("monitor, b_id in buttonState: %s", buttonStates[b["id"]])
                         if buttonStates[b["id"]]["reported"]["state"] != "Disconnected":
                             connected = False
                             for bridge in buttonStates[b["id"]]:
                                 if bridge != "reported":
                                     if now - buttonStates[b["id"]][bridge]["timeStamp"] < WATCHDOG_TIME:
                                         connected = True
+                                    else:
+                                        buttonStates[b["id"]][bridge]["connected"] = False
+                                        buttonStates[b["id"]][bridge]["state"] = "Disconnected"
+                                        buttonStates[b["id"]][bridge]["signal"] = 0
+                                        bridgeList.append(bridge)
+                                        changed = True
+                                        logger.debug("Bridge %s not seen for WATCHDOG_TIME", bridge)
                             if not connected:
                                 changed = True
-                                buttonStates[b["id"]]["reported"]["state"] != "Disconnected"
+                                buttonStates[b["id"]]["reported"]["state"] = "Disconnected"
                 elif b["id"] in buttonStates: 
                     if buttonStates[b["id"]]["reported"]["state"] != "Disabled":
                         buttonStates[b["id"]]["reported"]["state"] = "Disabled"
                         changed = True
                 if changed:
-                    state = buttonStates[b["id"]]["reported"]["state"],
-                    signal = "0",
-                    bridge = ""
+                    logger.debug("monitor, button %s not connected", b["id"])
+                    state = buttonStates[b["id"]]["reported"]["state"]
+                    signal = "0"
+                    bridge = "None"
                     reactor.callInThread(postButtonStatus, state, signal, bridge, b["_id"])
+                disconnect = []
+                for bridge in self.connectedBridges:
+                    if bridge not in bridgeList:
+                        disconnect.append(bridge) 
+                for d in disconnect:
+                    logger.debug("d in disconnect: %s", d)
+                    self.connectedBridges.remove(d)
+
+    def initBridge(self, bid):
+        self.connectedBridges.append(bid)
+        msg = {
+        "source": config["cid"],
+        "destination": bid + "/" + config["aid"],
+        "body": [
+                    {"uuids": config["uuids"]}
+                ]
+        }
+        logger.debug("initBridge, sending: %s", msg)
+        self.sendToBridge(msg)
+
+    def updateUUIDs(self):
+        for bridge in self.connectedBridges:
+            reactor.callInThread(self.initBridge, bridge)
 
 if __name__ == '__main__':
     readConfig(True)
+    getButtons()
     cbid, sessionID, ws_url = authorise()
     headers = {'sessionID': sessionID}
     factory = ClientWSFactory(ws_url, headers=headers, debug=False)
     factory.protocol = ClientWSProtocol
     connectWS(factory)
-    readConfigLoop()
     reactor.run()
