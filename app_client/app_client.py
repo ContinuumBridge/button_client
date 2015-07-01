@@ -32,9 +32,9 @@ from twisted.internet.protocol import ReconnectingClientFactory
 config                = {}
 buttons               = []
 buttonStates          = {}
-HOME                  = os.path.expanduser("~")
-CONFIG_FILE           = HOME + "/button_client/app_client/app_client.config"
-CB_LOGFILE            = HOME + "/button_client/app_client/app_client.log"
+HOME                  = os.getcwd()
+CONFIG_FILE           = HOME + "/app_client.config"
+CB_LOGFILE            = HOME + "/app_client.log"
 CB_ADDRESS            = "portal.continuumbridge.com"
 CB_LOGGING_LEVEL      = "DEBUG"
 CONFIG_READ_INTERVAL  = 10.0
@@ -337,7 +337,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
                                         buttonStates[b["id"]][bid] = {
                                             "connected": body["c"],
                                             "state": "OK",
-                                            "signal": -200 
+                                            "signal": 0
                                         }
                                         changed = bid
                                 else:  # New button, create entry in dict
@@ -345,7 +345,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
                                     buttonStates[b["id"]][bid] = {
                                         "connected": body["c"],
                                         "state": "OK",
-                                        "signal": -200
+                                        "signal": 0
                                     }
                                     changed = bid
                                 buttonStates[b["id"]][bid]["timeStamp"] = time.time()
@@ -373,7 +373,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
                             if changed:
                                 logger.debug("changed bridge: " + str(changed))
                                 logger.debug("State changed: %s", str(json.dumps(buttonStates, indent=4)))
-                                signal = -200
+                                signal = 0
                                 loudestBridge = None
                                 connected = False
                                 for bridge in buttonStates[b["id"]]:
