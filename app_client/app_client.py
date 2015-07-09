@@ -242,8 +242,10 @@ class ClientWSProtocol(WebSocketClientProtocol):
         self.foundButton = False
         self.connectedBridges = []
     	self.readConfigLoop()
-        l = task.LoopingCall(self.monitor)
-        l.start(MONITOR_INTERVAL)
+        l1 = task.LoopingCall(self.readConfigLoop)
+        l1.start(CONFIG_READ_INTERVAL)
+        l2 = task.LoopingCall(self.monitor)
+        l2.start(MONITOR_INTERVAL)
 
     def signalHandler(self, signal, frame):
         logger.debug("signalHandler received signal")
@@ -255,7 +257,6 @@ class ClientWSProtocol(WebSocketClientProtocol):
         if readConfig(True):
             self.updateUUIDs()
         getButtons()
-        configLoop = reactor.callLater(CONFIG_READ_INTERVAL, self.readConfigLoop)
 
     def sendToBridge(self, message):
         self.sendMessage(json.dumps(message))
@@ -306,7 +307,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
                                     {"a": rx_n}
                                 ]
                       }
-                #logger.debug("onMessage ack: %s", str(json.dumps(ack, indent=4)))
+                logger.debug("onMessage ack: %s", str(json.dumps(ack, indent=4)))
                 reactor.callInThread(self.sendToBridge, ack)
 
     def processBody(self, body, bid):
@@ -353,39 +354,28 @@ class ClientWSProtocol(WebSocketClientProtocol):
                             if "s" in body:
                                 buttonStates[b["id"]][bid]["state"] = "Pressed" if body["s"] == 1 else "OK"
                                 changed = bid
-                                if buttonStates[b["id"]][bid]["state"] != buttonStates[b["id"]]["reported"]["state"]:
+                                if buttonStates[b["id"]][bid]["state"] == "Pressed" and buttonStates[b["id"]]["reported"]["state"] == "OK" or \
+                                    buttonStates[b["id"]][bid]["state"] == "OK" and buttonStates[b["id"]]["reported"]["state"] == "Pressed":
                                     buttonStates[b["id"]]["reported"]["state"] = buttonStates[b["id"]][bid]["state"]
-                                    if buttonStates[b["id"]]["reported"]["state"] != b["state"] and b["state"] != "Waiting" and b["state"] != "No signal" \
-                                        and buttonStates[b["id"]]["reported"]["state"] != "Disconnected":
-                                        alert = b["name"] + (" pressed" if buttonStates[b["id"]]["reported"]["state"] == "Pressed" else " cleared")
-                                        if "email" in b:
-                                            if b["email"] != "":
-                                                subject = alert + " at " +  nicetime(time.time())
-                                                reactor.callInThread(sendMail, b["email"], subject, alert)
-                                        if "sms" in b:
-                                            if b["sms"] != "":
-                                                reactor.callInThread(sendSMS, alert, b["sms"])
+                                    alert = b["name"] + (" pressed" if buttonStates[b["id"]]["reported"]["state"] == "Pressed" else " cleared")
+                                    if "email" in b:
+                                        if b["email"] != "":
+                                            subject = alert + " at " +  nicetime(time.time())
+                                            reactor.callInThread(sendMail, b["email"], subject, alert)
+                                    if "sms" in b:
+                                        if b["sms"] != "":
+                                            reactor.callInThread(sendSMS, alert, b["sms"])
+                                elif buttonStates[b["id"]]["reported"]["state"] != "Pressed" and buttonStates[b["id"]]["reported"]["state"] != "OK":
+                                    buttonStates[b["id"]]["reported"]["state"] = buttonStates[b["id"]][bid]["state"]
                             if "p" in body:
                                 signal = ssidToNumber(body["p"]) 
                                 if signal != buttonStates[b["id"]][bid]["signal"]:
                                     buttonStates[b["id"]][bid]["signal"] = signal
                                     changed = bid
                             if changed:
-                                logger.debug("changed bridge: " + str(changed))
-                                logger.debug("State changed: %s", str(json.dumps(buttonStates, indent=4)))
-                                signal = 0
-                                loudestBridge = None
-                                connected = False
-                                for bridge in buttonStates[b["id"]]:
-                                    if buttonStates[b["id"]][bridge]["connected"] and buttonStates[b["id"]][bridge]["signal"] > signal:
-                                        signal = buttonStates[b["id"]][bridge]["signal"]
-                                        loudestBridge = bridge
-                                    if buttonStates[b["id"]][bridge]["connected"]:
-                                        connected = True
-                                state = "No signal" if not connected else buttonStates[b["id"]]["reported"]["state"],
-                                signal = "0" if not connected else signal,
-                                bridge = loudestBridge
-                                reactor.callInThread(postButtonStatus, state, signal, bridge, b["_id"])
+                                logger.debug("changed button: %s, bridge: %s", b["id"], str(changed))
+                                logger.debug("State changed: %s", str(json.dumps(buttonStates[b["id"]], indent=4)))
+                                self.updateDisplay(b)
                         break
         #except Exception as ex:
         #    logger.warning("onmessage. Problem processing message body, type: %s, exception: %s", str(type(ex)), str(ex.args))
@@ -422,10 +412,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
                         changed = True
                 if changed:
                     logger.debug("monitor, button %s not connected", b["id"])
-                    state = buttonStates[b["id"]]["reported"]["state"]
-                    signal = "0"
-                    bridge = "None"
-                    reactor.callInThread(postButtonStatus, state, signal, bridge, b["_id"])
+                    self.updateDisplay(b)
                 disconnect = []
                 for bridge in self.connectedBridges:
                     if bridge not in bridgeList:
@@ -433,6 +420,23 @@ class ClientWSProtocol(WebSocketClientProtocol):
                 for d in disconnect:
                     logger.debug("d in disconnect: %s", d)
                     self.connectedBridges.remove(d)
+
+    def updateDisplay(self, b):
+        logger.debug("updateDisplay")
+        loudestBridge = None
+        connected = False
+        signal = 0
+        for bridge in buttonStates[b["id"]]:
+            if buttonStates[b["id"]][bridge]["connected"]:
+                connected = True
+            	if buttonStates[b["id"]][bridge]["signal"] > signal:
+                    signal = buttonStates[b["id"]][bridge]["signal"]
+                    loudestBridge = bridge
+        if not connected:
+             buttonStates[b["id"]]["reported"]["state"] = "No signal"
+        state = buttonStates[b["id"]]["reported"]["state"]
+        bridge = loudestBridge
+        reactor.callInThread(postButtonStatus, state, signal, bridge, b["_id"])
 
     def initBridge(self, bid):
         self.connectedBridges.append(bid)
