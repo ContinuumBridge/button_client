@@ -242,10 +242,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
         self.foundButton = False
         self.connectedBridges = []
     	self.readConfigLoop()
-        l1 = task.LoopingCall(self.readConfigLoop)
-        l1.start(CONFIG_READ_INTERVAL)
-        l2 = task.LoopingCall(self.monitor)
-        l2.start(MONITOR_INTERVAL)
+        reactor.callLater(MONITOR_INTERVAL, self.monitor)
 
     def signalHandler(self, signal, frame):
         logger.debug("signalHandler received signal")
@@ -257,6 +254,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
         if readConfig(True):
             self.updateUUIDs()
         getButtons()
+        reactor.callLater(CONFIG_READ_INTERVAL, self.readConfigLoop)
 
     def sendToBridge(self, message):
         self.sendMessage(json.dumps(message))
@@ -420,6 +418,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
                 for d in disconnect:
                     logger.debug("d in disconnect: %s", d)
                     self.connectedBridges.remove(d)
+        reactor.callLater(MONITOR_INTERVAL, self.monitor)
 
     def updateDisplay(self, b):
         logger.debug("updateDisplay")
