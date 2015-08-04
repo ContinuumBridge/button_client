@@ -137,14 +137,12 @@ def authorise():
     #    logger.warning("Unable to authorise with server, type: %s, exception: %s", str(type(ex)), str(ex.args))
     
 def readConfig(forceRead=False):
-    if True:
-    #try:
+    try:
         global config
         oldconfig = config
         if time.time() - os.path.getmtime(CONFIG_FILE) < 600 or forceRead:
             with open(CONFIG_FILE, 'r') as f:
                 newConfig = json.load(f)
-                logger.info( "Read button_client.config")
                 config.update(newConfig)
                 logger.info("Config read")
             for c in config:
@@ -157,8 +155,8 @@ def readConfig(forceRead=False):
                 return True
             else:
                 return False
-    #except Exception as ex:
-    #    logger.warning("Problem reading button_client.config, type: %s, exception: %s", str(type(ex)), str(ex.args))
+    except Exception as ex:
+        logger.warning("Problem reading button_client.config, type: %s, exception: %s", str(type(ex)), str(ex.args))
         return False
 
 def postButtonStatus(state, signal, bridge, id):
