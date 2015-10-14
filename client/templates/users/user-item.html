@@ -1,0 +1,19 @@
+<template name="userItem">
+  <tr>
+  <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+    <td class="col-md-4"><input type="text" value="{{emails.[0].address}}" id="email" class="table-input" placeholder="ID"></td>
+    <td class="col-md-1">
+      <label class="checkbox">
+        <input type="checkbox" checked="{{isAdmin}}" class="table-input" name="enabled">
+        <!--<span class="checkbox-custom"></span>-->
+      </label>
+    </td>
+    <td class="col-md-4">
+        <input type="text" value="{{attributes.email}}" id="email" class="table-input" placeholder="ID">
+    </td>
+    <td class="col-md-1 delete-item-wrapper">
+      <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
+    </td>
+  <!--</div>-->
+  </tr>
+</template>

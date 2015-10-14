@@ -39,7 +39,7 @@ Template.appBody.onRendered(function() {
         .hide()
         .insertBefore(next)
         .fadeIn(function () {
-          listFadeInHold.release();
+          //listFadeInHold.release();
         });
     },
     removeElement: function(node) {
@@ -114,13 +114,14 @@ Template.appBody.events({
     
     // if we are on a private list, we'll need to go to a public one
     var current = Router.current();
-    if (current.route.name === 'listsShow' && current.data().userId) {
+    if (current.route.name === 'listShow' && current.data().userId) {
       Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
     }
   },
 
   'click .js-new-list': function() {
-    var list = {name: Lists.defaultName(), incompleteCount: 0, userId: Meteor.userId()};
+    var list = {name: Lists.defaultName(), organisationId: Session.get('organisation')};
+    //var list = {name: Lists.defaultName(), userId: Meteor.userId()};
     list._id = Lists.insert(list);
 
     Router.go('listsShow', list);

@@ -5,32 +5,32 @@
     <section id="menu">
       {{#if currentUser}}
         <div class="btns-group-vertical">
+            {{#if isInRole 'admin'}}
+                <a href="{{pathFor 'usersShow'}}" class="btn-secondary">Users</a>
+                <a href="{{pathFor 'organisationsShow'}}" class="btn-secondary">Organisations</a>
+            {{/if}}
             <a class="js-logout btn-secondary">Logout</a>
         </div>
-      {{else}}
-        <div class="btns-group">
-          <a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
-          <!--<a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>-->
+        <div class="list-buttons">
+            <a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>
+            {{#each lists}}
+              <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
+                {{#if userId}}
+                  <!--<span class="icon-lock"></span>-->
+                {{/if}}
+                {{#if incompleteCount}}
+                  <!--<span class="count-list">{{incompleteCount}}</span>-->
+                {{/if}}
+                {{attributes.name}}
+              </a>
+            {{/each}}
         </div>
+      {{else}}
+          <div class="btns-group">
+              <a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
+              <!--<a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>-->
+          </div>
       {{/if}}
-
-      <div class="list-buttons">
-        <!--<a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>-->
-        {{!--
-        {{#each lists}}
-          <a href="{{pathFor 'listsShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
-            {{#if userId}}
-              <!--<span class="icon-lock"></span>-->
-            {{/if}}
-            {{#if incompleteCount}}
-              <!--<span class="count-list">{{incompleteCount}}</span>-->
-            {{/if}}
-            {{name}}
-          </a>
-        {{/each}}
-        --}}
-
-      </div>
     </section>
 
     {{#unless connected}}

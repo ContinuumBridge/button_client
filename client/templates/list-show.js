@@ -6,7 +6,7 @@ var firstRender = true;
 var listRenderHold = LaunchScreen.hold();
 listFadeInHold = null;
 
-Template.listsShow.onRendered(function() {
+Template.listShow.onRendered(function() {
   if (firstRender) {
     // Released in app-body.js
     listFadeInHold = LaunchScreen.hold();
@@ -32,7 +32,7 @@ Template.listsShow.onRendered(function() {
   };
 });
 
-Template.listsShow.helpers({
+Template.listShow.helpers({
   editing: function() {
     return Session.get(EDITING_KEY);
   },
@@ -42,6 +42,8 @@ Template.listsShow.helpers({
   },
 
   buttons: function(listId) {
+    //return Lists.
+    console.log('Buttons.find({listId: listId}, {sort: {name : 1}})', Buttons.find({listId: listId}, {sort: {name : 1}}));
     return Buttons.find({listId: listId}, {sort: {name : 1}});
   }
 });
@@ -101,7 +103,7 @@ var toggleListPrivacy = function(list) {
   }
 };
 
-Template.listsShow.events({
+Template.listShow.events({
   'click .js-cancel': function() {
     Session.set(EDITING_KEY, false);
   },

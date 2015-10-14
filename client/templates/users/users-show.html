@@ -1,0 +1,49 @@
+<template name="usersShow">
+  <div class="page lists-show">
+      <nav class="js-title-nav">
+
+          <div class="nav-group">
+              <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+          </div>
+
+          <h1 class="js-edit-list title-page"><span class="title-wrapper">Users</span></h1>
+      </nav>
+    <table class="item-list table table-striped">
+      <thead>
+          <tr>
+          <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+            <td class="col-md-4">Email</td>
+            <td class="col-md-2">Is Admin</td>
+            <td class="col-md-4">Organisations</td>
+            <td class="col-md-2"></td>
+          <!--</div>-->
+          </tr>
+      </thead>
+      <tbody>
+      <!--<div class="content-scrollable list-items">-->
+      {{#if usersReady}}
+          {{#each users this}}
+
+            {{> userItem}}
+          {{else}}
+            <div class="wrapper-message">
+              <div class="title-message">No users here</div>
+              <div class="subtitle-message">Add new users using the button above</div>
+            </div>
+          {{/each}}
+      {{else}}
+          <div class="wrapper-message">
+            <div class="title-message">Loading users...</div>
+          </div>
+      {{/if}}
+      </tbody>
+    </table>
+
+    <form class="js-button-new button-new input-symbol">
+        <!--<span class="icon-add js-button-add"></span>-->
+        <button class="js-item-add btn-sm btn-default" type="submit">
+            Add Button
+        </button>
+    </form>
+  </div>
+</template>
