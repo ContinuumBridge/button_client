@@ -9,7 +9,17 @@
       </label>
     </td>
     <td class="col-md-4">
-        <input type="text" value="{{attributes.email}}" id="email" class="table-input" placeholder="ID">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {{organisationName}}
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                {{#each organisations}}
+                    <li><a href="#" class="js-select-organisation" user={{../_id}} id={{_id}}>{{attributes.name}}</a></li>
+                {{/each}}
+            </ul>
+        </div>
     </td>
     <td class="col-md-1 delete-item-wrapper">
       <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
@@ -17,3 +27,24 @@
   <!--</div>-->
   </tr>
 </template>
+
+<template name="organisationsDropdownTrigger">
+</template>
+<!--
+            {{# dropdownTrigger name="organisationsDropdown" }}
+                <button class="btn btn-default" type="button" id="dropdownMenu">
+                    {{organisationName}}
+                </button>
+            {{/ dropdownTrigger }}
+            {{# dropdown name="organisationsDropdown" label=attributes.name }}
+                <ul class="dropdown__menu">
+                    {{#each organisations this}}
+                        <li role="menuItem"><a href="#">
+                            <button class="btn btn-default" type="button">
+                                Test
+                            </button>
+                        </a></li>
+                    {{/each}}
+                </ul>
+            {{/dropdown}}
+-->

@@ -169,48 +169,24 @@ Template.organisationsShow.events({
 
     event.preventDefault();
 
-    var modalBody = Template.addItemModal.renderFunction().value;
+    var modalBody = Template.addOrganisationModal.renderFunction().value;
     console.log('modal body', modalBody);
     bootbox.addItem({
-      title: "Add a button",
+      title: "Add an organisation",
       value: modalBody,
       callback: function(result) {
-        /*
         if (result === null) {
           //Example.show("Prompt dismissed");
         } else {
           console.log('submitted', result);
-          console.log('Buttons', Buttons);
           console.log('self._id', self._id);
-          Buttons.insert({
-            organisationId: self._id,
-            enabled: true,
+          Organisations.insert({
             id: result.id,
             name: result.name,
-            email: result.email,
-            sms: result.sms,
             createdAt: new Date()
           });
-          organisations.update(this._id, {$inc: {incompleteCount: 1}});
-          //Example.show("Hi <b>"+result+"</b>");
         }
-        */
       }
     });
-    //$('#add-item-modal').modal()
-    /*
-    var $input = $(event.target).find('[type=text]');
-    if (! $input.val())
-      return;
-    
-    Buttons.insert({
-      organisationId: this._id,
-      text: $input.val(),
-      checked: false,
-      createdAt: new Date()
-    });
-    organisations.update(this._id, {$inc: {incompleteCount: 1}});
-    $input.val('');
-    */
   }
 });

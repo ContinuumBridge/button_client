@@ -38,7 +38,7 @@ Template.listShow.helpers({
   },
 
   buttonsReady: function() {
-    return Router.current().buttonsHandle.ready();
+    return Router.current().listHandle.ready();
   },
 
   buttons: function(listId) {

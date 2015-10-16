@@ -6,12 +6,16 @@
       {{#if currentUser}}
         <div class="btns-group-vertical">
             {{#if isInRole 'admin'}}
-                <a href="{{pathFor 'usersShow'}}" class="btn-secondary">Users</a>
-                <a href="{{pathFor 'organisationsShow'}}" class="btn-secondary">Organisations</a>
             {{/if}}
+            <a href="{{pathFor 'usersShow'}}" class="btn-secondary">Users</a>
+            <a href="{{pathFor 'organisationsShow'}}" class="btn-secondary">Organisations</a>
+            <a href="{{pathFor 'listShow'}}" class="btn-secondary">List</a>
             <a class="js-logout btn-secondary">Logout</a>
         </div>
         <div class="list-buttons">
+            <div class="btns-group-vertical current-organisation">
+              <a class="btn-secondary">{{currentOrganisationName}}</a>
+            </div>
             <a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>
             {{#each lists}}
               <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">

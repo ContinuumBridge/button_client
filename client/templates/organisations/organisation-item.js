@@ -42,8 +42,11 @@ Template.organisationItem.events({
     //Buttons.update(this._id, {$set: {text: event.target.value}});
   }, 300),
 
-  'mousedown .js-view-lists, click': function() {
-    Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
+  'mousedown .js-view-lists, click': function(event) {
+    //Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
+    //Router.go('listShow', Lists.findOne({userId: {$exists: false}}));
+
+    Session.set('organisation', event.target.id);
   },
 
   // handle mousedown otherwise the blur handler above will swallow the click

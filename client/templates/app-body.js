@@ -7,6 +7,8 @@ Session.setDefault(USER_MENU_KEY, false);
 var SHOW_CONNECTION_ISSUE_KEY = 'showConnectionIssue';
 Session.setDefault(SHOW_CONNECTION_ISSUE_KEY, false);
 
+var ORGANISATION_KEY = 'organisation';
+
 var CONNECTION_ISSUE_TIMEOUT = 5000;
 
 Meteor.startup(function () {
@@ -71,8 +73,18 @@ Template.appBody.helpers({
   userMenuOpen: function() {
     return Session.get(USER_MENU_KEY);
   },
+  currentOrganisationName: function() {
+    var organisationId = Session.get('organisation');
+    if (organisationId) {
+      var organisation = Organisations.findOne(organisationId);
+      return organisation.get('name');
+    } else {
+      return "No Organisation Selected"
+    }
+  },
   lists: function() {
-    return Lists.find();
+    var organisationId = Session.get(ORGANISATION_KEY);
+    return Lists.find({organisationIds: organisationId});
   },
   activeListClass: function() {
     var current = Router.current();
@@ -124,6 +136,6 @@ Template.appBody.events({
     //var list = {name: Lists.defaultName(), userId: Meteor.userId()};
     list._id = Lists.insert(list);
 
-    Router.go('listsShow', list);
+    Router.go('listShow', list);
   }
 });
