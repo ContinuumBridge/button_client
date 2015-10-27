@@ -172,17 +172,22 @@ Template.listShow.events({
 
     var modalBody = Template.addItemModal.renderFunction().value;
     console.log('modal body', modalBody);
-    bootbox.addItem({
+    bootbox.formModal({
       title: "Add a button",
       value: modalBody,
+      fields: {
+          id: 'text',
+          name: 'text',
+          email: 'email',
+          sms: 'text'
+      },
       callback: function(result) {
         if (result === null) {
           //Example.show("Prompt dismissed");
         } else {
           console.log('submitted', result);
-          console.log('Buttons', Buttons);
           console.log('self._id', self._id);
-          Buttons.insert({
+          var buttonId = Buttons.insert({
             listId: self._id,
             enabled: true,
             id: result.id,
@@ -191,7 +196,8 @@ Template.listShow.events({
             sms: result.sms,
             createdAt: new Date()
           });
-          Lists.update(this._id, {$inc: {incompleteCount: 1}});
+          console.log('buttonId ', buttonId );
+          //Lists.update(this._id, {$inc: {incompleteCount: 1}});
           //Example.show("Hi <b>"+result+"</b>");
         }
       }

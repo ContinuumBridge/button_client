@@ -13,14 +13,40 @@ Meteor.publish('organisations', function() {
   if (Roles.userIsInRole(this.userId, ['admin'])) {
       return Organisations.find({});
   } else {
-      return Organisations.find({_id: this.userId});
+      var user = Users.build(Users.findOne(this.userId));
+      //console.log('user.organisations.find()', user.organisations.find());
+      return user.organisations.find();
+      //return Organisations.find({_id: this.userId});
   }
 });
 
 Meteor.publish('lists', function() {
-    return Lists.find({});
+
+    var user = Users.build(Users.findOne(this.userId));
+    var organisation = user.organisations.findOne();
+    if (Roles.userIsInRole(this.userId, ['admin'])) {
+        return Lists.find({});
+    } else {
+        return Lists.find({organisationId: organisation._id});
+    }
+    //return Lists.find({});
 });
 
+Meteor.publish('buttons', function() {
+
+    var user = Users.build(Users.findOne(this.userId));
+    var organisation = user.organisations.findOne();
+    var lists = Lists.find({organisationId: organisation._id}).fetch();
+    var listIds = _.pluck(lists, '_id');
+
+    if (Roles.userIsInRole(this.userId, ['admin'])) {
+        return Buttons.find({});
+    } else {
+        return Buttons.find({listId: {$in: listIds}});
+    }
+});
+
+/*
 Meteor.publish('publicLists', function() {
   return Lists.find({userId: {$exists: false}});
 });
@@ -32,9 +58,4 @@ Meteor.publish('privateLists', function() {
     this.ready();
   }
 });
-
-Meteor.publish('buttons', function(listId) {
-  check(listId, String);
-
-  return Buttons.find({listId: listId});
-});
+*/

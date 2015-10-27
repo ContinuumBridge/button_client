@@ -171,9 +171,12 @@ Template.organisationsShow.events({
 
     var modalBody = Template.addOrganisationModal.renderFunction().value;
     console.log('modal body', modalBody);
-    bootbox.addItem({
+    bootbox.formModal({
       title: "Add an organisation",
       value: modalBody,
+      fields: {
+          name: 'text'
+      },
       callback: function(result) {
         if (result === null) {
           //Example.show("Prompt dismissed");

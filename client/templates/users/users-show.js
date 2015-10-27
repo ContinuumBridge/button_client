@@ -1,3 +1,5 @@
+var ERRORS_KEY = 'appErrors';
+
 var EDITING_KEY = 'editingUser';
 Session.setDefault(EDITING_KEY, false);
 
@@ -59,29 +61,6 @@ var saveList = function(list, template) {
   Lists.update(list._id, {$set: {name: template.$('[name=name]').val()}});
 }
 
-var deleteList = function(list) {
-  // ensure the last public list cannot be deleted.
-  /*
-  if (! list.userId && Lists.find({userId: {$exists: false}}).count() === 1) {
-    return alert("Sorry, you cannot delete the final public list!");
-  }
-  */
-
-  var message = "Are you sure you want to delete the list " + list.name + "?";
-  if (confirm(message)) {
-    // we must remove each item individually from the client
-    Buttons.find({listId: list._id}).forEach(function(button) {
-      Buttons.remove(button._id);
-    });
-    Lists.remove(list._id);
-
-    Router.go('home');
-    return true;
-  } else {
-    return false;
-  }
-};
-
 Template.usersShow.events({
   'click .js-cancel': function() {
     Session.set(EDITING_KEY, false);
@@ -142,19 +121,41 @@ Template.usersShow.events({
     template.$('.js-button-new input').focus();
   },
   */
-
   'click .js-item-add': function(event) {
 
     var self = this;
 
     event.preventDefault();
 
-    var modalBody = Template.addItemModal.renderFunction().value;
-    console.log('modal body', modalBody);
-    bootbox.addItem({
+    var modalBody = Template.addUserModal.renderFunction().value;
+    bootbox.formModal({
       title: "Add a user",
       value: modalBody,
+      fields: {
+          email: 'email',
+          password: 'password',
+          isAdmin: 'checkbox'
+      },
       callback: function(result) {
+
+          if (result === null) {
+            //Example.show("Prompt dismissed");
+          } else {
+              console.log('result', result);
+              var userId = Accounts.createUser({
+                      email: result.email,
+                      password: result.password
+                  }, function(error) {
+                      if (error) {
+                          return Session.set(ERRORS_KEY, {'none': error.reason});
+                      }
+                  }
+              );
+              if (result.isAdmin) {
+                  Roles.addUsersToRoles(userId, ['admin']);
+              }
+          }
+
         /*
         if (result === null) {
           //Example.show("Prompt dismissed");
@@ -171,23 +172,8 @@ Template.usersShow.events({
           Lists.update(this._id, {$inc: {incompleteCount: 1}});
           //Example.show("Hi <b>"+result+"</b>");
         }
-        */
+         */
       }
     });
-    //$('#add-item-modal').modal()
-    /*
-    var $input = $(event.target).find('[type=text]');
-    if (! $input.val())
-      return;
-    
-    Buttons.insert({
-      listId: this._id,
-      text: $input.val(),
-      checked: false,
-      createdAt: new Date()
-    });
-    Lists.update(this._id, {$inc: {incompleteCount: 1}});
-    $input.val('');
-    */
   }
 });

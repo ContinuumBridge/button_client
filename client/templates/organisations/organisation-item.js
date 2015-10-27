@@ -46,7 +46,10 @@ Template.organisationItem.events({
     //Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
     //Router.go('listShow', Lists.findOne({userId: {$exists: false}}));
 
-    Session.set('organisation', event.target.id);
+    console.log('view-lists', event.target);
+    var user = Users.build(Meteor.user());
+    user.setOrganisation(this);
+    //Session.set('organisation', event.target.id);
   },
 
   // handle mousedown otherwise the blur handler above will swallow the click

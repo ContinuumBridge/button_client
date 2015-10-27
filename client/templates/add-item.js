@@ -1,5 +1,5 @@
 
-bootbox.addItem = function() {
+bootbox.formModal = function() {
 
     var options;
     var defaults;
@@ -51,40 +51,37 @@ bootbox.addItem = function() {
         var value;
 
         /*
-        switch (options.inputType) {
-            case "text":
-            case "textarea":
-            case "email":
-            case "select":
-            case "date":
-            case "time":
-            case "number":
-            case "password":
-                value = input.val();
-                break;
 
-            case "checkbox":
-                var checkedItems = input.find("input:checked");
-
-                // we assume that checkboxes are always multiple,
-                // hence we default to an empty array
-                value = [];
-
-                each(checkedItems, function(_, item) {
-                    value.push($(item).val());
-                });
-                break;
-        }
         */
+        console.log('options.inputs', options.fields);
+        var attributes = _.object(_.map(options.fields, function(fieldType, fieldName) {
+            //console.log('input', input, inputType);
+
+            switch (fieldType) {
+                case "text":
+                case "textarea":
+                case "email":
+                case "select":
+                case "date":
+                case "time":
+                case "number":
+                case "password":
+                    return [fieldName, input.find('.' + fieldName).val()];
+                    break;
+
+                case "checkbox":
+                    var checkbox = input.find('.' + fieldName);
+                    console.log('checkbox ', checkbox );
+                    console.log('checkbox.checked', checkbox.checked);
+                    return [fieldName, checkbox.checked];
+                    break;
+            }
+        }));
+        console.log('attributes ', attributes );
         //console.log('submit input', input);
         //console.log('submit input', input.find('.id'));
 
-        return options.callback.call(this, {
-            id: input.find('.id').val(),
-            name: input.find('.name').val(),
-            email: input.find('.email').val(),
-            sms: input.find('.sms').val()
-        });
+        return options.callback.call(this, attributes);
     };
 
     options.show = false;

@@ -57,16 +57,53 @@ Template.userItem.events({
         //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
+    'change #isAdmin':function(e){
+    //'change input[type=checkbox]':function(e){
+        console.log('e', e.currentTarget.checked);
+        if (e.currentTarget.checked) {
+            Roles.addUsersToRoles(this._id, ['admin']);
+        } else {
+            Roles.removeUsersFromRoles(this._id, ['admin']);
+        }
+    },
+
     'mousedown .js-select-organisation, click .js-select-organisation': function(event) {
+
         var userId = event.currentTarget.getAttribute('user');
         var user = Users.build(Users.findOne(userId));
-        _.each(user.organisations.find({}).fetch(), function(organisation) {
-            console.log('organisation', organisation);
-            user.organisations.remove(organisation);
-        });
         var organisation = Organisations.findOne(event.currentTarget.id);
-        user.organisations.add(organisation);
+        user.setOrganisation(organisation);
     },
+
+    'click .js-change-password': function(event) {
+
+        var self = this;
+
+        event.preventDefault();
+
+        var modalBody = Template.setPasswordModal.renderFunction().value;
+        bootbox.formModal({
+            title: "Change password",
+            value: modalBody,
+            fields: {
+                password: 'password'
+            },
+            callback: function (result) {
+
+                if (result === null) {
+                    //Example.show("Prompt dismissed");
+                } else {
+                    console.log('Change password result', result);
+                    console.log('Change password self._id', self._id);
+                    Meteor.call('changeUserPassword', self._id, result.password, function(error, response) {
+
+                        if (error) {console.error('Error changing user password', error)}
+                    });
+                }
+            }
+        });
+    },
+
     // handle mousedown otherwise the blur handler above will swallow the click
     // on iOS, we still require the click event so handle both
     'mousedown .js-delete-item, click .js-delete-item': function() {

@@ -73,18 +73,26 @@ Template.appBody.helpers({
   userMenuOpen: function() {
     return Session.get(USER_MENU_KEY);
   },
+  currentOrganisation: function() {
+
+    return Users.build(Meteor.user()).organisations.findOne();
+  },
   currentOrganisationName: function() {
-    var organisationId = Session.get('organisation');
-    if (organisationId) {
-      var organisation = Organisations.findOne(organisationId);
+    var organisation = Meteor.getCurrentOrganisation();
+    if (organisation) {
       return organisation.get('name');
     } else {
       return "No Organisation Selected"
     }
   },
   lists: function() {
-    var organisationId = Session.get(ORGANISATION_KEY);
-    return Lists.find({organisationIds: organisationId});
+    //var organisationId = Session.get(ORGANISATION_KEY);
+    var organisation = Meteor.getCurrentOrganisation();
+    if (organisation) {
+      return Lists.find({organisationId: organisation._id});
+    } else {
+      return [];
+    }
   },
   activeListClass: function() {
     var current = Router.current();
@@ -132,7 +140,8 @@ Template.appBody.events({
   },
 
   'click .js-new-list': function() {
-    var list = {name: Lists.defaultName(), organisationId: Session.get('organisation')};
+    console.log('Meteor.getCurrentOrganisation()._id', Meteor.getCurrentOrganisation()._id);
+    var list = {name: Lists.defaultName(), organisationId: Meteor.getCurrentOrganisation()._id};
     //var list = {name: Lists.defaultName(), userId: Meteor.userId()};
     list._id = Lists.insert(list);
 
