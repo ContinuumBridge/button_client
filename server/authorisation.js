@@ -1,4 +1,5 @@
 
+/*
 Accounts.validateNewUser(function (user) {
     var loggedInUser = Meteor.user();
 
@@ -9,3 +10,4 @@ Accounts.validateNewUser(function (user) {
 
     throw new Meteor.Error(403, "Not authorized to create new users");
 });
+*/

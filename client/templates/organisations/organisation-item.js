@@ -43,13 +43,10 @@ Template.organisationItem.events({
   }, 300),
 
   'mousedown .js-view-lists, click': function(event) {
-    //Router.go('listsShow', Lists.findOne({userId: {$exists: false}}));
-    //Router.go('listShow', Lists.findOne({userId: {$exists: false}}));
 
     console.log('view-lists', event.target);
     var user = Users.build(Meteor.user());
     user.setOrganisation(this);
-    //Session.set('organisation', event.target.id);
   },
 
   // handle mousedown otherwise the blur handler above will swallow the click
