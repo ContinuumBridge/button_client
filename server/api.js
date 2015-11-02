@@ -4,7 +4,7 @@ if (Meteor.isServer) {
 
         // All values listed below are default
         collectionApi = new CollectionAPI({
-            authToken: 'galvanize',              // Require this string to be passed in on each request
+            authToken: 'vArH9SWKQyCQLHiNpheKyQuU',              // Require this string to be passed in on each request
             apiPath: 'api',          // API path prefix
             standAlone: true,                 // Run as a stand-alone HTTP(S) server
             allowCORS: false,                  // Allow CORS (Cross-Origin Resource Sharing)
@@ -24,7 +24,24 @@ if (Meteor.isServer) {
             before: {  // This methods, if defined, will be called before the POST/GET/PUT/DELETE actions are performed on the collection.
                 // If the function returns false the action will be canceled, if you return true the action will take place.
                 POST: undefined,    // function(obj, requestMetadata, returnObject) {return true/false;},
-                GET: function(objs, requestMetadata, returnObject) {return true;},
+                GET: function(objs, requestMetadata, returnObject) {
+
+                    if (objs.length < 1) {
+
+                        returnObject.success = false;
+                        returnObject.statusCode = 404;
+                        return false;
+                    } else {
+
+                        returnObject.body = _.map(objs, function(obj) {
+                            //return _.omit(obj, '')
+                            return obj.attributes;
+                        });
+                        returnObject.success = true;
+                        returnObject.statusCode = 200;
+                        return true;
+                    }
+                },
                 PUT: function(obj, newValues, requestMetadata, returnObject) {
                     return true;
                     //console.log('put obj', obj, 'newValues', newValues, 'returnObject', returnObject);
