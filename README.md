@@ -52,7 +52,7 @@ Web-App/Client API
 (This section will be expanded).
 A REST interface will be implemented, either over HTTP or using JSON over a TCP socket. It is assumed in the following that the bridge-app client is the client and the web-app is the server.
 
-All requests to the API should include the header "X-Auth-Token: galvanize".
+All requests to the API should include the header "X-Auth-Token: vArH9SWKQyCQLHiNpheKyQuU".
 
     GET <>
     http://54.76.157.10:3005/api/buttons/
