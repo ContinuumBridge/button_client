@@ -1,6 +1,10 @@
 var EDITING_KEY = 'EDITING_TODO_ID';
 
 Template.buttonsItem.helpers({
+    signal: function() {
+        var signal = this.signal;
+        return signal ? signal : "-1";
+    },
     checkedClass: function() {
         return this.checked && 'checked';
     },

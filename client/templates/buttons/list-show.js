@@ -44,7 +44,7 @@ Template.listShow.helpers({
   buttons: function(listId) {
     //return Lists.
     console.log('Buttons.find({listId: listId}, {sort: {name : 1}})', Buttons.find({listId: listId}, {sort: {name : 1}}));
-    return Buttons.find({listId: listId}, {sort: {name : 1}});
+    return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
   }
 });
 
@@ -104,118 +104,125 @@ var toggleListPrivacy = function(list) {
 };
 
 Template.listShow.events({
-  'click .js-cancel': function() {
-    Session.set(EDITING_KEY, false);
-  },
-  
-  'keydown input[type=text]': function(event) {
-    // ESC
-    if (27 === event.which) {
-      event.preventDefault();
-      $(event.target).blur();
-    }
-  },
-  
-  'blur input[type=text]': function(event, template) {
-    // if we are still editing (we haven't just clicked the cancel button)
-    if (Session.get(EDITING_KEY))
-      saveList(this, template);
-  },
 
-  'submit .js-edit-form': function(event, template) {
-    event.preventDefault();
-    saveList(this, template);
-  },
-  
-  // handle mousedown otherwise the blur handler above will swallow the click
-  // on iOS, we still require the click event so handle both
-  'mousedown .js-cancel, click .js-cancel': function(event) {
-    event.preventDefault();
-    Session.set(EDITING_KEY, false);
-  },
+    'click .js-cancel': function() {
+        Session.set(EDITING_KEY, false);
+    },
 
-  'change .list-edit': function(event, template) {
-    if ($(event.target).val() === 'edit') {
-      editList(this, template);
-    } else if ($(event.target).val() === 'delete') {
-      deleteList(this, template);
-    } else {
-      toggleListPrivacy(this, template);
-    }
-
-    event.target.selectedIndex = 0;
-  },
-  
-  'click .js-edit-list': function(event, template) {
-    editList(this, template);
-  },
-  
-  'click .js-toggle-list-privacy': function(event, template) {
-    toggleListPrivacy(this, template);
-  },
-  
-  'click .js-delete-list': function(event, template) {
-    deleteList(this, template);
-  },
-
-  /*
-  'click .js-button-add': function(event, template) {
-    template.$('.js-button-new input').focus();
-  },
-  */
-
-  'click .js-item-add': function(event) {
-
-    var self = this;
-
-    event.preventDefault();
-
-    var modalBody = Template.addItemModal.renderFunction().value;
-    console.log('modal body', modalBody);
-    bootbox.formModal({
-      title: "Add a button",
-      value: modalBody,
-      fields: {
-          id: 'text',
-          name: 'text',
-          email: 'email',
-          sms: 'text'
-      },
-      callback: function(result) {
-        if (result === null) {
-          //Example.show("Prompt dismissed");
-        } else {
-          console.log('submitted', result);
-          console.log('self._id', self._id);
-          var buttonId = Buttons.insert({
-            listId: self._id,
-            enabled: true,
-            id: result.id,
-            name: result.name,
-            email: result.email,
-            sms: result.sms,
-            createdAt: new Date()
-          });
-          console.log('buttonId ', buttonId );
-          //Lists.update(this._id, {$inc: {incompleteCount: 1}});
-          //Example.show("Hi <b>"+result+"</b>");
+    'keydown input[type=text]': function(event) {
+        // ESC
+        if (27 === event.which) {
+          event.preventDefault();
+          $(event.target).blur();
         }
-      }
-    });
-    //$('#add-item-modal').modal()
+    },
+
+    'blur input[type=text]': function(event, template) {
+        // if we are still editing (we haven't just clicked the cancel button)
+        if (Session.get(EDITING_KEY))
+          saveList(this, template);
+    },
+
+    'submit .js-edit-form': function(event, template) {
+        event.preventDefault();
+        saveList(this, template);
+    },
+
+    // handle mousedown otherwise the blur handler above will swallow the click
+    // on iOS, we still require the click event so handle both
+    'mousedown .js-cancel, click .js-cancel': function(event) {
+        event.preventDefault();
+        Session.set(EDITING_KEY, false);
+    },
+
+    'change .list-edit': function(event, template) {
+        if ($(event.target).val() === 'edit') {
+          editList(this, template);
+        } else if ($(event.target).val() === 'delete') {
+          deleteList(this, template);
+        } else {
+          toggleListPrivacy(this, template);
+        }
+
+        event.target.selectedIndex = 0;
+    },
+
+    'click .js-edit-list': function(event, template) {
+        editList(this, template);
+    },
+
     /*
-    var $input = $(event.target).find('[type=text]');
-    if (! $input.val())
-      return;
-    
-    Buttons.insert({
-      listId: this._id,
-      text: $input.val(),
-      checked: false,
-      createdAt: new Date()
-    });
-    Lists.update(this._id, {$inc: {incompleteCount: 1}});
-    $input.val('');
+    'click .js-toggle-list-privacy': function(event, template) {
+        toggleListPrivacy(this, template);
+    },
     */
-  }
+
+    'mousedown .js-edit-defaults, click .js-edit-messages': function(event) {
+
+        console.log('js-edit-defaults this', this);
+        var defaultButton = this.getDefaultButton(this);
+
+        console.log('defaultButton ', defaultButton );
+        Modal.show('buttonDefaultsModal', defaultButton);
+    },
+
+    'click .js-delete-list': function(event, template) {
+        deleteList(this, template);
+    },
+
+    /*
+    'click .js-button-add': function(event, template) {
+      template.$('.js-button-new input').focus();
+    },
+    */
+
+    'click .js-item-add': function(event) {
+
+        var self = this;
+
+        event.preventDefault();
+
+        var defaultButton = this.getDefaultButton()
+        console.log('defaultButton ', defaultButton );
+        //var defaultData = defaultButton.attributes;
+        //var button = Buttons.insert(_.omit(defaultData, '_id', 'listId'));
+        //console.log('button ', button );
+        //if (!button) button = this.buttons.insert({});
+
+        Modal.show('addButtonModal', defaultButton);
+        /*
+        var modalBody = Template.addItemModal.renderFunction().value;
+        console.log('modal body', modalBody);
+        bootbox.formModal({
+          title: "Add a button",
+          value: modalBody,
+          fields: {
+              id: 'text',
+              name: 'text',
+              email: 'email',
+              sms: 'text'
+          },
+          callback: function(result) {
+            if (result === null) {
+              //Example.show("Prompt dismissed");
+            } else {
+              console.log('submitted', result);
+              console.log('self._id', self._id);
+              var buttonId = Buttons.insert({
+                listId: self._id,
+                enabled: true,
+                id: result.id,
+                name: result.name,
+                email: result.email,
+                sms: result.sms,
+                createdAt: new Date()
+              });
+              console.log('buttonId ', buttonId );
+              //Lists.update(this._id, {$inc: {incompleteCount: 1}});
+              //Example.show("Hi <b>"+result+"</b>");
+            }
+          }
+        });
+        */
+    }
 });

@@ -142,7 +142,6 @@ Template.appBody.events({
   'click .js-new-list': function() {
     console.log('Meteor.getCurrentOrganisation()._id', Meteor.getCurrentOrganisation()._id);
     var list = {name: Lists.defaultName(), organisationId: Meteor.getCurrentOrganisation()._id};
-    //var list = {name: Lists.defaultName(), userId: Meteor.userId()};
     list._id = Lists.insert(list);
 
     Router.go('listShow', list);
