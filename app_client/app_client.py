@@ -248,7 +248,7 @@ class ClientWSProtocol(WebSocketClientProtocol):
         reactor.stop()
 
     def readConfigLoop(self):
-        #logger.debug("readConfigLoop")
+        logger.debug("readConfigLoop")
         if readConfig(True):
             self.updateUUIDs()
         getButtons()
