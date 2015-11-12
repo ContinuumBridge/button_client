@@ -11,7 +11,7 @@ Template.addButtonModal.events({
         var buttonId = Buttons.insert({
             listId: this.get('listId'),
             enabled: false,
-            //id: result.id,
+            id: target.buttonId.value,
             name: target.name.value,
             email: target.email.value,
             sms: target.sms.value,

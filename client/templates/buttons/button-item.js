@@ -67,8 +67,9 @@ Template.buttonsItem.events({
     // handle mousedown otherwise the blur handler above will swallow the click
     // on iOS, we still require the click event so handle both
     'mousedown .js-delete-item, click .js-delete-item': function() {
+        console.log('this._id', this._id);
         Buttons.remove(this._id);
-        if (! this.checked)
-          Lists.update(this.listId, {$inc: {incompleteCount: -1}});
+        //if (! this.checked)
+          //Lists.update(this.listId, {$inc: {incompleteCount: -1}});
     }
 });

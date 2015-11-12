@@ -1,6 +1,7 @@
 <template name="buttonsItem">
     <tr>
     <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+        <td class="col-md-1"><input type="text" value="{{attributes.id}}" id="id" class="table-input" placeholder="ID"></td>
         <td class="col-md-1"><input type="text" value="{{attributes.status}}" id="status" class="table-input state {{stateColour}}" placeholder="Status" readonly></td>
         <td class="col-md-1">
             <div class="item-checkbox">
@@ -18,7 +19,7 @@
                 <input type="checkbox" checked="{{attributes.override}}" class="table-input" id="override">
             </div>
         </td>
-        <td class="col-md-2"><input type="text" value="{{attributes.email}}" id="email" class="table-input" placeholder="Email"></td>
+        <td class="col-md-1"><input type="text" value="{{attributes.email}}" id="email" class="table-input" placeholder="Email"></td>
         <td class="col-md-1"><input type="text" value="{{attributes.sms}}" id="sms" class="table-input" placeholder="SMS"></td>
         <td class="col-md-1"><img class="signal" src="/img/signal_{{signal}}.png"/></td>
         <td class="col-md-1"><input type="text" value="{{attributes.bridge}}" id="bridge" class="table-input" placeholder="Bridge" readonly></td>
