@@ -2,7 +2,7 @@ var EDITING_KEY = 'EDITING_TODO_ID';
 
 Template.buttonsItem.helpers({
     signal: function() {
-        var signal = this.signal;
+        var signal = this.attributes.signal;
         return signal ? signal : "-1";
     },
     checkedClass: function() {
@@ -11,8 +11,9 @@ Template.buttonsItem.helpers({
     editingClass: function() {
         return Session.equals(EDITING_KEY, this._id) && 'editing';
     },
-    stateColour: function() {
-        return this.state == 'Pressed' ? 'green' : '';
+    statusColour: function() {
+        var status = this.attributes.status;
+        return status == 'pressed' ? 'green' : '';
     }
 });
 
@@ -49,7 +50,7 @@ Template.buttonsItem.events({
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
     'keyup input[type=text]': _.throttle(function(event) {
-      console.log('edit event', event);
+      //console.log('edit event', event);
       var data = {};
       data[event.target.id] = event.target.value;
       Buttons.update(this._id, {$set: data});
@@ -67,7 +68,7 @@ Template.buttonsItem.events({
     // handle mousedown otherwise the blur handler above will swallow the click
     // on iOS, we still require the click event so handle both
     'mousedown .js-delete-item, click .js-delete-item': function() {
-        console.log('this._id', this._id);
+        //console.log('this._id', this._id);
         Buttons.remove(this._id);
         //if (! this.checked)
           //Lists.update(this.listId, {$inc: {incompleteCount: -1}});

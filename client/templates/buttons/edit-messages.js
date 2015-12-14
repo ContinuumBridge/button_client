@@ -1,4 +1,17 @@
 
+Template.buttonMessagesModal.onRendered(function() {
+
+
+    console.log('quill ');
+    var quill = new Quill(this.$('#normalMessage')[0], {
+        modules: {
+            'toolbar': { container: '#full-toolbar' },
+        },
+        theme: 'snow'
+    });
+    //quill.addModule('toolbar', { container: '#toolbar' });
+});
+
 Template.buttonMessagesModal.events({
 
     // update the text of the item on keypress but throttle the event to ensure
@@ -15,3 +28,4 @@ Template.buttonMessagesModal.events({
         //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300)
 });
+
