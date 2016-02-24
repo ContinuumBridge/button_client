@@ -12,9 +12,7 @@
                         <form class="input-symbol modal-form">
                             <div class="form-group">
                                 <label for="normalMessage">Normal Message</label>
-                                <div id="normalMessage">
-
-                                </div>
+                                <textarea id="normalMessage" value="{{attributes.normalMessage}}" class="form-control test" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="pressedMessage">Pressed Message</label>
@@ -22,7 +20,6 @@
                             </div>
                             <div class="form-group">
                                 <label for="overrideMessage">Override Message</label>
-                                <textarea id="normalMessage" value="{{attributes.normalMessage}}" class="form-control test" rows="3"></textarea>
                                 <textarea id="overrideMessage" value="{{attributes.overrideMessage}}" class="form-control" rows="3"></textarea>
                             </div>
                         </form>
