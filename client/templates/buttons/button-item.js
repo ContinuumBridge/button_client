@@ -1,6 +1,30 @@
 var EDITING_KEY = 'EDITING_TODO_ID';
 
 Template.buttonsItem.helpers({
+    buttonAction: function() {
+        switch (this.attributes.status) {
+            case 'pressed':
+                return 'Acknowledge';
+                break;
+            case 'acknowledged':
+                return 'Clear';
+                break;
+            case 'operational':
+                return 'Press';
+                break;
+            default:
+                return '';
+        }
+    },
+    ledColour: function() {
+        switch (this.attributes.status) {
+            case 'pressed':
+                return 'green';
+                break;
+            default:
+                return 'off';
+        }
+    },
     signal: function() {
         var signal = this.attributes.signal;
         return signal ? signal : "-1";
@@ -57,10 +81,10 @@ Template.buttonsItem.events({
       //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
-    'mousedown .js-edit-messages, click .js-edit-messages': function(event) {
+    'mousedown .js-button-config, click .js-button-config': function(event) {
 
         //console.log('edit-messages', this);
-        Modal.show('buttonMessagesModal', this);
+        Modal.show('buttonConfigModal', this);
         //var user = Users.build(Meteor.user());
         //user.setOrganisation(this);
     },

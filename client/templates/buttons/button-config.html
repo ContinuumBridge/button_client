@@ -1,14 +1,42 @@
-<template name="buttonMessageDefaultsModal">
+<template name="buttonConfigModal">
     <div class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit button defaults for this list</h4>
+                    <h4 class="modal-title">Edit button messages</h4>
                 </div>
 
                 <div class="modal-body">
                     <div class="well">
+                        <!-- Use `name` to add a custom class to the outer container -->
+                        {{#basicTabs name="" tabs=tabs}}
+
+                            {{#tabContent slug="people"}}
+                                <h2>People</h2>
+                                <button class="add-people">
+                                    Add People
+                                </button>
+                            {{/tabContent}}
+
+                            {{#tabContent slug="places"}}
+                                <h2>Places</h2>
+                                <button class="add-places">
+                                    Add Places
+                                </button>
+                            {{/tabContent}}
+
+                            {{#tabContent slug="things"}}
+                                <h2>Things</h2>
+                                <button class="add-things">
+                                    Add Things
+                                </button>
+                            {{/tabContent}}
+
+                        {{/basicTabs}}
+
+
+
                         <form class="input-symbol modal-form">
                             <div class="form-group">
                                 <label for="normalMessage">Normal Message</label>
@@ -35,25 +63,21 @@
     </div>
 </template>
 
-<template name="buttonConfigDefaultsModal">
+<!--
+<template name="buttonConfigModal">
     <div class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit button defaults for this list</h4>
+                    <h4 class="modal-title">Button config</h4>
                 </div>
 
                 <div class="modal-body">
                     <div class="well">
                         <form class="input-symbol modal-form">
                             <div class="form-group">
-                                <label for="id">ID</label>
-                                <input type="text" value="{{attributes.id}}" id="id">
-                            </div>
-                            <div class="form-group">
-                                <label for="bridge">Bridge</label>
-                                <input type="text" value="{{attributes.bridge}}" id="bridge">
+                                <input type="checkbox" checked="{{attributes.enabled}}" class="table-input" id="enabled">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -75,3 +99,4 @@
         </div>
     </div>
 </template>
+-->
