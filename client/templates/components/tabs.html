@@ -1,0 +1,29 @@
+
+<template name="spurTabs">
+    <div class="dynamicTabs-container {{name}}">
+
+        <!-- These keep the instance synced with the parent's reactive data -->
+        {{#if activeTab}}
+        {{trackActiveTab activeTab}}
+        {{/if}}
+
+        {{trackTabs tabs}}
+
+        <ul class="tabs-list">
+            {{#each tabs}}
+            <li class="tab-item {{isActiveTab slug}} {{class}}">{{name}}</li>
+            {{/each}}
+        </ul>
+        <div class="tabs-content-container">
+
+            <!-- Pass interface context to tab instances -->
+            {{> UI.contentBlock
+                context=__context__
+                item=item
+            }}
+
+        </div>
+
+    </div>
+
+</template>

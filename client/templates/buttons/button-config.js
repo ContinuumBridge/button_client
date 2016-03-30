@@ -1,27 +1,34 @@
 
 ReactiveTabs.createInterface({
-    template: 'basicTabs',
+    template: 'spurTabs',
     onChange: function (slug, template) {
         // This callback runs every time a tab changes.
         // The `template` instance is unique per {{#basicTabs}} block.
-        console.log('[tabs] Tab has changed! Current tab:', slug);
-        console.log('[tabs] Template instance calling onChange:', template);
+        //console.log('[tabs] Tab has changed! Current tab:', slug);
+        //console.log('[tabs] Template instance calling onChange:', template);
     }
 });
 
 Template.buttonConfigModal.events({
 
+    'change [type=checkbox]': function(event) {
+        var checked = $(event.target).is(':checked');
+        var data = {};
+        data[event.target.id] = checked;
+        Buttons.update(this._id, {$set: data});
+    },
     // update the text of the item on keypress but throttle the event to ensure
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
     //'keyup input[type=text]': _.throttle(function(event) {
-    'keyup textarea': _.throttle(function(event) {
+    'keyup textarea, keyup input[type=text]': _.throttle(function(event) {
         console.log('edit event', event);
         var data = {};
         data[event.target.id] = event.target.value;
         console.log('data ', data );
-        console.log('this._id', this._id);
-        Buttons.update(this._id, {$set: data});
+        console.log('this._id', this.item._id);
+        console.log('this', this);
+        Buttons.update(this.item._id, {$set: data});
         //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300)
 });
@@ -30,13 +37,8 @@ Template.buttonConfigModal.helpers({
     tabs: function () {
         // Every tab object MUST have a name and a slug!
         return [
-            { name: 'People', slug: 'people' },
-            { name: 'Places', slug: 'places' },
-            { name: 'Things', slug: 'things', onRender: function(slug, template) {
-                // This callback runs every time this specific tab's content renders.
-                // As with `onChange`, the `template` instance is unique per block helper.
-                alert("[tabs] Things has been rendered!");
-            }}
+            { name: 'Config', slug: 'config' },
+            { name: 'Messages', slug: 'messages' }
         ];
     },
     activeTab: function () {

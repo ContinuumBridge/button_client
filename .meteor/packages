@@ -8,7 +8,6 @@ meteor-platform
 insecure
 less
 accounts-password
-nemo64:bootstrap
 cwohlman:bootboxjs
 mizzao:bootboxjs
 meteorhacks:npm
@@ -23,3 +22,4 @@ lookback:dropdowns
 peppelg:bootstrap-3-modal
 alanning:roles-manually-modified
 templates:tabs
+twbs:bootstrap

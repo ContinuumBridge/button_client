@@ -160,7 +160,8 @@ Template.listShow.events({
     'mousedown .js-edit-defaults': function(event) {
 
         var defaultButton = this.getDefaultButton(this);
-        Modal.show('buttonMessageDefaultsModal', defaultButton);
+        console.log('defaultButton ', defaultButton );
+        Modal.show('buttonDefaultsModal', defaultButton);
     },
 
     /*

@@ -1,28 +1,51 @@
 var EDITING_KEY = 'EDITING_TODO_ID';
 
 Template.buttonsItem.helpers({
+    /*
     buttonAction: function() {
         switch (this.attributes.status) {
+            case 'normal':
+                return 'Press';
+                break;
             case 'pressed':
-                return 'Acknowledge';
+                return 'Override';
                 break;
             case 'acknowledged':
-                return 'Clear';
-                break;
-            case 'operational':
-                return 'Press';
+                return 'Reset';
                 break;
             default:
                 return '';
         }
     },
+    */
     ledColour: function() {
+
+        if (this.attributes.showCustom) return "green";
+
         switch (this.attributes.status) {
+            case 'normal':
+                return 'off';
+                break;
             case 'pressed':
-                return 'green';
+                return 'amber';
                 break;
             default:
                 return 'off';
+        }
+    },
+    ledLabel: function() {
+
+        if (this.attributes.showCustom) return "Custom: " + this.attributes.customMessage;
+
+        switch (this.attributes.status) {
+            case 'normal':
+                return 'Normal: ' + this.attributes.normalMessage;
+                break;
+            case 'pressed':
+                return 'Pressed: ' + this.attributes.pressedMessage;
+                break;
+            default:
+                return this.attributes.status;
         }
     },
     signal: function() {
@@ -48,9 +71,6 @@ Template.buttonsItem.events({
         var data = {};
         data[event.target.id] = checked;
         Buttons.update(this._id, {$set: data});
-        //console.log('checkbox checked', checked);
-        //Buttons.update(this._id, {$set: {enabled: checked}});
-        //Lists.update(this.listId, {$inc: {incompleteCount: checked ? -1 : 1}});
     },
 
     'focus input[type=text]': function(event) {
@@ -81,12 +101,34 @@ Template.buttonsItem.events({
       //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
+    //'mousedown .js-button-action, click .js-button-action': function(event) {
+    /*
+    'mousedown .js-button-action': function(event) {
+
+        console.log('js-button-action this', this);
+        var newStatus;
+        switch(this.attributes.status) {
+            case 'normal':
+                newStatus = 'pressed';
+                break;
+            case 'pressed':
+                newStatus = 'acknowledged';
+                break;
+            case 'acknowledged':
+                newStatus = 'normal';
+                break;
+            default:
+                newStatus = 'normal';
+                break;
+        }
+        Buttons.update(this._id, {$set: {status: newStatus}});
+        //Modal.show('buttonConfigModal', this);
+    },
+    */
+
     'mousedown .js-button-config, click .js-button-config': function(event) {
 
-        //console.log('edit-messages', this);
         Modal.show('buttonConfigModal', this);
-        //var user = Users.build(Meteor.user());
-        //user.setOrganisation(this);
     },
 
     // handle mousedown otherwise the blur handler above will swallow the click
@@ -97,4 +139,12 @@ Template.buttonsItem.events({
         //if (! this.checked)
           //Lists.update(this.listId, {$inc: {incompleteCount: -1}});
     }
+});
+
+Template.buttonsItem.onRendered(function() {
+    // Activate the tooltip(s)
+    var el = this.find('[data-toggle="tooltip"]');
+    var $el = $(el);
+    console.log('buttonsItem onRendered el', $el);
+    $el.tooltip();
 });

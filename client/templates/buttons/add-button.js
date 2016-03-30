@@ -17,7 +17,7 @@ Template.addButtonModal.events({
             sms: target.sms.value,
             normalMessage: target.normalMessage.value,
             pressedMessage: target.pressedMessage.value,
-            overrideMessage: target.overrideMessage.value,
+            customMessage: target.customMessage.value,
             createdAt: new Date()
         });
 
