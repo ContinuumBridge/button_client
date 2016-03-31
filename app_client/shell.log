@@ -1,0 +1,453 @@
+Traceback (most recent call last):
+  File "./app_client.py", line 457, in <module>
+    cbid, sessionID, ws_url = authorise()
+  File "./app_client.py", line 132, in authorise
+    cbid = json.loads(response.text)['cbid']
+  File "/usr/lib/python2.7/json/__init__.py", line 326, in loads
+    return _default_decoder.decode(s)
+  File "/usr/lib/python2.7/json/decoder.py", line 366, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/lib/python2.7/json/decoder.py", line 384, in raw_decode
+    raise ValueError("No JSON object could be decoded")
+ValueError: No JSON object could be decoded
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 78, in emit
+    self.doRollover()
+  File "/usr/lib/python2.7/logging/handlers.py", line 144, in doRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 238
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 225
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 228
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 238
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 225
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 228
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 238
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 225
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 228
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 238
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 140
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 142
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 166
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 225
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 228
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/logging/handlers.py", line 77, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib/python2.7/logging/handlers.py", line 154, in shouldRollover
+    self.stream = self._open()
+  File "/usr/lib/python2.7/logging/__init__.py", line 916, in _open
+    stream = open(self.baseFilename, self.mode)
+IOError: [Errno 28] No space left on device: '/home/ubuntu/button_client_files/app_client.log'
+Logged from file app_client.py, line 238

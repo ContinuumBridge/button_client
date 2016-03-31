@@ -1,8 +1,55 @@
 var EDITING_KEY = 'EDITING_TODO_ID';
 
 Template.buttonsItem.helpers({
+    /*
+    buttonAction: function() {
+        switch (this.attributes.status) {
+            case 'normal':
+                return 'Press';
+                break;
+            case 'pressed':
+                return 'Override';
+                break;
+            case 'acknowledged':
+                return 'Reset';
+                break;
+            default:
+                return '';
+        }
+    },
+    */
+    ledColour: function() {
+
+        if (this.attributes.showCustom) return "green";
+
+        switch (this.attributes.status) {
+            case 'normal':
+                return 'off';
+                break;
+            case 'pressed':
+                return 'amber';
+                break;
+            default:
+                return 'off';
+        }
+    },
+    ledLabel: function() {
+
+        if (this.attributes.showCustom) return "Custom: " + this.attributes.customMessage;
+
+        switch (this.attributes.status) {
+            case 'normal':
+                return 'Normal: ' + this.attributes.normalMessage;
+                break;
+            case 'pressed':
+                return 'Pressed: ' + this.attributes.pressedMessage;
+                break;
+            default:
+                return this.attributes.status;
+        }
+    },
     signal: function() {
-        var signal = this.signal;
+        var signal = this.attributes.signal;
         return signal ? signal : "-1";
     },
     checkedClass: function() {
@@ -11,8 +58,9 @@ Template.buttonsItem.helpers({
     editingClass: function() {
         return Session.equals(EDITING_KEY, this._id) && 'editing';
     },
-    stateColour: function() {
-        return this.state == 'Pressed' ? 'green' : '';
+    statusColour: function() {
+        var status = this.attributes.status;
+        return status == 'pressed' ? 'green' : '';
     }
 });
 
@@ -23,9 +71,6 @@ Template.buttonsItem.events({
         var data = {};
         data[event.target.id] = checked;
         Buttons.update(this._id, {$set: data});
-        //console.log('checkbox checked', checked);
-        //Buttons.update(this._id, {$set: {enabled: checked}});
-        //Lists.update(this.listId, {$inc: {incompleteCount: checked ? -1 : 1}});
     },
 
     'focus input[type=text]': function(event) {
@@ -49,27 +94,57 @@ Template.buttonsItem.events({
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
     'keyup input[type=text]': _.throttle(function(event) {
-      console.log('edit event', event);
+      //console.log('edit event', event);
       var data = {};
       data[event.target.id] = event.target.value;
       Buttons.update(this._id, {$set: data});
       //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
-    'mousedown .js-edit-messages, click .js-edit-messages': function(event) {
+    //'mousedown .js-button-action, click .js-button-action': function(event) {
+    /*
+    'mousedown .js-button-action': function(event) {
 
-        //console.log('edit-messages', this);
-        Modal.show('buttonMessagesModal', this);
-        //var user = Users.build(Meteor.user());
-        //user.setOrganisation(this);
+        console.log('js-button-action this', this);
+        var newStatus;
+        switch(this.attributes.status) {
+            case 'normal':
+                newStatus = 'pressed';
+                break;
+            case 'pressed':
+                newStatus = 'acknowledged';
+                break;
+            case 'acknowledged':
+                newStatus = 'normal';
+                break;
+            default:
+                newStatus = 'normal';
+                break;
+        }
+        Buttons.update(this._id, {$set: {status: newStatus}});
+        //Modal.show('buttonConfigModal', this);
+    },
+    */
+
+    'mousedown .js-button-config, click .js-button-config': function(event) {
+
+        Modal.show('buttonConfigModal', this);
     },
 
     // handle mousedown otherwise the blur handler above will swallow the click
     // on iOS, we still require the click event so handle both
     'mousedown .js-delete-item, click .js-delete-item': function() {
-        console.log('this._id', this._id);
+        //console.log('this._id', this._id);
         Buttons.remove(this._id);
         //if (! this.checked)
           //Lists.update(this.listId, {$inc: {incompleteCount: -1}});
     }
+});
+
+Template.buttonsItem.onRendered(function() {
+    // Activate the tooltip(s)
+    var el = this.find('[data-toggle="tooltip"]');
+    var $el = $(el);
+    console.log('buttonsItem onRendered el', $el);
+    $el.tooltip();
 });

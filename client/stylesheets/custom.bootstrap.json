@@ -21,7 +21,7 @@
     "breadcrumbs"          : false,
     "pagination"           : false,
     "pager"                : false,
-    "labels"               : false,
+    "labels"               : true,
 
     "badges"               : false,
     "jumbotron"            : false,
@@ -36,7 +36,7 @@
     "close"                : false,
 
     "modals"               : true,
-    "tooltip"              : false,
+    "tooltip"              : true,
     "popovers"             : true,
     "carousel"             : false,
 

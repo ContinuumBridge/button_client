@@ -9,28 +9,43 @@
 
                 <div class="modal-body">
                     <div class="well">
-                        <form class="input-symbol modal-form">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="text" value="{{attributes.email}}" id="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="sms">SMS</label>
-                                <input type="text" value="{{attributes.sms}}" id="sms">
-                            </div>
-                            <div class="form-group">
-                                <label for="normalMessage">Normal Message</label>
-                                <textarea id="normalMessage" value="{{attributes.normalMessage}}" class="form-control test" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="pressedMessage">Pressed Message</label>
-                                <textarea id="pressedMessage" value="{{attributes.pressedMessage}}" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="overrideMessage">Override Message</label>
-                                <textarea id="overrideMessage" value="{{attributes.overrideMessage}}" class="form-control" rows="3"></textarea>
-                            </div>
-                        </form>
+                        {{#spurTabs name="" item=this.attributes tabs=tabs}}
+
+                            {{#tabContent slug="config"}}
+                                <form class="input-symbol modal-form">
+                                    <div class="form-group">
+                                        <label for="enabled">Enabled</label>
+                                        <input type="checkbox" checked="{{item.enabled}}" class="table-input" id="enabled">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="text" value="{{item.email}}" id="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sms">SMS</label>
+                                        <input type="text" value="{{item.sms}}" id="sms">
+                                    </div>
+                                </form>
+                            {{/tabContent}}
+
+                            {{#tabContent slug="messages"}}
+                                <form class="input-symbol modal-form">
+                                    <div class="form-group">
+                                        <label for="normalMessage">Normal Message</label>
+                                        <textarea id="normalMessage" value="{{item.normalMessage}}" class="form-control test" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pressedMessage">Pressed Message</label>
+                                        <textarea id="pressedMessage" value="{{item.pressedMessage}}" class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="customMessage">Custom Message</label>
+                                        <textarea id="customMessage" value="{{item.customMessage}}" class="form-control" rows="3"></textarea>
+                                    </div>
+                                </form>
+                            {{/tabContent}}
+
+                        {{/spurTabs}}
                     </div>
                 </div>
 

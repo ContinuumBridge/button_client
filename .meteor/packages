@@ -7,7 +7,6 @@
 insecure
 less
 accounts-password
-nemo64:bootstrap
 cwohlman:bootboxjs
 mizzao:bootboxjs
 meteorhacks:npm
@@ -35,3 +34,5 @@ spacebars
 check
 standard-minifier-css
 standard-minifier-js
+templates:tabs
+twbs:bootstrap

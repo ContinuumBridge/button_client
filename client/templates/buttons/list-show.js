@@ -157,14 +157,20 @@ Template.listShow.events({
     },
     */
 
-    'mousedown .js-edit-defaults, click .js-edit-messages': function(event) {
+    'mousedown .js-edit-defaults': function(event) {
 
-        console.log('js-edit-defaults this', this);
         var defaultButton = this.getDefaultButton(this);
-
         console.log('defaultButton ', defaultButton );
         Modal.show('buttonDefaultsModal', defaultButton);
     },
+
+    /*
+    'mousedown .js-edit-config': function(event) {
+
+        var defaultButton = this.getDefaultButton(this);
+        Modal.show('buttonConfigDefaultsModal', defaultButton);
+    },
+    */
 
     'click .js-delete-list': function(event, template) {
         deleteList(this, template);
