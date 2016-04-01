@@ -15,7 +15,7 @@ Template.buttonConfigModal.events({
         var checked = $(event.target).is(':checked');
         var data = {};
         data[event.target.id] = checked;
-        Buttons.update(this._id, {$set: data});
+        Buttons.update(this.item._id, {$set: data});
     },
     // update the text of the item on keypress but throttle the event to ensure
     // we don't flood the server with updates (handles the event at most once
