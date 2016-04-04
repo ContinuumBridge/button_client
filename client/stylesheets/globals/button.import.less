@@ -26,7 +26,7 @@
 
   &[class*="secondary"] {
     .transition( all 300ms ease-in );
-    box-shadow: lighten(#517096, 5%) 0 0 0 1px inset;
+    box-shadow: lighten(#CDCDCD, 5%) 0 0 0 1px inset;
     color: @color-empty;
 
     &:hover{ color: @color-rare; }
@@ -34,6 +34,14 @@
     &.active {
       box-shadow: lighten(#517096, 25%) 0 0 0 1px inset;
     }
+  }
+  &[class*="btn-row"] {
+    padding: 0.9em 1.75em;
+  }
+
+  &[class*="btn-content"] {
+    border-width: 0.5px;
+    border-style: solid;
   }
 
   &[disabled] { opacity: .5; }

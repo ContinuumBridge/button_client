@@ -1,7 +1,7 @@
 <template name="appBody">
   <div id="container" class="{{menuOpen}} {{cordova}}">
 
-    <img id="logo" src="/img/logo-cb-white.png"/>
+    <img id="logo" src="/img/spur-logo.png"/>
     <section id="menu">
       {{#if currentUser}}
         <div class="btns-group-vertical">
@@ -15,7 +15,7 @@
             <div class="btns-group-vertical current-organisation">
               <a class="btn-secondary">{{currentOrganisationName}}</a>
             </div>
-            <a class="js-new-list link-list-new"><span class="icon-plus"></span>New List</a>
+            <a class="js-new-list link-list-new list-button"><span class="icon-plus"></span>New List</a>
             {{#each lists}}
               <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
                 {{#if userId}}
@@ -56,4 +56,5 @@
       {{/each}}
     </div>
   </div>
+  <img id="cb-powers" src="/img/cbr-powers-spur.png"/>
 </template>
