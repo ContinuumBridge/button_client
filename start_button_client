@@ -1,0 +1,2 @@
+export HOME="/home/ubuntu" 
+MONGO_URL="mongodb://buttons:rnNq1F9g@ds047524.mongolab.com:47524/buttons" meteor --port 80
