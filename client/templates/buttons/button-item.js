@@ -33,6 +33,7 @@ Template.buttonsItem.helpers({
                 return 'off';
         }
     },
+
     ledLabel: function() {
 
         if (this.attributes.showCustom) return "Custom: " + this.attributes.customMessage;

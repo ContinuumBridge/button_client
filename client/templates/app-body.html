@@ -9,7 +9,7 @@
                 {{#linkTo route='usersShow' }}<div class="btn-secondary">Users</div>{{/linkTo}}
                 {{#linkTo route='organisationsShow' }}<div class="btn-secondary">Organisations</div>{{/linkTo}}
             {{/if}}
-            <a class="js-logout btn-secondary">Logout</a>
+            <a class="js-logout btn-secondary">Signout</a>
         </div>
         <div class="list-buttons">
             <div class="btns-group-vertical current-organisation">
@@ -30,8 +30,8 @@
         </div>
       {{else}}
           <div class="btns-group">
-              <a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
-              <!--<a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>-->
+              <!--<a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
+              <a href="{{pathFor 'join'}}" class="btn-secondary">Join</a>-->
           </div>
       {{/if}}
     </section>
