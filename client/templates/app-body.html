@@ -4,30 +4,33 @@
     <img id="logo" src="/img/spur-logo.png"/>
     <section id="menu">
       {{#if currentUser}}
-        <div class="btns-group-vertical">
+        <div class="btns-group-vertical nav-btns-group">
             {{#if isInRole 'admin'}}
                 {{#linkTo route='usersShow' }}<div class="btn-secondary">Users</div>{{/linkTo}}
                 {{#linkTo route='organisationsShow' }}<div class="btn-secondary">Organisations</div>{{/linkTo}}
             {{/if}}
             <a class="js-logout btn-secondary">Signout</a>
         </div>
-        <div class="list-buttons">
-            <div class="btns-group-vertical current-organisation">
-              <a class="btn-secondary">{{currentOrganisationName}}</a>
-            </div>
-            <a class="js-new-list link-list-new list-button"><span class="icon-plus"></span>New List</a>
-            {{#each lists}}
-              <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
-                {{#if userId}}
-                  <!--<span class="icon-lock"></span>-->
-                {{/if}}
-                {{#if incompleteCount}}
-                  <!--<span class="count-list">{{incompleteCount}}</span>-->
-                {{/if}}
-                {{attributes.name}}
-              </a>
-            {{/each}}
+        <div class="btns-group-vertical current-organisation">
+            <a class="btn-secondary">{{currentOrganisationName}}</a>
         </div>
+        <div class="list-buttons">
+            <div class="list-buttons">
+                <a class="js-new-list link-list-new list-button"><span class="icon-plus"></span>New List</a>
+                {{#each lists}}
+                  <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
+                    {{#if userId}}
+                      <!--<span class="icon-lock"></span>-->
+                    {{/if}}
+                    {{#if incompleteCount}}
+                      <!--<span class="count-list">{{incompleteCount}}</span>-->
+                    {{/if}}
+                    {{attributes.name}}
+                  </a>
+                {{/each}}
+            </div>
+        </div>
+        <img id="cb-powers" src="/img/cbr-powers-spur.png"/>
       {{else}}
           <div class="btns-group">
               <!--<a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
@@ -56,5 +59,4 @@
       {{/each}}
     </div>
   </div>
-  <img id="cb-powers" src="/img/cbr-powers-spur.png"/>
 </template>
