@@ -1,0 +1,47 @@
+<template name="organisationsShow">
+  <div class="page lists-show">
+      <nav class="js-title-nav">
+
+          <div class="nav-group">
+              <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+          </div>
+
+          <h1 class="js-edit-list title-page"><span class="title-wrapper">Organisations</span></h1>
+      </nav>
+    <table class="item-list table table-striped">
+      <thead>
+          <tr>
+          <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+            <td class="col-md-4">Name</td>
+            <td class="col-md-4"></td>
+            <td class="col-md-1"></td>
+          <!--</div>-->
+          </tr>
+      </thead>
+      <tbody>
+      <!--<div class="content-scrollable list-items">-->
+      {{#if organisationsReady}}
+          {{#each organisations this}}
+            {{> organisationItem}}
+          {{else}}
+            <div class="wrapper-message">
+              <div class="title-message">No organisations here</div>
+              <div class="subtitle-message">Add new organisations using the button above</div>
+            </div>
+          {{/each}}
+      {{else}}
+          <div class="wrapper-message">
+            <div class="title-message">Loading organisations...</div>
+          </div>
+      {{/if}}
+      </tbody>
+    </table>
+
+    <form class="js-button-new button-new input-symbol">
+        <!--<span class="icon-add js-button-add"></span>-->
+        <button class="js-item-add btn-sm btn-default" type="submit">
+            Add Organisation
+        </button>
+    </form>
+  </div>
+</template>

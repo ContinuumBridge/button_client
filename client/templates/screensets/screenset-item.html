@@ -1,0 +1,15 @@
+<template name="organisationItem">
+  <tr>
+  <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+    <td class="col-md-4"><input type="text" value="{{attributes.name}}" id="name" class="table-input" placeholder="ID"></td>
+    <td class="col-md-4">
+      <button class="js-view-lists btn-sm btn-default btn-content" id={{_id}} type="submit">
+          View Lists
+      </button>
+    </td>
+    <td class="col-md-1 delete-item-wrapper">
+      <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
+    </td>
+  <!--</div>-->
+  </tr>
+</template>
