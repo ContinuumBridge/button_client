@@ -76,6 +76,45 @@ Meteor.publish('buttons', function(listId) {
     }
 });
 
+Meteor.publish('screensets', function() {
+
+    if (this.userId) {
+
+        return Screensets.find({});
+        /*
+        if (Roles.userIsInRole(this.userId, ['admin'])) {
+            return Screensets.find({});
+        } else {
+            var user = Users.build(Users.findOne(this.userId));
+            return user.organisations.find();
+        }
+        */
+    } else {
+
+        this.ready();
+    }
+});
+
+
+Meteor.publish('screens', function() {
+
+    if (this.userId) {
+
+        return Screens.find({});
+        /*
+        if (Roles.userIsInRole(this.userId, ['admin'])) {
+            return Screensets.find({});
+        } else {
+            var user = Users.build(Users.findOne(this.userId));
+            return user.organisations.find();
+        }
+        */
+    } else {
+
+        this.ready();
+    }
+});
+
 /*
 Meteor.publish('publicLists', function() {
   return Lists.find({userId: {$exists: false}});

@@ -53,9 +53,9 @@
         {{#with _id}} {{! Establish new data context with only the '_id'
                           field. This way, when the 'incompleteCount' field
                           changes, we don't re-render the list contents }}
-          {{#each buttons this}}
-            {{> buttonsItem}}
-          {{else}}
+            {{#each buttons this}}
+              {{> buttonsItem}}
+            {{else}}
             <div class="wrapper-message">
               <div class="title-message">No buttons here</div>
               <div class="subtitle-message">Add new buttons using the button above</div>

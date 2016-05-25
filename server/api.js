@@ -1,4 +1,5 @@
 
+/*
 if (Meteor.isServer) {
     Meteor.startup(function () {
 
@@ -62,3 +63,4 @@ if (Meteor.isServer) {
         collectionApi.start();
     });
 }
+*/

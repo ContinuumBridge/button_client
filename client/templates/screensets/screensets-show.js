@@ -36,11 +36,9 @@ Template.screensetsShow.helpers({
   editing: function() {
     return Session.get(EDITING_KEY);
   },
-
   screensetsReady: function() {
     return Router.current().screensetsHandle.ready();
   },
-
   screensets: function(screensetId) {
     return Screensets.find({});
     //return Buttons.find({screensetId: screensetId}, {sort: {name : 1}});
@@ -149,19 +147,17 @@ Template.screensetsShow.events({
     var modalBody = Template.addScreensetModal.renderFunction().value;
     console.log('modal body', modalBody);
     bootbox.formModal({
-      title: "Add a screenset",
+      title: "Add a Screenset",
       value: modalBody,
       fields: {
           name: 'text'
       },
-      callback: function(result) {
+      callback: function(resuScreensets) {
         if (result === null) {
           //Example.show("Prompt dismissed");
         } else {
           console.log('submitted', result);
-          console.log('self._id', self._id);
           Screensets.insert({
-            id: result.id,
             name: result.name,
             createdAt: new Date()
           });
