@@ -143,7 +143,20 @@ Template.screensetsShow.events({
     var self = this;
 
     event.preventDefault();
+    
+    console.log('click .js-item-add');
 
+    console.log('this', this);
+    
+    /*
+    Screens.insert({
+        name: 'Test',
+        x: 50,
+        y: 100,
+        createdAt: new Date()
+    });
+    */
+    /*
     var modalBody = Template.addScreensetModal.renderFunction().value;
     console.log('modal body', modalBody);
     bootbox.formModal({
@@ -164,5 +177,6 @@ Template.screensetsShow.events({
         }
       }
     });
+    */
   }
 });

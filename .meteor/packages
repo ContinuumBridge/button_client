@@ -37,3 +37,6 @@ templates:tabs
 twbs:bootstrap
 tinytest
 yasseraudio:jsplumb
+fortawesome:fontawesome
+kadira:flow-router
+kadira:react-layout

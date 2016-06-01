@@ -43,6 +43,7 @@ Template.listShow.helpers({
 
   buttons: function(listId) {
     //return Lists.
+    console.log('buttons listId', listId);
     console.log('Buttons.find({listId: listId}, {sort: {name : 1}})', Buttons.find({listId: listId}, {sort: {name : 1}}));
     return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
   }

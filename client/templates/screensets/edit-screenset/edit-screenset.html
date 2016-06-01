@@ -1,28 +1,27 @@
 <template name="editScreenset">
 
-    <button class="js-view-lists btn-sm btn-default btn-content" id={{_id}} type="submit">
+    <button class="js-item-add btn-sm btn-default btn-content" type="submit">
         Add Screen
     </button>
 
     <div id="plumb" class="plumb">
         <div class="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan" id="canvas">
             {{#if screensReady}}
-                {{#each screens this}}
-                  {{> screenNode}}
-                {{else}}
-                  <div class="wrapper-message">
-                    <div class="title-message">No screens here</div>
-                    <div class="subtitle-message">Add new screens using the button above</div>
-                  </div>
-                {{/each}}
+                {{#with _id}}
+                    {{#each screens this}}
+                      {{> screenNode}}
+                    {{else}}
+                      <div class="wrapper-message">
+                        <div class="title-message">No screens here</div>
+                        <div class="subtitle-message">Add new screens using the button above</div>
+                      </div>
+                    {{/each}}
+                {{/with}}
             {{else}}
                 <div class="wrapper-message">
                   <div class="title-message">Loading screenset...</div>
                 </div>
             {{/if}}
-            <div class="window jtk-node" id="flowchartWindow2"><strong>2</strong><br/><br/></div>
-            <div class="window jtk-node" id="flowchartWindow3"><strong>3</strong><br/><br/></div>
-            <div class="window jtk-node" id="flowchartWindow4"><strong>4</strong><br/><br/></div>
         </div>
     </div>
 
