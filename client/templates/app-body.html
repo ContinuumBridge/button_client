@@ -3,35 +3,40 @@
 
     <img id="logo" src="/img/spur-logo.png"/>
     <section id="menu">
+
       {{#if currentUser}}
-        <div class="btns-group-vertical nav-btns-group">
-            {{#if isInRole 'admin'}}
-                {{#linkTo route='usersShow' }}<div class="btn-secondary">Users</div>{{/linkTo}}
-                {{#linkTo route='organisationsShow' }}<div class="btn-secondary">Organisations</div>{{/linkTo}}
-            {{/if}}
-            {{#linkTo route='screensetsShow' }}<div class="btn-secondary">Screensets</div>{{/linkTo}}
-            <a class="js-logout btn-secondary">Signout</a>
-        </div>
-        <div class="btns-group-vertical current-organisation">
-            <a class="btn-secondary">{{currentOrganisationName}}</a>
-        </div>
-        <div class="list-buttons">
-            <div class="list-buttons">
-                <a class="js-new-list link-list-new list-button"><span class="icon-plus"></span>New List</a>
-                {{#each lists}}
-                  <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
-                    {{#if userId}}
-                      <!--<span class="icon-lock"></span>-->
-                    {{/if}}
-                    {{#if incompleteCount}}
-                      <!--<span class="count-list">{{incompleteCount}}</span>-->
-                    {{/if}}
-                    {{attributes.name}}
-                  </a>
-                {{/each}}
-            </div>
-        </div>
-        <img id="cb-powers" src="/img/cbr-powers-spur-inv.png"/>
+        {{#if Template.subscriptionsReady}}
+          <div class="btns-group-vertical nav-btns-group">
+              {{#if isInRole 'admin'}}
+                  {{#linkTo 'usersShow' }}<div class="btn-secondary">Users</div>{{/linkTo}}
+                  {{#linkTo 'organisationsShow' }}<div class="btn-secondary">Organisations</div>{{/linkTo}}
+              {{/if}}
+              {{#linkTo 'screensetsShow' }}<div class="btn-secondary">Screensets</div>{{/linkTo}}
+              <a class="js-logout btn-secondary">Signout</a>
+          </div>
+          <div class="btns-group-vertical current-organisation">
+              <a class="btn-secondary">{{currentOrganisationName}}</a>
+          </div>
+          <div class="list-buttons">
+              <div class="list-buttons">
+                  <a class="js-new-list link-list-new list-button"><span class="icon-plus"></span>New List</a>
+                  {{#if Template.subscriptionsReady}}
+                    {{#each lists}}
+                      <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
+                        {{#if userId}}
+                          <!--<span class="icon-lock"></span>-->
+                        {{/if}}
+                        {{#if incompleteCount}}
+                          <!--<span class="count-list">{{incompleteCount}}</span>-->
+                        {{/if}}
+                        {{attributes.name}}
+                      </a>
+                    {{/each}}
+                  {{/if}}
+              </div>
+          </div>
+          <img id="cb-powers" src="/img/cbr-powers-spur-inv.png"/>
+        {{/if}}
       {{else}}
           <div class="btns-group">
               <!--<a href="{{pathFor 'signin'}}" class="btn-secondary">Sign In</a>
@@ -55,9 +60,11 @@
     <div class="content-overlay"></div>
 
     <div id="content-container">
-      {{#each thisArray}}
-        {{> yield}}
-      {{/each}}
+        {{#if hasReactComponent}}
+            <div>{{> React component=reactComponent app_data=app_data}}</div>
+        {{else}}
+            {{> Template.dynamic template=page}}
+        {{/if}}
     </div>
   </div>
 </template>

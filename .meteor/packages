@@ -11,10 +11,7 @@ cwohlman:bootboxjs
 mizzao:bootboxjs
 
 
-iron:router
 nimble:restivus
-xcv58:collection-api
-emmerge:graviton
 lookback:dropdowns
 peppelg:bootstrap-3-modal
 alanning:roles
@@ -40,3 +37,9 @@ yasseraudio:jsplumb
 fortawesome:fontawesome
 kadira:flow-router
 kadira:react-layout
+ecmascript
+kadira:blaze-layout
+react-template-helper
+arillo:flow-router-helpers
+emmerge:graviton
+xcv58:collection-api

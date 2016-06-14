@@ -115,6 +115,25 @@ Meteor.publish('screens', function() {
     }
 });
 
+Meteor.publish('screenConnections', function() {
+
+    if (this.userId) {
+
+        return ScreenConnections.find({});
+        /*
+        if (Roles.userIsInRole(this.userId, ['admin'])) {
+            return Screensets.find({});
+        } else {
+            var user = Users.build(Users.findOne(this.userId));
+            return user.organisations.find();
+        }
+        */
+    } else {
+
+        this.ready();
+    }
+});
+
 /*
 Meteor.publish('publicLists', function() {
   return Lists.find({userId: {$exists: false}});

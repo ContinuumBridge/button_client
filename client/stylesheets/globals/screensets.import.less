@@ -15,14 +15,16 @@
   -moz-border-radius: 0.5em;
   border-radius: 0.5em;
   opacity: 0.8;
+  /*
   width: 80px;
   height: 80px;
   line-height: 80px;
+  */
   cursor: pointer;
   text-align: center;
   z-index: 20;
   position: absolute;
-  background-color: #eeeeef;
+  background: white none;
   color: black;
   font-family: helvetica, sans-serif;
   padding: 0.5em;
@@ -48,14 +50,33 @@
 .flowchart-demo .hover {
   border: 1px dotted red;
 }
-.screen-node-titlebar {
+
+.screen {
+    pointer-events: none;
+}
+
+.screen-inner {
+    float: left;
+    width: 100px;
+    height: 100px;
+}
+
+.screen-inner > * {
+    pointer-events: all;
+}
+
+.screen-inner .display {
+    width: 100px;
+}
+
+.screen-titlebar {
     float: right;
     pointer-events: all;
 }
 
-.screen-node-icon {
+.screen-title-icon {
     background: #F1F1F1;
-    color: #5C95C5;
+    color: @color-primary;
     width: 20px;
     height: 20px;
     border-radius: 11px;
@@ -114,7 +135,7 @@
 }
 
 .window.jsplumb-connected {
-  border: 2px solid green;
+  border: 2px solid #313236;
 }
 
 .jsplumb-drag {

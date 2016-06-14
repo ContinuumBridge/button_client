@@ -2,6 +2,7 @@ accounts-base@1.2.7
 accounts-password@1.1.8
 alanning:roles@1.2.15
 allow-deny@1.0.4
+arillo:flow-router-helpers@0.5.1
 autoupdate@1.2.9
 babel-compiler@6.6.4
 babel-runtime@0.1.8
@@ -39,15 +40,8 @@ htmljs@1.0.9
 http@1.1.5
 id-map@1.0.7
 insecure@1.0.7
-iron:controller@1.0.12
-iron:core@1.0.11
-iron:dynamic-template@1.0.12
-iron:layout@1.0.12
-iron:location@1.0.11
-iron:middleware-stack@1.0.11
-iron:router@1.0.12
-iron:url@1.0.11
 jquery@1.11.8
+kadira:blaze-layout@2.3.0
 kadira:flow-router@2.12.1
 kadira:react-layout@1.5.3
 launch-screen@1.0.11
@@ -83,6 +77,7 @@ rate-limit@1.0.4
 react@0.14.6
 react-meteor-data@0.2.9
 react-runtime@0.14.5
+react-template-helper@0.2.9
 reactive-dict@1.1.7
 reactive-var@1.0.9
 reload@1.1.8
@@ -111,3 +106,4 @@ webapp@1.2.8
 webapp-hashing@1.0.9
 xcv58:collection-api@0.3.0
 yasseraudio:jsplumb@0.0.1
+zimme:active-route@2.3.2

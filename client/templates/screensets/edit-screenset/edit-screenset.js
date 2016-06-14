@@ -1,6 +1,38 @@
 //var EDITING_KEY = 'EDITING_ORGANISATION_ID';
 
 /*
+import Q from 'q';
+import React from 'react';
+
+EditScreensetView = React.createClass({
+
+    mixins: [ ReactMeteorData ],
+
+    getMeteorData: function() {
+        console.log('screens getMeteorData');
+        var data = {};
+        //var postId = this.props.postId;
+        var handle = Meteor.subscribe('screens');
+        if (handle.ready()) {
+            data.screens = Screens.find({});
+        }
+        return data;
+    },
+    
+    render: function() {
+        
+        return (
+            <button class="js-item-add btn-sm btn-default btn-content" type="submit">
+                Add Screen
+            </button>
+            <ScreensView />
+        );
+    }
+}
+*/
+
+
+/*
 Template.editScreenset.helpers({
     screensReady: function() {
         return Router.current().screensetHandle.ready();

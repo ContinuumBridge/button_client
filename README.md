@@ -89,3 +89,24 @@ All requests to the API should include the header "X-Auth-Token: vArH9SWKQyCQLHi
 
 Bridge-App Client
 -----------------
+
+
+
+-----------------
+
+Screen schema
+-----------------
+{
+    _id: <id string>,
+    display: <svg string>,
+    x: <int>,
+    y: <int>,
+    left: <screen id string>,
+    right: <screen id string>,
+    doubleLeft: <screen id string>,
+    doubleRight: <screen id string>,
+    screensetId: <screenset id string>
+}
+
+
+

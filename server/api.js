@@ -1,4 +1,6 @@
 
+//import CollectionAPI from 'collection-api';
+
 /*
 if (Meteor.isServer) {
     Meteor.startup(function () {
