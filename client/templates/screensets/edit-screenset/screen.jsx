@@ -153,7 +153,7 @@ ScreenView = React.createClass({
             plumb.addEndpoint(screenNode, sourceEndpoint, endpoint);
         });
 
-        plumb.addEndpoint(screenNode,
+        var targetEP = plumb.addEndpoint(screenNode,
             targetEndpoint, {
                 isTarget: true,
                 maxConnections: 5,
@@ -163,6 +163,7 @@ ScreenView = React.createClass({
                 dropOptions: { hoverClass: "hover" }
             }
         );
+        console.log('targetEP ', targetEP );
 
         this.state.screenElementDeferred.resolve({
             plumb: plumb,

@@ -68,6 +68,7 @@ ScreensView = React.createClass({
                     },
                     removed: function (id) {
                         console.log('connection removed', id);
+                        self.removePlumbConnection(id, fields);
                     }
                 });
                 data.connections = connections.fetch();
@@ -158,6 +159,10 @@ ScreensView = React.createClass({
 
         var plumb = this.plumb = new Plumb("plumb", plumbInitDeferred);
 
+        var $plumb = $(self.refs.plumb);
+        console.log('$plumb', $plumb);
+        plumb.setContainer($plumb);
+
         plumbInitDeferred.promise.then(function(plumb) {
 
             plumb.bind('beforeDrop', function(connInfo, originalEvent) {
@@ -171,7 +176,7 @@ ScreensView = React.createClass({
                 return self.onDisconnection(connInfo);
                 //updateConnections(info.connection, true);
             });
-        });
+        }).done();
     },
 
     onConnection: function(connInfo, remove) {
@@ -277,6 +282,14 @@ ScreensView = React.createClass({
         });
     },
 
+    removePlumbConnection: function(id, fields) {
+
+        var plumbInitDeferred = this.state.plumbInitDeferred;
+
+        plumbInitDeferred.promise.then(function(plumb) {
+            
+        });
+    },
     /*
     renderConnections: function() {
 
@@ -421,20 +434,20 @@ ScreensView = React.createClass({
         )
         */
         return (
-            <div id="plumb" className="plumb">
-                <div className="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan" id="canvas">
+            <div id="plumb" className="plumb" ref="plumb">
                     {this.data.screens ? this.renderScreens() : 
                         <div className="wrapper-message">
                           <div className="title-message">Loading screens...</div>
                         </div>
                     }
-                </div>
             </div>
         )
     }
 });
 
 /*
+ <div className="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan" id="canvas">
+ </div>
 var TopbarView = React.createClass({
     
     addScreen: function () {

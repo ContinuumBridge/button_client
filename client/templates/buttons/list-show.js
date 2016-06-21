@@ -3,19 +3,31 @@ Session.setDefault(EDITING_KEY, false);
 
 // Track if this is the first time the list template is rendered
 var firstRender = true;
-var listRenderHold = LaunchScreen.hold();
-listFadeInHold = null;
+//var listRenderHold = LaunchScreen.hold();
+//listFadeInHold = null;
+
+Template.listShow.onCreated(function() {
+    var self = this;
+    self.autorun(function() {
+        var listId = FlowRouter.getParam('listId');
+        console.log('listId ', listId );
+        self.subscribe('buttons', listId);
+        self.subscribe('lists', listId);
+    });
+});
 
 Template.listShow.onRendered(function() {
+    /*
   if (firstRender) {
     // Released in app-body.js
-    listFadeInHold = LaunchScreen.hold();
+    //listFadeInHold = LaunchScreen.hold();
 
     // Handle for launch screen defined in app-body.js
-    listRenderHold.release();
+    //listRenderHold.release();
 
     firstRender = false;
   }
+     */
 
   this.find('.js-title-nav')._uihooks = {
     insertElement: function(node, next) {
@@ -33,20 +45,23 @@ Template.listShow.onRendered(function() {
 });
 
 Template.listShow.helpers({
-  editing: function() {
-    return Session.get(EDITING_KEY);
-  },
-
-  buttonsReady: function() {
-    return Router.current().listHandle.ready();
-  },
-
-  buttons: function(listId) {
-    //return Lists.
-    console.log('buttons listId', listId);
-    console.log('Buttons.find({listId: listId}, {sort: {name : 1}})', Buttons.find({listId: listId}, {sort: {name : 1}}));
-    return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
-  }
+    
+    editing: function() {
+      return Session.get(EDITING_KEY);
+    },
+    
+    list: function() {
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        console.log('helpers list ', list );
+        return list;
+    },
+    
+    buttons: function() {
+        
+        var listId = FlowRouter.getParam('listId');
+        return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
+        //return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
+    }
 });
 
 var editList = function(list, template) {
@@ -160,9 +175,10 @@ Template.listShow.events({
 
     'mousedown .js-edit-defaults': function(event) {
 
-        var defaultButton = this.getDefaultButton(this);
-        console.log('defaultButton ', defaultButton );
-        Modal.show('buttonDefaultsModal', defaultButton);
+        //var defaultButton = this.getDefaultButton(this);
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        //console.log('defaultButton ', defaultButton );
+        Modal.show('buttonDefaultsModal', list.getDefaultButton());
     },
 
     /*
@@ -189,47 +205,11 @@ Template.listShow.events({
 
         event.preventDefault();
 
-        var defaultButton = this.getDefaultButton()
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        console.log('list ', list );
+        var defaultButton = list.getDefaultButton();
         console.log('defaultButton ', defaultButton );
-        //var defaultData = defaultButton.attributes;
-        //var button = Buttons.insert(_.omit(defaultData, '_id', 'listId'));
-        //console.log('button ', button );
-        //if (!button) button = this.buttons.insert({});
-
-        Modal.show('addButtonModal', defaultButton);
-        /*
-        var modalBody = Template.addItemModal.renderFunction().value;
-        console.log('modal body', modalBody);
-        bootbox.formModal({
-          title: "Add a button",
-          value: modalBody,
-          fields: {
-              id: 'text',
-              name: 'text',
-              email: 'email',
-              sms: 'text'
-          },
-          callback: function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              console.log('submitted', result);
-              console.log('self._id', self._id);
-              var buttonId = Buttons.insert({
-                listId: self._id,
-                enabled: true,
-                id: result.id,
-                name: result.name,
-                email: result.email,
-                sms: result.sms,
-                createdAt: new Date()
-              });
-              console.log('buttonId ', buttonId );
-              //Lists.update(this._id, {$inc: {incompleteCount: 1}});
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          }
-        });
-        */
+       
+        Modal.show('addButtonModal', list.getDefaultButton());
     }
 });

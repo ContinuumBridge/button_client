@@ -22,13 +22,14 @@
                   <a class="js-new-list link-list-new list-button"><span class="icon-plus"></span>New List</a>
                   {{#if Template.subscriptionsReady}}
                     {{#each lists}}
-                      <a href="{{pathFor 'listShow'}}" class="list-button {{activeListClass}}" title="{{name}}">
-                        {{#if userId}}
-                          <!--<span class="icon-lock"></span>-->
+                      <a href="{{pathFor 'listShow' listId=attributes._id}}" class="list-button {{activeListClass}}" title="{{name}}">
+                        <!--{{#if userId}}
+                          <span class="icon-lock"></span>
                         {{/if}}
                         {{#if incompleteCount}}
-                          <!--<span class="count-list">{{incompleteCount}}</span>-->
+                          <span class="count-list">{{incompleteCount}}</span>
                         {{/if}}
+                        -->
                         {{attributes.name}}
                       </a>
                     {{/each}}
@@ -63,7 +64,7 @@
         {{#if hasReactComponent}}
             <div>{{> React component=reactComponent app_data=app_data}}</div>
         {{else}}
-            {{> Template.dynamic template=page}}
+            {{> Template.dynamic template=content}}
         {{/if}}
     </div>
   </div>

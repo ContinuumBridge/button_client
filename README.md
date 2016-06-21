@@ -101,12 +101,20 @@ Screen schema
     display: <svg string>,
     x: <int>,
     y: <int>,
-    left: <screen id string>,
-    right: <screen id string>,
-    doubleLeft: <screen id string>,
-    doubleRight: <screen id string>,
     screensetId: <screenset id string>
 }
+
+ScreenConnection schema
+-----------------
+{
+    _id: <id string>,
+    sourceId:
+    sourceAnchor: <string Left, DoubleLeft, Right, DoubleRight>
+    targetId:
+    targetAnchor: <string Main>
+    screensetId: <screenset id string>
+}
+
 
 
 

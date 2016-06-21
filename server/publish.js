@@ -54,21 +54,32 @@ Meteor.publish('lists', function() {
 Meteor.publish('buttons', function(listId) {
 
     console.log('publish buttons', listId);
+    console.log('this.userId', this.userId);
     if (this.userId) {
 
+        /*
         var user = Users.build(Users.findOne(this.userId));
+        console.log('user ', user );
         var organisation = user.organisations.findOne();
-        var lists = Lists.find({organisationId: organisation._id}).fetch();
-        var listIds = _.pluck(lists, '_id');
-        var index = listIds.indexOf(listId);
+        console.log('organisation ', organisation );
+        */
+        var user = Users.findOne(this.userId);
+        var organisationId = user.organisationIds[0];
+        if (organisationId) {
+            
+            var organisation = Organisations.findOne(organisationId);
+            var lists = Lists.find({organisationId: organisation._id}).fetch();
+            var listIds = _.pluck(lists, '_id');
+            var index = listIds.indexOf(listId);
+            
+            if (index >= 0) {
 
-        if (index >= 0) {
+                return Buttons.find({listId: listId});
+            //} else if (Roles.userIsInRole(this.userId, ['admin'])) {
 
-            return Buttons.find({listId: listId});
-        //} else if (Roles.userIsInRole(this.userId, ['admin'])) {
-
-        } else {
-            this.ready();
+            } else {
+                this.ready();
+            }
         }
     } else {
 

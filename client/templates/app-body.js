@@ -154,7 +154,7 @@ Template.appBody.events({
   'click .js-logout': function() {
     Meteor.logout();
 
-    Router.go('signin');
+    Meteor.navigateTo('signin');
 
     // if we are on a private list, we'll need to go to a public one
     /*
