@@ -105,6 +105,51 @@ Plumb = function(elementName, initDeferred) {
          */
     });
 
+    instance.getOffset = function(el, relativeToRoot, container) {
+        // ADDED
+        //relativeToRoot = true;
+        
+        el = jsPlumb.getElement(el);
+        container = container || this.getContainer();
+        console.log('container ', container );
+        var out = {
+                left: el.offsetLeft,
+                top: el.offsetTop
+            },
+            op = (relativeToRoot  || (container != null && (el != container && el.offsetParent != container))) ?  el.offsetParent : null,
+            _maybeAdjustScroll = function(offsetParent) {
+                if (offsetParent != null && offsetParent !== document.body && (offsetParent.scrollTop > 0 || offsetParent.scrollLeft > 0)) {
+                    out.left -= offsetParent.scrollLeft;
+                    // ADDED
+                    //out.left -= 200;
+                    out.top -= offsetParent.scrollTop;
+                }
+            }.bind(this);
+
+        while (op != null) {
+            out.left += op.offsetLeft;
+            out.top += op.offsetTop;
+            _maybeAdjustScroll(op);
+            op = relativeToRoot ? op.offsetParent :
+                op.offsetParent == container ? null : op.offsetParent;
+        }
+        
+        // ADDED
+        if (el.className.substring(0,16) == 'jsplumb-endpoint') {
+            out.left -= 200;
+        }
+
+        // if container is scrolled and the element (or its offset parent) is not absolute or fixed, adjust accordingly.
+        if (container != null && !relativeToRoot && (container.scrollTop > 0 || container.scrollLeft > 0)) {
+            var pp = el.offsetParent != null ? this.getStyle(el.offsetParent, "position") : "static",
+                p = this.getStyle(el, "position");
+            if (p !== "absolute" && p !== "fixed" && pp !== "absolute" && pp != "fixed") {
+                out.left -= container.scrollLeft;
+                out.top -= container.scrollTop;
+            }
+        }
+        return out;
+    }
     //jsPlumb.fire("jsPlumbDemoLoaded", instance);
 
     return instance;

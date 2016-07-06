@@ -4,11 +4,14 @@ var EDITING_KEY = 'editingUser';
 Session.setDefault(EDITING_KEY, false);
 
 // Track if this is the first time the list template is rendered
+/*
 var firstRender = true;
 var listRenderHold = LaunchScreen.hold();
 usersFadeInHold = null;
+*/
 
 Template.usersShow.onRendered(function() {
+  /*
   if (firstRender) {
     // Released in app-body.js
     usersFadeInHold = LaunchScreen.hold();
@@ -18,6 +21,7 @@ Template.usersShow.onRendered(function() {
 
     firstRender = false;
   }
+  */
 
   this.find('.js-title-nav')._uihooks = {
     insertElement: function(node, next) {
@@ -39,9 +43,11 @@ Template.usersShow.helpers({
     return Session.get(EDITING_KEY);
   },
 
+  /*
   usersReady: function() {
     return Router.current().usersHandle.ready();
   },
+  */
 
   users: function(listId) {
     return Users.find({});

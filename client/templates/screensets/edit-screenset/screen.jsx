@@ -121,22 +121,22 @@ ScreenView = React.createClass({
         var sourceEndpoints = [
             {
                 uuid: screenUID + "SingleLeft",
-                anchor: [0, 0.3, -1, 0],
+                anchor: [0, 0.3, -1, 0, -200, 0],
                 //label: "Left"
             },
             {
                 uuid: screenUID + "DoubleLeft",
-                anchor: [0, 0.6, -1, 0],
+                anchor: [0, 0.6, -1, 0, -200, 0],
                 //label: "Double Left"
             },
             {
                 uuid: screenUID + "SingleRight",
-                anchor: [1, 0.3, 1, 0],
+                anchor: [1, 0.3, 1, 0, -200, 0],
                 //label: "Right"
             },
             {
                 uuid: screenUID + "DoubleRight",
-                anchor: [1, 0.6, 1, 0],
+                anchor: [1, 0.6, 1, 0, -200, 0],
                 //label: "Double Right"
             }
         ];
@@ -158,7 +158,7 @@ ScreenView = React.createClass({
                 isTarget: true,
                 maxConnections: 5,
                 uuid: screenUID + "Main",
-                anchor: [0.5, 0, 0, -1],
+                anchor: [0.5, 0, 0, -1, -200, 0],
                 //anchor: "Continuous",
                 dropOptions: { hoverClass: "hover" }
             }
@@ -191,8 +191,7 @@ ScreenView = React.createClass({
 
         var screenId = this.props.record._id;
 
-        ScreenConnections.find({$or: [{sourceId: screenId},{targetId: screenId}]});
-        Screens.remove(this.props.record._id);
+        Meteor.call('removeScreen', screenId);
     },
 
     handleDisplayChange: function(event) {
@@ -231,7 +230,7 @@ ScreenView = React.createClass({
                     <textarea className="display" value={screen.get('display')} 
                            onChange={this.handleDisplayChange} />
                 </div>
-                <TitlebarView parentElementPromise={screenElement} destroy={this.handleDestroy} />
+                <TitlebarView parentElementPromise={screenElement} handleDestroy={this.handleDestroy} />
             </div>
         )
     }
@@ -262,7 +261,7 @@ var TitlebarView = React.createClass({
     render: function() {
         return (
             <div className="screen-titlebar">
-                <div onClick={this.props.destroy} className="node-delete">
+                <div onClick={this.props.handleDestroy} className="node-delete">
                     <i className="fa fa-times screen-title-icon"></i>
                 </div>
                 <div ref="handle" className="node-handle">

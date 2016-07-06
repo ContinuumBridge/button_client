@@ -1,21 +1,14 @@
 var EDITING_KEY = 'editingScreenset';
 Session.setDefault(EDITING_KEY, false);
 
-// Track if this is the first time the screenset template is rendered
-var firstRender = true;
-var screensetRenderHold = LaunchScreen.hold();
-screensetFadeInHold = null;
+Template.screensetsShow.onCreated(function() {
+    var self = this;
+    self.autorun(function() {
+        self.subscribe('screensets');
+    });
+});
 
 Template.screensetsShow.onRendered(function() {
-  if (firstRender) {
-    // Released in app-body.js
-    screensetFadeInHold = LaunchScreen.hold();
-
-    // Handle for launch screen defined in app-body.js
-    screensetRenderHold.release();
-
-    firstRender = false;
-  }
 
   this.find('.js-title-nav')._uihooks = {
     insertElement: function(node, next) {
@@ -33,15 +26,15 @@ Template.screensetsShow.onRendered(function() {
 });
 
 Template.screensetsShow.helpers({
+  
   editing: function() {
-    return Session.get(EDITING_KEY);
-  },
-  screensetsReady: function() {
-    return Router.current().screensetsHandle.ready();
+    
+      return Session.get(EDITING_KEY);
   },
   screensets: function(screensetId) {
-    return Screensets.find({});
-    //return Buttons.find({screensetId: screensetId}, {sort: {name : 1}});
+    
+      return Screensets.find({});
+      //return Buttons.find({screensetId: screensetId}, {sort: {name : 1}});
   }
 });
 
@@ -59,23 +52,11 @@ var saveScreenset = function(screenset, template) {
 }
 
 var deleteScreenset = function(screenset) {
-  // ensure the last public screenset cannot be deleted.
-  /*
-  if (! screenset.userId && screensets.find({userId: {$exists: false}}).count() === 1) {
-    return alert("Sorry, you cannot delete the final public screenset!");
-  }
-  */
 
   var message = "Are you sure you want to delete the screenset " + screenset.name + "?";
   if (confirm(message)) {
     // we must remove each item individually from the client
-    /*
-    Buttons.find({organisationId: organisation._id}).forEach(function(button) {
-      Buttons.remove(button._id);
-    });
-    organisations.remove(organisation._id);
-    */
-
+    
     Router.go('home');
     return true;
   } else {
@@ -114,27 +95,25 @@ Template.screensetsShow.events({
     Session.set(EDITING_KEY, false);
   },
 
+  /*
   'change .screenset-edit': function(event, template) {
     if ($(event.target).val() === 'edit') {
-      editscreenset(this, template);
+      editScreenset(this, template);
     } else if ($(event.target).val() === 'delete') {
-      deletescreenset(this, template);
+      deleteScreenset(this, template);
     } 
 
     event.target.selectedIndex = 0;
   },
+  */
   
+  /*
   'click .js-edit-screenset': function(event, template) {
-    editscreenset(this, template);
+    editScreenset(this, template);
   },
   
   'click .js-delete-screenset': function(event, template) {
-    deletescreenset(this, template);
-  },
-
-  /*
-  'click .js-button-add': function(event, template) {
-    template.$('.js-button-new input').focus();
+    deleteScreenset(this, template);
   },
   */
 
@@ -147,7 +126,8 @@ Template.screensetsShow.events({
     console.log('click .js-item-add');
 
     console.log('this', this);
-    
+
+    Modal.show('addScreensetModal');
     /*
     Screens.insert({
         name: 'Test',

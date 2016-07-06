@@ -1,6 +1,6 @@
-var EDITING_KEY = 'EDITING_ORGANISATION_ID';
+var EDITING_KEY = 'EDITING_SCREENSET_ID';
 
-Template.organisationItem.helpers({
+Template.screensetItem.helpers({
   checkedClass: function() {
     return this.checked && 'checked';
   },
@@ -12,7 +12,7 @@ Template.organisationItem.helpers({
   }
 });
 
-Template.organisationItem.events({
+Template.screensetItem.events({
 
   'focus input[type=text]': function(event) {
     Session.set(EDITING_KEY, this._id);
@@ -35,23 +35,28 @@ Template.organisationItem.events({
   // we don't flood the server with updates (handles the event at most once 
   // every 300ms)
   'keyup input[type=text]': _.throttle(function(event) {
-    console.log('organisation edit event', event);
-    var data = {};
-    data[event.target.id] = event.target.value;
-    Organisations.update(this._id, {$set: data});
-    //Buttons.update(this._id, {$set: {text: event.target.value}});
+      console.log('organisation edit event', event);
+      var data = {};
+      data[event.target.id] = event.target.value;
+      Organisations.update(this._id, {$set: data});
   }, 300),
 
-  'mousedown .js-view-lists, click': function(event) {
+  'mousedown .js-edit-screenset, click .js-edit-screenset': function(event) {
 
-    console.log('view-lists', event.target);
-    var user = Users.build(Meteor.user());
-    user.setOrganisation(this);
+      console.log('edit screenset this', this);
+
+      FlowRouter.go('/screensets/' + this._id);
+      /*
+      console.log('view-lists', event.target);
+      var user = Users.build(Meteor.user());
+      user.setOrganisation(this);
+      */
   },
 
   // handle mousedown otherwise the blur handler above will swallow the click
   // on iOS, we still require the click event so handle both
   'mousedown .js-delete-item, click .js-delete-item': function() {
-    Organisations.remove(this._id);
+      Meteor.call('removeScreenset', this._id);
+      //Screensets.remove(this._id);
   }
 });

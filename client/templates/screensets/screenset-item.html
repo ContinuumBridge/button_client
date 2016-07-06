@@ -3,15 +3,26 @@
   <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
     <td class="col-md-4"><input type="text" value="{{attributes.name}}" id="name" class="table-input" placeholder="ID"></td>
     <td class="col-md-4">
-      <button class="js-view-lists btn-sm btn-default btn-content" id={{_id}} type="submit">
-          <a href="{{pathFor 'editScreenset'}}" class="list-button {{activeListClass}}" title="{{name}}">
+      <button class="js-edit-screenset btn-sm btn-default btn-content" id={{_id}} type="submit">
           Edit
-          </a>
       </button>
     </td>
+    {{#if isInRole 'admin'}}
+        <td class="col-md-3">
+            <input type="checkbox" checked="{{isTemplate}}" class="table-input checkbox js-is-template" name="is-template">
+        </td>
+    {{else}}
+        <td class="col-md-3">
+        </td>
+    {{/if}}
     <td class="col-md-1 delete-item-wrapper">
       <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
     </td>
   <!--</div>-->
   </tr>
 </template>
+
+<!--
+<a href="{{pathFor 'editScreenset' screensetId=_id}}" class="list-button {{activeListClass}}" title="{{name}}">
+</a>
+-->

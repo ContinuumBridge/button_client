@@ -1,6 +1,42 @@
 <template name="addScreensetModal">
-    <form class="input-symbol">
-        <td><input type="text" class="name" placeholder="Name"></td>
-        <!--<td><span class="icon-add js-button-add"></span></td>-->
-    </form>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add a screenset</h4>
+                </div>
+
+                <form class="input-symbol modal-form">
+                    <div class="modal-body">
+                        <div class="well">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input name="name" type="text" value="{{attributes.name}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="template">Create from template</label>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="organisationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{selectedTemplateName}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {{#each templates}}
+                                            <li><a href="#" class="js-select-template" id={{_id}}>{{attributes.name}}</a></li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button submit" class="js-add-screenset btn btn-default">Add Screenset</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </template>

@@ -33,7 +33,9 @@ ScreensView = React.createClass({
         //var postId = this.props.postId;
         var screensHandle = Meteor.subscribe('screens');
         if (screensHandle.ready()) {
-            var screens = Screens.find({});
+            var screensetId = FlowRouter.getParam('screensetId');
+            console.log('screensetId ', screensetId );
+            var screens = Screens.find({screensetId: screensetId});
             screens.observeChanges({
                 added: function (id, fields) {
                     console.log('doc inserted 1', id, fields);
@@ -68,7 +70,7 @@ ScreensView = React.createClass({
                     },
                     removed: function (id) {
                         console.log('connection removed', id);
-                        self.removePlumbConnection(id, fields);
+                        self.removePlumbConnection(id);
                     }
                 });
                 data.connections = connections.fetch();
@@ -159,9 +161,11 @@ ScreensView = React.createClass({
 
         var plumb = this.plumb = new Plumb("plumb", plumbInitDeferred);
 
+        /*
         var $plumb = $(self.refs.plumb);
         console.log('$plumb', $plumb);
         plumb.setContainer($plumb);
+        */
 
         plumbInitDeferred.promise.then(function(plumb) {
 

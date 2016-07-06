@@ -14,7 +14,8 @@ EditScreensetView = React.createClass({
         //var postId = this.props.postId;
         var handle = Meteor.subscribe('screensets');
         if (handle.ready()) {
-            data.screenset = Screensets.findOne();
+            var screensetId = FlowRouter.getParam('screensetId');
+            data.screenset = Screensets.findOne(screensetId);
         }
         return data;
     },
@@ -36,19 +37,54 @@ EditScreensetView = React.createClass({
             createdAt: new Date()
         });
     },
+    
+    handleDestroy: function() {
+
+        var screensetId = this.data.screenset && this.data.screenset._id;
+        console.log('screensetId ', screensetId );
+        if (screensetId)
+            Meteor.call('removeScreenset', screensetId);
+        FlowRouter.go('/screensets');
+    },
         
     render: function() {
         
         console.log('edit screenset render this.data.screenset', this.data.screenset);
         
+        var screenset = this.data.screenset;
+        var name = screenset && screenset.get('name') || "";
+        
         return (
-            <div>
-                <p>Edit Screenset</p>
-            
-                <button class="btn-sm btn-default btn-content" onClick={this.addScreen}>
-                    Add Screen
-                </button>
+            <div className="page lists-show">
+                <nav className="js-title-nav">
+                    <div className="nav-group">
+                        <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+                    </div>
+                    <h1 className="js-edit-list title-page">
+                        <span class="title-wrapper">
+                            Screenset {name}
+                        </span>
+                    </h1>
+                    <div className="nav-group right">
+                      <div className="nav-item options-mobile">
+                        <select class="list-edit">
+                          <option value="delete">Delete</option>
+                        </select>
+                        <span className="icon-cog"></span>
+                      </div>
+                      <div className="options-web">
 
+                        <button className="btn-sm btn-primary btn-content" onClick={this.addScreen}>
+                            Add Screen
+                        </button>
+
+                        <a className="js-delete-list nav-item" onClick={this.handleDestroy}>
+                          <span className="icon-trash" title="Delete list"></span>
+                        </a>
+                      </div>
+                    </div>
+                </nav>
+            
                 {this.data.screenset ? <ScreensView screenset={this.data.screenset} /> :
                     <div className="wrapper-message">
                         <div className="title-message">Loading screenset...</div>

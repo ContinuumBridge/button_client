@@ -145,6 +145,6 @@ Template.buttonsItem.onRendered(function() {
     // Activate the tooltip(s)
     var el = this.find('[data-toggle="tooltip"]');
     var $el = $(el);
-    console.log('buttonsItem onRendered el', $el);
+    //console.log('buttonsItem onRendered el', $el);
     $el.tooltip();
 });
