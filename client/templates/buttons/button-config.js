@@ -1,4 +1,6 @@
 
+//var navDep = new Deps.Dependency;
+
 ReactiveTabs.createInterface({
     template: 'spurTabs',
     onChange: function (slug, template) {
@@ -8,6 +10,13 @@ ReactiveTabs.createInterface({
         //console.log('[tabs] Template instance calling onChange:', template);
     }
 });
+
+/*
+Template.buttonConfigModal.rendered = function(){
+    console.log('buttonConfigModal.rendered');
+    //navDep.changed();
+};
+*/
 
 Template.buttonConfigModal.events({
 
@@ -25,19 +34,24 @@ Template.buttonConfigModal.events({
         console.log('edit event', event);
         var data = {};
         data[event.target.id] = event.target.value;
-        console.log('data ', data );
-        console.log('this._id', this.item._id);
-        console.log('this', this);
         Buttons.update(this.item._id, {$set: data});
         //Buttons.update(this._id, {$set: {text: event.target.value}});
-    }, 300)
+    }, 300),
+    'mousedown .js-select-screenset, click .js-select-screenset': function(event) {
+
+        console.log('this', this);
+        var buttonId = event.currentTarget.getAttribute('buttonId');
+        console.log('buttonId ', buttonId );
+        console.log('event.currentTarget.id', event.currentTarget.id);
+        Buttons.update(buttonId, {$set: {screensetId: event.currentTarget.id}});
+    },
 });
 
 Template.buttonConfigModal.helpers({
     tabs: function () {
         // Every tab object MUST have a name and a slug!
         return [
-            { name: 'Config', slug: 'config' },
+            { name: 'Config', slug: 'config', onRender: function() { console.log('Config tabs rendered')}},
             { name: 'Messages', slug: 'messages' }
         ];
     },
@@ -51,6 +65,25 @@ Template.buttonConfigModal.helpers({
         // If you don't provide an active tab, the first one is selected by default.
         // See the `advanced use` section below to learn about dynamic tabs.
         return Session.get('activeTab'); // Returns "people", "places", or "things".
+    },
+    screensetName: function() {
+        //navDep.depend();
+        //Screensets.findOne();
+        console.log('screensetName this', this);
+        var button = Buttons.findOne(this.item._id);
+        var screensetId = this.item.screensetId;
+        //if (Session.get('rerenderHack')) void(0);
+        if (screensetId) {
+            return Screensets.findOne(screensetId).get('name');
+        } else {
+            return "None";
+        }
+    },
+    screensets: function() {
+
+        var organisationId = Meteor.getCurrentOrganisationId();
+        console.log('screensets organisationId ', organisationId );
+        return Screensets.find({organisationId: organisationId});
     }
 });
 

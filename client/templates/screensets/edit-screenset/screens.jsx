@@ -205,16 +205,7 @@ ScreensView = React.createClass({
             screensetId: this.props.screenset._id,
             createdAt: new Date()
         });
-
-        console.log('screenConnectionId ', screenConnectionId );
-        /*
-        //var sourceNode = nodeList.get(connInfo.sourceId);
-        var sourceNode = ds.record.getRecord(util.format('node/%s', connInfo.sourceId));
-        console.log('sourceNode ', sourceNode );
-        Node.addConnection(sourceNode, connInfo);
-
         return false;
-        */
     },
 
     onDisconnection: function(connInfo) {

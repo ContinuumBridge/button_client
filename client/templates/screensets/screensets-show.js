@@ -31,10 +31,12 @@ Template.screensetsShow.helpers({
     
       return Session.get(EDITING_KEY);
   },
-  screensets: function(screensetId) {
-    
-      return Screensets.find({});
-      //return Buttons.find({screensetId: screensetId}, {sort: {name : 1}});
+  screensets: function() {
+
+      //var user = Meteor.user();
+      //var organisationId = user.organisationIds && user.organisationIds[0];
+      var organisationId = Meteor.getCurrentOrganisationId();
+      return Screensets.find({organisationId: organisationId});
   }
 });
 

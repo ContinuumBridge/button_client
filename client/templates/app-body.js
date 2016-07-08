@@ -41,6 +41,7 @@ Template.appBody.onCreated(function() {
     //var postId = FlowRouter.getParam('postId');
     self.subscribe('lists');
     self.subscribe('organisations');
+    self.subscribe('screensets');
     self.subscribe('users');
   });
 });

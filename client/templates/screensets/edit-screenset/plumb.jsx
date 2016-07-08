@@ -111,7 +111,6 @@ Plumb = function(elementName, initDeferred) {
         
         el = jsPlumb.getElement(el);
         container = container || this.getContainer();
-        console.log('container ', container );
         var out = {
                 left: el.offsetLeft,
                 top: el.offsetTop
