@@ -3,6 +3,24 @@
 
 Meteor.methods({
 
+    createAccountUser: function(attributes) {
+
+        // TODO Permissions
+        var userId = Accounts.createUser({
+                email: attributes.email,
+                password: attributes.password
+            }/*, function(error) {
+                if (error) {
+                    return Session.set(ERRORS_KEY, {'none': error.reason});
+                }
+            }*/
+        );
+        if (attributes.isAdmin) {
+            Roles.addUsersToRoles(userId, ['admin']);
+        }
+        return userId;
+    },
+    
     changeUserPassword: function (userId, newPassword) {
 
         var future = new Future();
@@ -22,6 +40,15 @@ Meteor.methods({
         }
 
         return future.wait();
+    },
+     
+    removeOrganisation: function(organisationId) {
+
+        var screensets = Screensets.find({organisationId: organisationId}).fetch();
+        _.each(screensets, function(screenset) {
+            Meteor.call('removeScreenset', screenset._id);
+        });
+        Organisations.remove({_id: organisationId});
     },
     
     createScreensetFromTemplate: function(templateId, name) {
