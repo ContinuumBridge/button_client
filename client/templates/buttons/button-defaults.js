@@ -1,19 +1,20 @@
 
 Template.buttonDefaultsModal.events({
 
-    'keyup input[type=text], keyup textarea': _.throttle(function(event) {
+    'change input[type=text], keyup input[type=text], keyup textarea': _.throttle(function(event) {
         console.log('edit event', event);
         var data = {};
         data[event.target.id] = event.target.value;
         console.log('data ', data );
         console.log('this._id', this._id);
-        Buttons.update(this.item._id, {$set: data});
+        Buttons.update(this._id, {$set: data});
         //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300)
 });
 
 
 Template.buttonDefaultsModal.helpers({
+    /*
     tabs: function () {
         // Every tab object MUST have a name and a slug!
         return [
@@ -32,4 +33,5 @@ Template.buttonDefaultsModal.helpers({
         // See the `advanced use` section below to learn about dynamic tabs.
         return Session.get('activeTab'); // Returns "people", "places", or "things".
     }
+    */
 });

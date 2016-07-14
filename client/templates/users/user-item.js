@@ -22,7 +22,7 @@ Template.userItem.helpers({
         if (organisationId) {
             return Organisations.findOne(organisationId).get('name');
         } else {
-            return "None";
+            return "Organisation";
         }
     },
     organisations: function() {

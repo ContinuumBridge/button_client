@@ -66,11 +66,13 @@ Template.buttonsItem.helpers({
 
 Template.buttonsItem.events({
 
-    'change [type=checkbox]': function(event) {
-        var checked = $(event.target).is(':checked');
-        var data = {};
-        data[event.target.id] = checked;
-        Buttons.update(this._id, {$set: data});
+    'change .js-show-custom': function(event) {
+    //'change [type=checkbox]': function(event) {
+        //var checked = $(event.target).is(':checked');
+        //var data = {};
+        //data[event.target.id] = checked;
+        //event.currentTarget.checked
+        Buttons.update(this._id, {$set: {showCustom: event.currentTarget.checked}});
     },
 
     'focus input[type=text]': function(event) {
@@ -128,7 +130,14 @@ Template.buttonsItem.events({
 
     'mousedown .js-button-config, click .js-button-config': function(event) {
 
-        Modal.show('buttonConfigModal', this);
+        console.log('Modal show this', this);
+        console.log('Buttons.findOne(this._id)', Buttons.findOne(this._id));
+        //Modal.show('buttonConfigModal', function() { return Buttons.findOne(this._id)});
+        // Don't use this._id directly, otherwise reactivness doesn't work :S
+        var id = this._id;
+        Modal.show('buttonConfigModal', function() { 
+            return Buttons.findOne({_id: id});
+        });
     },
 
     // handle mousedown otherwise the blur handler above will swallow the click

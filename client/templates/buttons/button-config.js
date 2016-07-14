@@ -1,6 +1,7 @@
 
 //var navDep = new Deps.Dependency;
 
+/*
 ReactiveTabs.createInterface({
     template: 'spurTabs',
     onChange: function (slug, template) {
@@ -10,12 +11,24 @@ ReactiveTabs.createInterface({
         //console.log('[tabs] Template instance calling onChange:', template);
     }
 });
+*/
 
 /*
 Template.buttonConfigModal.rendered = function(){
     console.log('buttonConfigModal.rendered');
     //navDep.changed();
 };
+
+Template.buttonConfigModal.onCreated(function() {
+    
+    this.screensetName = new ReactiveVar(String("None"));
+    var screenset = Screensets.findOne(this.attributes.screensetId);
+    screenset.observeChanges({
+        changed: function(a, b) {
+            console.log('screenset changed', a, b);
+        }
+    })
+});
 */
 
 Template.buttonConfigModal.events({
@@ -24,30 +37,33 @@ Template.buttonConfigModal.events({
         var checked = $(event.target).is(':checked');
         var data = {};
         data[event.target.id] = checked;
-        Buttons.update(this.item._id, {$set: data});
+        Buttons.update(this._id, {$set: data});
     },
     // update the text of the item on keypress but throttle the event to ensure
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
     //'keyup input[type=text]': _.throttle(function(event) {
-    'keyup textarea, keyup input[type=text]': _.throttle(function(event) {
+    'keyup textarea, keyup input[type=text], change input[type=text]': _.throttle(function(event) {
         console.log('edit event', event);
         var data = {};
         data[event.target.id] = event.target.value;
-        Buttons.update(this.item._id, {$set: data});
+        Buttons.update(this._id, {$set: data});
         //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
     'mousedown .js-select-screenset, click .js-select-screenset': function(event) {
 
-        console.log('this', this);
+        event.preventDefault();
+        
+        // Callback has context of the screenset
         var buttonId = event.currentTarget.getAttribute('buttonId');
-        console.log('buttonId ', buttonId );
+        //console.log('buttonId ', buttonId );
         console.log('event.currentTarget.id', event.currentTarget.id);
         Buttons.update(buttonId, {$set: {screensetId: event.currentTarget.id}});
-    },
+    }
 });
 
 Template.buttonConfigModal.helpers({
+    /*
     tabs: function () {
         // Every tab object MUST have a name and a slug!
         return [
@@ -66,18 +82,26 @@ Template.buttonConfigModal.helpers({
         // See the `advanced use` section below to learn about dynamic tabs.
         return Session.get('activeTab'); // Returns "people", "places", or "things".
     },
+    */
     screensetName: function() {
         //navDep.depend();
         //Screensets.findOne();
         console.log('screensetName this', this);
-        var button = Buttons.findOne(this.item._id);
-        var screensetId = this.item.screensetId;
+        
+        console.log('_.keys(this)', _.keys(this));
+        //var button = Buttons.findOne(this.item._id);
+        console.log('Template.currentData();', Template.currentData());
+        var screensetId = this.get('screensetId');
         //if (Session.get('rerenderHack')) void(0);
+        return screensetId ? Screensets.findOne(screensetId).get('name') : "None";
+        //return Screensets.findOne(screensetId);
+        /*
         if (screensetId) {
             return Screensets.findOne(screensetId).get('name');
         } else {
             return "None";
         }
+        */
     },
     screensets: function() {
 

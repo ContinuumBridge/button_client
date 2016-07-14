@@ -13,7 +13,6 @@ mizzao:bootboxjs
 
 nimble:restivus
 lookback:dropdowns
-peppelg:bootstrap-3-modal
 alanning:roles
 meteor-base
 mobile-experience
@@ -43,3 +42,4 @@ react-template-helper
 arillo:flow-router-helpers
 emmerge:graviton
 xcv58:collection-api
+peppelg:bootstrap-3-modal

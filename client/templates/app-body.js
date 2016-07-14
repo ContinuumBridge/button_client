@@ -179,6 +179,6 @@ Template.appBody.events({
     var list = {name: Lists.defaultName(), organisationId: Meteor.getCurrentOrganisation()._id};
     list._id = Lists.insert(list);
 
-    Router.go('listShow', list);
+    FlowRouter.go('listShow', list);
   }
 });

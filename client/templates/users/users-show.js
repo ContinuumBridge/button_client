@@ -122,6 +122,8 @@ Template.usersShow.events({
 
       event.preventDefault();
 
+       Modal.show('addUserModal');
+      /*
       var modalBody = Template.addUserModal.renderFunction().value;
       bootbox.formModal({
         title: "Add a user",
@@ -141,5 +143,6 @@ Template.usersShow.events({
             }
         }
     });
+    */
   }
 });

@@ -5,16 +5,17 @@ Meteor.methods({
 
     createAccountUser: function(attributes) {
 
+        console.log('attributes', attributes);
         // TODO Permissions
-        var userId = Accounts.createUser({
-                email: attributes.email,
-                password: attributes.password
-            }/*, function(error) {
+        var userId = Accounts.createUser(_.omit(attributes, 'isAdmin', 'organisationIds')/*, function(error) {
                 if (error) {
                     return Session.set(ERRORS_KEY, {'none': error.reason});
                 }
             }*/
         );
+        
+        Users.update({_id: userId}, {$set:{organisationIds: attributes.organisationIds}});
+        console.log('userId ', userId );
         if (attributes.isAdmin) {
             Roles.addUsersToRoles(userId, ['admin']);
         }
