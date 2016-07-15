@@ -84,8 +84,9 @@ var deleteList = function(list) {
     return alert("Sorry, you cannot delete the final public list!");
   }
   */
+    console.log('list', list.content());
 
-  var message = "Are you sure you want to delete the list " + list.name + "?";
+  var message = "Are you sure you want to delete this list?";
   if (confirm(message)) {
     // we must remove each item individually from the client
     Buttons.find({listId: list._id}).forEach(function(button) {
@@ -93,7 +94,7 @@ var deleteList = function(list) {
     });
     Lists.remove(list._id);
 
-    Router.go('home');
+    FlowRouter.go('home');
     return true;
   } else {
     return false;

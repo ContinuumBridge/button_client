@@ -18,51 +18,40 @@ Meteor.publish('organisations', function() {
 
     if (this.userId) {
 
+        var user = Users.findOne(this.userId);
+
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Organisations.find({});
-        } else {
-            var user = Users.build(Users.findOne(this.userId));
-            //console.log('user.organisations.find()', user.organisations.find());
-            return user.organisations.find();
-            //return Organisations.find({_id: this.userId});
+        } else if (user.organisationIds && user.organisationIds[0]) {
+            return Organisations.find({_id: user.organisationIds[0]});
         }
-    } else {
-
-        this.ready();
     }
+
+    this.ready();
 });
 
 Meteor.publish('lists', function() {
 
-    //console.log('publish lists this.userId', this.userId);
     if (this.userId) {
-        var user = Users.build(Users.findOne(this.userId));
+        var user = Users.findOne(this.userId);
         //if (!user) return;
-        var organisation = user.organisations.findOne();
+        var organisationId = user.organisationIds && user.organisationIds[0];
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Lists.find({});
-        } else {
-            return Lists.find({organisationId: organisation._id});
+        } else if (organisationId) {
+            return Lists.find({organisationId: organisationId});
         }
-    } else {
-
-        this.ready();
     }
+
+    this.ready();
+
     //return Lists.find({});
 });
 
 Meteor.publish('buttons', function(listId) {
 
-    console.log('publish buttons', listId);
-    console.log('this.userId', this.userId);
     if (this.userId) {
 
-        /*
-        var user = Users.build(Users.findOne(this.userId));
-        console.log('user ', user );
-        var organisation = user.organisations.findOne();
-        console.log('organisation ', organisation );
-        */
         var user = Users.findOne(this.userId);
         var organisationId = user.organisationIds[0];
         if (organisationId) {

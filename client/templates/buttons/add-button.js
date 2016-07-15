@@ -7,7 +7,7 @@ Template.addButtonModal.events({
 
         var target = event.target;
         //console.log('this._id', this.get('listId'));
-        //console.log('submit ', event.target.enabled.value);
+        console.log('submit ', target.name.value);
         var buttonId = Buttons.insert({
             listId: this.get('listId'),
             enabled: false,
