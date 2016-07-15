@@ -9,7 +9,12 @@
     </td>
     {{#if isInRole 'admin'}}
         <td class="col-md-3">
-            <input type="checkbox" checked="{{attributes.isTemplate}}" class="table-input checkbox js-is-template" name="is-template">
+            <td class="col-md-2">
+            <div class="checkbox">
+                    <input id="{{_id}}showCustom" name="isTemplate" type="checkbox" checked="{{attributes.isTemplate}}" class="table-input js-is-template" >
+                    <label for="{{_id}}showCustom" class="isAdmin"></label>
+                </div>
+            </td>
         </td>
     {{else}}
         <td class="col-md-3">

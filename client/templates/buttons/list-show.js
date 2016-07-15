@@ -84,15 +84,17 @@ var deleteList = function(list) {
     return alert("Sorry, you cannot delete the final public list!");
   }
   */
-    console.log('list', list.content());
+    console.log('deleteList', list);
 
   var message = "Are you sure you want to delete this list?";
   if (confirm(message)) {
-    // we must remove each item individually from the client
+      Meteor.call('removeList', list._id);
+      /*
     Buttons.find({listId: list._id}).forEach(function(button) {
       Buttons.remove(button._id);
     });
     Lists.remove(list._id);
+       */
 
     FlowRouter.go('home');
     return true;
@@ -191,7 +193,8 @@ Template.listShow.events({
     */
 
     'click .js-delete-list': function(event, template) {
-        deleteList(this, template);
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        deleteList(list, template);
     },
 
     /*

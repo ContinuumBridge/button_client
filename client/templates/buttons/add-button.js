@@ -7,7 +7,7 @@ Template.addButtonModal.events({
 
         var target = event.target;
         //console.log('this._id', this.get('listId'));
-        console.log('submit ', target.name.value);
+        //console.log('submit ', target.name.value);
         var buttonId = Buttons.insert({
             listId: this.get('listId'),
             enabled: false,
@@ -15,9 +15,11 @@ Template.addButtonModal.events({
             name: target.name.value,
             email: target.email.value,
             sms: target.sms.value,
+            /*
             normalMessage: target.normalMessage.value,
             pressedMessage: target.pressedMessage.value,
             customMessage: target.customMessage.value,
+            */
             createdAt: new Date()
         });
 

@@ -130,10 +130,8 @@ Template.buttonsItem.events({
 
     'mousedown .js-button-config, click .js-button-config': function(event) {
 
-        console.log('Modal show this', this);
-        console.log('Buttons.findOne(this._id)', Buttons.findOne(this._id));
-        //Modal.show('buttonConfigModal', function() { return Buttons.findOne(this._id)});
         // Don't use this._id directly, otherwise reactivness doesn't work :S
+        // https://github.com/PeppeL-G/bootstrap-3-modal/issues/5
         var id = this._id;
         Modal.show('buttonConfigModal', function() { 
             return Buttons.findOne({_id: id});

@@ -45,11 +45,23 @@ Meteor.methods({
      
     removeOrganisation: function(organisationId) {
 
+        var lists = Lists.find({organisationId: organisationId}).fetch();
+        _.each(lists, function() {
+            Meteor.call('removeScreenset', screenset._id);
+        });
+        
         var screensets = Screensets.find({organisationId: organisationId}).fetch();
         _.each(screensets, function(screenset) {
             Meteor.call('removeScreenset', screenset._id);
         });
         Organisations.remove({_id: organisationId});
+    },
+
+    removeList: function(listId) {
+
+        console.log('removeList', listId);
+        Buttons.remove({listId: listId});
+        Lists.remove({_id: listId});
     },
     
     createScreensetFromTemplate: function(templateId, name) {
