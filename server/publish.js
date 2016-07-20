@@ -80,15 +80,18 @@ Meteor.publish('screensets', function() {
 
     if (this.userId) {
 
-        return Screensets.find({});
-        /*
+        //return Screensets.find({});
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Screensets.find({});
         } else {
-            var user = Users.build(Users.findOne(this.userId));
-            return user.organisations.find();
+            
+            // Let users access their screensets and templates
+            var user = Users.findOne(this.userId);
+            var organisationId = user.organisationIds && user.organisationIds[0];
+            return organisationId ? Screensets.find(
+                {$or: [{isTemplate: true}, {organisationId: organisationId}]})
+                : Screensets.find({isTemplate: true});
         }
-        */
     } else {
 
         this.ready();

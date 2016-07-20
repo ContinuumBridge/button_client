@@ -65,16 +65,13 @@ Template.appBody.onRendered(function() {
 });
 
 Template.appBody.helpers({
-  /*
-  forceRefresh: function() {
-    return FlowRouter.current().route;
-  },
+ 
   hasReactComponent: function() {
       console.log('hasReactComponent');
       console.log('FlowRouter.current().route', FlowRouter.current().route);
       return !_.isUndefined(FlowRouter.current().route.options.reactComponent);
   },
-  */
+  
   reactComponent: function() {
       console.log('FlowRouter.current().route.options.reactComponent()', FlowRouter.current().route.options.reactComponent());
       return FlowRouter.current().route.options.reactComponent();

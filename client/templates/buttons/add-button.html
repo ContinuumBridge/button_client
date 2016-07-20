@@ -26,6 +26,20 @@
                                 <label for="sms">SMS</label>
                                 <input name="sms" type="text" value="{{attributes.sms}}" id="sms">
                             </div>
+                            <div class="form-group">
+                                <label>Screenset</label>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{screensetName}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        {{#each screensets}}
+                                            <li><a href="#" class="js-select-screenset" id={{_id}} buttonId={{../_id}}>{{attributes.name}}</a></li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

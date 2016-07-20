@@ -67,11 +67,6 @@ Template.buttonsItem.helpers({
 Template.buttonsItem.events({
 
     'change .js-show-custom': function(event) {
-    //'change [type=checkbox]': function(event) {
-        //var checked = $(event.target).is(':checked');
-        //var data = {};
-        //data[event.target.id] = checked;
-        //event.currentTarget.checked
         Buttons.update(this._id, {$set: {showCustom: event.currentTarget.checked}});
     },
 
@@ -85,22 +80,22 @@ Template.buttonsItem.events({
     },
 
     'keydown input[type=text]': function(event) {
-      // ESC or ENTER
-      if (event.which === 27 || event.which === 13) {
-        event.preventDefault();
-        event.target.blur();
-      }
+        // ESC or ENTER
+        if (event.which === 27 || event.which === 13) {
+          event.preventDefault();
+          event.target.blur();
+        }
     },
 
     // update the text of the item on keypress but throttle the event to ensure
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
     'keyup input[type=text]': _.throttle(function(event) {
-      //console.log('edit event', event);
-      var data = {};
-      data[event.target.id] = event.target.value;
-      Buttons.update(this._id, {$set: data});
-      //Buttons.update(this._id, {$set: {text: event.target.value}});
+        //console.log('edit event', event);
+        var data = {};
+        data[event.target.id] = event.target.value;
+        Buttons.update(this._id, {$set: data});
+        //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
     //'mousedown .js-button-action, click .js-button-action': function(event) {

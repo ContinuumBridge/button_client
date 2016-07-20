@@ -1,6 +1,25 @@
 
+var SCREENSET_KEY = 'addButtonScreenset';
+Session.setDefault(SCREENSET_KEY, false);
+
+Template.addButtonModal.rendered = function() {
+    
+    // Initially set the screenset from the default button
+    var screensetId = this.data.get('screensetId');
+    if (screensetId)
+        Session.set(SCREENSET_KEY, screensetId);
+};
+
 Template.addButtonModal.events({
 
+    'mousedown .js-select-screenset, click .js-select-screenset': function(event) {
+
+        console.log('event.currentTarget.id', event.currentTarget.id);
+        event.preventDefault();
+        var screensetId = event.currentTarget.id;
+        Session.set(SCREENSET_KEY, screensetId);
+    },
+    
     'submit .modal-form': function(event) {
 
         event.preventDefault();
@@ -15,6 +34,7 @@ Template.addButtonModal.events({
             name: target.name.value,
             email: target.email.value,
             sms: target.sms.value,
+            screensetId: Session.get(SCREENSET_KEY),
             /*
             normalMessage: target.normalMessage.value,
             pressedMessage: target.pressedMessage.value,
@@ -25,19 +45,11 @@ Template.addButtonModal.events({
 
         Modal.hide();
     }
-    // update the text of the item on keypress but throttle the event to ensure
-    // we don't flood the server with updates (handles the event at most once
-    // every 300ms)
-    //'keyup input[type=text]': _.throttle(function(event) {
-    /*
-    'keyup textarea': _.throttle(function(event) {
-        console.log('edit event', event);
-        var data = {};
-        data[event.target.id] = event.target.value;
-        console.log('data ', data );
-        console.log('this._id', this._id);
-        Buttons.update(this._id, {$set: data});
-        //Buttons.update(this._id, {$set: {text: event.target.value}});
-    }, 300)
-    */
 });
+
+Template.addButtonModal.helpers(_.defaults({
+    screensetName: function() {
+        var screensetId = Session.get(SCREENSET_KEY);
+        return screensetId ? Screensets.findOne(screensetId).get('name') : "None";
+    }
+}, ScreensetsDropdown.helpers));

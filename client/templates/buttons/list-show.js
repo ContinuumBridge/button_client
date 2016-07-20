@@ -52,7 +52,6 @@ Template.listShow.helpers({
     
     list: function() {
         var list = Lists.findOne(FlowRouter.getParam('listId'));
-        console.log('helpers list ', list );
         return list;
     },
     
@@ -72,9 +71,11 @@ var editList = function(list, template) {
   template.$('.js-edit-form input[type=text]').focus();
 };
 
-var saveList = function(list, template) {
-  Session.set(EDITING_KEY, false);
-  Lists.update(list._id, {$set: {name: template.$('[name=name]').val()}});
+var saveList = function(template) {
+    Session.set(EDITING_KEY, false);
+    console.log('$([name=name]).val()', $('[name=name]').val());
+    var listId = FlowRouter.getParam('listId');
+    Lists.update(listId, {$set: {name: template.$('[name=name]').val()}});
 }
 
 var deleteList = function(list) {
@@ -139,12 +140,12 @@ Template.listShow.events({
     'blur input[type=text]': function(event, template) {
         // if we are still editing (we haven't just clicked the cancel button)
         if (Session.get(EDITING_KEY))
-          saveList(this, template);
+          saveList(template);
     },
 
     'submit .js-edit-form': function(event, template) {
         event.preventDefault();
-        saveList(this, template);
+        saveList(template);
     },
 
     // handle mousedown otherwise the blur handler above will swallow the click
@@ -179,29 +180,19 @@ Template.listShow.events({
     'mousedown .js-edit-defaults': function(event) {
 
         //var defaultButton = this.getDefaultButton(this);
-        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        //var list = Lists.findOne(FlowRouter.getParam('listId'));
         //console.log('defaultButton ', defaultButton );
-        Modal.show('buttonDefaultsModal', list.getDefaultButton());
+        //Modal.show('buttonDefaultsModal', list.getDefaultButton());
+        //var id = this._id;
+        Modal.show('buttonDefaultsModal', function() {
+            return Lists.findOne(FlowRouter.getParam('listId')).getDefaultButton();
+        });
     },
-
-    /*
-    'mousedown .js-edit-config': function(event) {
-
-        var defaultButton = this.getDefaultButton(this);
-        Modal.show('buttonConfigDefaultsModal', defaultButton);
-    },
-    */
 
     'click .js-delete-list': function(event, template) {
         var list = Lists.findOne(FlowRouter.getParam('listId'));
         deleteList(list, template);
     },
-
-    /*
-    'click .js-button-add': function(event, template) {
-      template.$('.js-button-new input').focus();
-    },
-    */
 
     'click .js-item-add': function(event) {
 

@@ -8,13 +8,15 @@
             <!--<span class="label label-default">{{attributes.status}}</span>
             <input type="text" value="{{attributes.status}}" id="status" class="table-input state {{statusColour}}" placeholder="Status" readonly>-->
         </td>
-        <td class="col-md-4"><input type="text" value="{{attributes.name}}" id="name" class="table-input" placeholder="Name"></td>
+        <td class="col-md-6"><input type="text" value="{{attributes.name}}" id="name" class="table-input" placeholder="Name"></td>
+        <!--
         <td class="col-md-2">
             <div class="checkbox">
                 <input id="{{_id}}showCustom" name="showCustom" type="checkbox" checked="{{attributes.showCustom}}" class="table-input js-show-custom" >
                 <label for="{{_id}}showCustom" class="isAdmin"></label>
             </div>
         </td>
+        -->
         <td class="col-md-2"><img class="signal" src="/img/signal_{{signal}}.png"/></td>
         <td class="col-md-2">
             <button class="js-button-config btn-sm btn-default btn-content btn-row" id={{_id}} type="submit">
