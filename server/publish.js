@@ -52,19 +52,24 @@ Meteor.publish('buttons', function(listId) {
 
     if (this.userId) {
 
+        // For the python client
+        if (!listId && Roles.userIsInRole(this.userId, ['admin']))
+            return Buttons.find({});
+        
         var user = Users.findOne(this.userId);
-        var organisationId = user.organisationIds[0];
+        var organisationId = user.organisationIds && user.organisationIds[0];
+        
         if (organisationId) {
+
             
             var organisation = Organisations.findOne(organisationId);
             var lists = Lists.find({organisationId: organisation._id}).fetch();
             var listIds = _.pluck(lists, '_id');
             var index = listIds.indexOf(listId);
-            
+
             if (index >= 0) {
 
                 return Buttons.find({listId: listId});
-            //} else if (Roles.userIsInRole(this.userId, ['admin'])) {
 
             } else {
                 this.ready();
