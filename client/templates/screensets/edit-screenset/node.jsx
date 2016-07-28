@@ -1,23 +1,22 @@
 
-/*
-var _ = require('underscore');
-var $ = require('jquery');
-var React = require('react');
-var Q = require('q');
-var util = require('util');
-
-var Node = require('../../../methods/node');
-*/
 import Q from 'q';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-ScreenView = React.createClass({
+var InnerViews = {};
+InnerViews['screen'] = ScreenView;
+InnerViews['emailAlert'] = EmailAlertView;
+InnerViews['start'] = StartNodeView;
+//InnerViews['smsAlert'] = SMSAlertView;
+
+NodeView = React.createClass({
 
     getInitialState: function() {
 
         return {
             connections: [],
-            screenElementDeferred: Q.defer()
+            plumb: false,
+            nodeElementDeferred: Q.defer()
         }
     },
 
@@ -26,41 +25,48 @@ ScreenView = React.createClass({
         var self = this;
 
         self.props.plumbInitPromise.then(function(plumb) {
-            self.initPlumb(plumb);
+            self.setState({plumb: plumb});
         }).done();
-        
-        /*
-        var node = this.props.node;
-        var nodeUID = Node.getUID(node);
-        var updateState = function(data) {
-
-            self.setState(_.extend(data, {
-                uid: nodeUID
-            }));
-        }
-
-        node.subscribe(function(data) {
-            updateState(data);
-        }.bind(this));
-
-        updateState(node.get());
-
-        node.whenReady(function() {
-            self.props.plumbInitPromise.then(function(plumb) {
-                self.initPlumb(plumb);
-            }).done();
-        });
-        */
     },
 
-    initPlumb: function(plumb) {
+    componentWillUnmount: function() {
+
+        var self = this;
+        
+        console.log('componentWillUnmount 1');
+        var plumb = this.state.plumb;
+        if (plumb) {
+            var screenNode = ReactDOM.findDOMNode(this.refs['screen']);
+            plumb.detachAllConnections(screenNode);
+            plumb.removeAllEndpoints(screenNode)
+        }
+        /*
+        this.props.plumbInitPromise.then(function(plumb) {
+            
+            console.log('React.findDOMNode(self.refs[screen])', React.findDOMNode(self.refs['screen']));
+            plumb.detachAllConnections(React.findDOMNode(self.refs['screen']));
+            //self.initPlumb(plumb);
+        }).done();
+        */
+        console.log('componentWillUnmount 2');
+    },
+    
+    setupEndpointsWrapper: function(sourceEndpoints, targetEndpoints) {
+        
+        var self = this;
+        
+        self.props.plumbInitPromise.then(function(plumb) {
+            self.setupEndpoints(plumb, sourceEndpoints, targetEndpoints);
+        }).done();
+    },
+    
+    setupEndpoints: function(plumb, sourceEndpoints, targetEndpoints) {
 
         var self = this;
 
-        console.log('Screen initPlumb', plumb);
         var screen = this.props.record;
-        var screenUID = screen._id;
-        var screenNode = React.findDOMNode(this.refs['screen']);
+        //var screenUID = screen._id;
+        var screenNode = ReactDOM.findDOMNode(this.refs['screen']);
 
         // this is the paint style for the connecting lines..
         var connectorPaintStyle = {
@@ -117,29 +123,6 @@ ScreenView = React.createClass({
             connection.getOverlay("label").setLabel(connection.sourceId.substring(15) + "-" + connection.targetId.substring(15));
         };
 
-        console.log('screenUID ', screenUID );
-        var sourceEndpoints = [
-            {
-                uuid: screenUID + "SingleLeft",
-                anchor: [0, 0.3, -1, 0, -200, 0],
-                //label: "Left"
-            },
-            {
-                uuid: screenUID + "DoubleLeft",
-                anchor: [0, 0.6, -1, 0, -200, 0],
-                //label: "Double Left"
-            },
-            {
-                uuid: screenUID + "SingleRight",
-                anchor: [1, 0.3, 1, 0, -200, 0],
-                //label: "Right"
-            },
-            {
-                uuid: screenUID + "DoubleRight",
-                anchor: [1, 0.6, 1, 0, -200, 0],
-                //label: "Double Right"
-            }
-        ];
         _.each(sourceEndpoints, function(endpoint) {
 
             /*
@@ -153,19 +136,11 @@ ScreenView = React.createClass({
             plumb.addEndpoint(screenNode, sourceEndpoint, endpoint);
         });
 
-        var targetEP = plumb.addEndpoint(screenNode,
-            targetEndpoint, {
-                isTarget: true,
-                maxConnections: 5,
-                uuid: screenUID + "Main",
-                anchor: [0.5, 0, 0, -1, -200, 0],
-                //anchor: "Continuous",
-                dropOptions: { hoverClass: "hover" }
-            }
-        );
-        console.log('targetEP ', targetEP );
+        _.each(targetEndpoints, function(endpoint) {
+            plumb.addEndpoint(screenNode, targetEndpoint, endpoint);
+        });
 
-        this.state.screenElementDeferred.resolve({
+        this.state.nodeElementDeferred.resolve({
             plumb: plumb,
             element: this.refs.screen
         });
@@ -174,17 +149,10 @@ ScreenView = React.createClass({
     handleMouseUp: function() {
 
         var style = this.refs.screen.style;
-        //var style = this.refs.node.getDOMNode().style;
-        //console.log('left', style.left, 'top', style.top);
-        Screens.update(this.props.record._id, {
+        Nodes.update(this.props.record._id, {
             $set: { x: parseInt(style.left, 10)
                   , y: parseInt(style.top, 10)}
         });
-        /*
-        node.set('x', parseInt(style.left, 10));
-        node.set('y', parseInt(style.top, 10));
-        */
-        //console.log('mouse up', node);
     },
 
     handleDestroy: function() {
@@ -197,7 +165,7 @@ ScreenView = React.createClass({
     handleDisplayChange: function(event) {
 
         console.log('handleDisplayChange event', event.target.value);
-        Screens.update(this.props.record._id, {
+        Nodes.update(this.props.record._id, {
             $set: { display: event.target.value },
         });
         //this.setState({value: event.target.value});
@@ -205,32 +173,29 @@ ScreenView = React.createClass({
 
     render: function() {
 
-        console.log('render ScreenView');
-        var node = this.props.node;
-        /*
-        var InnerView = NodeViews[node.get('type')];
+        console.log('render NodeView');
+        var node = this.props.record;
+        
+        var InnerView = InnerViews[node.get('type')];
         var innerView;
         if (InnerView) {
-            innerView = <InnerView record={node} engine={this.props.engine} nodes={this.props.nodes} />;
+            //innerView = <InnerView record={node} engine={this.props.engine} nodes={this.props.nodes} />;
+            innerView = <InnerView record={node} setupEndpoints={this.setupEndpointsWrapper} />
         } else {
             innerView = <div></div>;
         }
-        */
 
-        var screen = this.props.record;
+        var node = this.props.record;
         var style = {
-            left: screen.get('x'),
-            top: screen.get('y')
+            left: node.get('x'),
+            top: node.get('y')
         }
-        var screenElement = this.state.screenElementDeferred.promise;
+        var nodeElement = this.state.nodeElementDeferred.promise;
         return (
-            <div className="draggable-object window screen" style={style} id={screen._id} ref="screen"
+            <div className="draggable-object window screen" style={style} id={node._id} ref="screen"
                 onMouseUp={this.handleMouseUp} onClick={this.handleClick} >
-                <div className="screen-inner">
-                    <textarea className="display" value={screen.get('display')} 
-                           onChange={this.handleDisplayChange} />
-                </div>
-                <TitlebarView parentElementPromise={screenElement} handleDestroy={this.handleDestroy} />
+                {innerView}
+                <TitlebarView parentElementPromise={nodeElement} handleDestroy={this.handleDestroy} />
             </div>
         )
     }

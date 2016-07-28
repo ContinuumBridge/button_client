@@ -31,11 +31,12 @@ ScreensView = React.createClass({
         console.log('screens getMeteorData');
         var data = {};
         //var postId = this.props.postId;
-        var screensHandle = Meteor.subscribe('screens');
+        var screensHandle = Meteor.subscribe('nodes');
         if (screensHandle.ready()) {
             var screensetId = FlowRouter.getParam('screensetId');
             console.log('screensetId ', screensetId );
-            var screens = Screens.find({screensetId: screensetId});
+            var screens = Nodes.find({screensetId: screensetId});
+            /*
             screens.observeChanges({
                 added: function (id, fields) {
                     console.log('doc inserted 1', id, fields);
@@ -51,19 +52,15 @@ ScreensView = React.createClass({
                     console.log('doc removed', id);
                 }
             });
+            */
             data.screens = screens.fetch();
-            var connectionsHandle = Meteor.subscribe('screenConnections');
+            var connectionsHandle = Meteor.subscribe('nodeConnections');
             if (connectionsHandle.ready()) {
-                var connections = ScreenConnections.find({});
+                var connections = NodeConnections.find({screensetId: screensetId});
                 connections.observeChanges({
                     added: function (id, fields) {
                         console.log('connection inserted 1', id, fields);
                         self.addPlumbConnection(id, fields);
-                        /*
-                        self.state.plumbInitDeferred.promise.then(function(plumb) {
-                            console.log('connection inserted 2', id, fields);
-                        });
-                        */
                     },
                     changed: function (id, fields) {
                         console.log('connection updated', id, fields);
@@ -96,9 +93,9 @@ ScreensView = React.createClass({
 
         //var screensetId = FlowRouter.getParam('postId');
 
-        //var query = Screens.find({screensetId: this.data._id});
+        //var query = Nodes.find({screensetId: this.data._id});
         /*
-        var screensQuery = Screens.find();
+        var screensQuery = Nodes.find();
         screensQuery.observeChanges({
             added: function (id, fields) {
                 console.log('doc inserted', id, fields);
@@ -197,7 +194,7 @@ ScreensView = React.createClass({
         var sourceAnchor = sourceUUID.substring(17);
         console.log('this.props.screenset._id', this.props.screenset._id);
 
-        var screenConnectionId = ScreenConnections.insert({
+        var screenConnectionId = NodeConnections.insert({
             sourceId: sourceId,
             sourceAnchor: sourceAnchor,
             targetId: connInfo.targetId,
@@ -211,7 +208,7 @@ ScreensView = React.createClass({
     onDisconnection: function(connInfo) {
 
         console.log('onDisconnection connInfo', connInfo);
-        ScreenConnections.remove(connInfo.connection.id);
+        NodeConnections.remove(connInfo.connection.id);
 
         return false;
     },
@@ -234,46 +231,6 @@ ScreensView = React.createClass({
             });
             connection.id = id;
             console.log('addPlumbConnection connection ', connection );
-            /*
-            var connection = plumb.connect({
-
-                source: fields.sourceId,
-                target: fields.targetId,
-                editable: true,
-                connector: ["CB"],
-                //connector: [ "StateMachine", { curviness: 20 } ],
-                connectorStyle: {strokeStyle: "#5c96bc", lineWidth: 2, outlineColor: "transparent", outlineWidth: 4},
-                overlays: [
-                    [
-                        "Custom", {
-                        id: "strength",
-                        location: 0.7,
-                        create: function (component) {
-
-                            //console.log('connector component', component);
-                            var newDiv = document.createElement("div");
-
-                            React.render(
-                                <ConnectorOverlayView record={connectionRecord} plumbComponent={component}/>,
-                                newDiv
-                            );
-
-                            return newDiv;
-                        }
-                    }
-                        //"Label",
-                        //id: "strength",
-                        //label: "Test label"
-                    ]
-                ],
-                anchors: [
-                    ["DoubleLeft", "Main"]
-                    //[fields.sourceId + "DoubleLeft", fields.targetId + "Main"]
-                    //["Perimeter", {shape: 'Circle'}],
-                    //["Perimeter", {shape: 'Circle'}]
-                ]
-            });
-             */
         });
     },
 
@@ -285,95 +242,6 @@ ScreensView = React.createClass({
             
         });
     },
-    /*
-    renderConnections: function() {
-
-        var self = this;
-
-        var connections = this.state.connections;
-
-        var plumbInit = self.state.plumbInitDeferred.promise;
-
-        plumbInit.then(function(plumb) {
-
-            //console.log('renderConnections connections ', connections );
-
-            var plumbConnections = plumb.getConnections();
-            console.log('plumbConnections ', plumbConnections );
-            //var plumbConnectionIds = _.pluck(plumbConnections, 'id');
-            var plumbConnectionIds = _.object(_.pluck(plumbConnections, 'id'), plumbConnections);
-            console.log('plumbConnectionIds ', plumbConnectionIds );
-
-            _.each(connections, function(connectionRecord) {
-
-                console.log('connectionRecord', connectionRecord);
-                var source = connectionRecord.get('source');
-                var target = connectionRecord.get('target');
-
-                var plumbConnection = _.findWhere(plumbConnections, {
-                    sourceId: source,
-                    targetId: target
-                });
-
-                if (plumbConnection) {
-
-                    // Remove the connection Id to indicate it has been found
-                    delete plumbConnectionIds[plumbConnection.id];
-
-                } else if (!plumbConnection) {
-
-                    var connection = plumb.connect({
-                        source: source,
-                        target: target,
-                        editable: true,
-                        connector: ["Groove"],
-                        //connector: [ "StateMachine", { curviness: 20 } ],
-                        connectorStyle: { strokeStyle: "#5c96bc", lineWidth: 2, outlineColor: "transparent", outlineWidth: 4 },
-                        overlays: [
-                            [
-                                "Custom", {
-                                id: "strength",
-                                location: 0.7,
-                                create: function(component) {
-
-                                    //console.log('connector component', component);
-                                    var newDiv = document.createElement("div");
-
-                                    React.render(
-                                        <ConnectorOverlayView record={connectionRecord} plumbComponent={component} />,
-                                        newDiv
-                                    );
-
-                                    return newDiv;
-                                }
-                            }
-                                //"Label",
-                                //id: "strength",
-                                //label: "Test label"
-                            ]
-                        ],
-                        anchors: [
-                            //[ "Continuous"],
-                            //[ "Continuous"]
-                            [ "Perimeter", {shape: 'Circle'}],
-                            [ "Perimeter", {shape: 'Circle'}]
-                        ]
-                    });
-
-                    console.log('renderConnections connection', connection);
-                    connection.id = connectionRecord.name.split('/')[1];
-                }
-            });
-
-            console.log('remaining plumbConnectionIds', plumbConnectionIds);
-            // Remove any plumb connections not found in the records
-            _.each(_.values(plumbConnectionIds), function(plumbConnection) {
-                console.log('detach plumbConnection', plumbConnection);
-                plumb.detach(plumbConnection);
-            });
-        }).done();
-    },
-    */
     
     renderScreens: function() {
 
@@ -387,7 +255,7 @@ ScreensView = React.createClass({
 
                 var plumbInit = self.state.plumbInitDeferred.promise;
                 console.log('renderScreens screen', screen);
-                return <ScreenView key={screen._id} 
+                return <NodeView key={screen._id} 
                                    record={screen} plumbInitPromise={plumbInit} />;
             });
         } else {
@@ -423,7 +291,7 @@ ScreensView = React.createClass({
         /*
         return (
             <div id="wells" className="wells" ref="nodes">
-                Screens
+                Nodes
                 {this.data.screens ? this.renderScreens() : <div>Loading</div>}
             </div>
         )
@@ -447,7 +315,7 @@ var TopbarView = React.createClass({
     
     addScreen: function () {
 
-        Screens.insert({
+        Nodes.insert({
             name: 'Test screen',
             display: 'Test display',
             x: 200,

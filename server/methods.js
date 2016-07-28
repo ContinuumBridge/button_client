@@ -79,21 +79,36 @@ Meteor.methods({
             createdAt: new Date()
         });
         
-        var templateScreens = Screens.find({screensetId: templateId}).fetch();
+        var templateNodes = Nodes.find({screensetId: templateId}).fetch();
+        var startNode = _.findWhere(templateNodes, {type: 'start'});
+        
+        console.log('startNode ', startNode );
         
         // Key: template id. Value: instantiated id
-        var screensMap = {};
+        var nodesMap = {};
         
-        _.each(templateScreens, function(templateScreen) {
-            console.log('templateScreen', templateScreen.attributes);
-            var attributes = _.omit(templateScreen.attributes, '_id');
+        _.each(templateNodes, function(templateNode) {
+            console.log('templateScreen', templateNode.attributes);
+            var attributes = _.omit(templateNode.attributes, '_id');
             attributes.screensetId = screensetId;
             attributes.createdAt = new Date();
-            var screenId = Screens.insert(attributes);
-            screensMap[templateScreen._id] = screenId;
+            var nodeId = Nodes.insert(attributes);
+            nodesMap[templateNode._id] = nodeId;
         });
+
+        if (!startNode) {
+            // Insert a start node if it doesn't exist in the template
+            Nodes.insert({
+                type: 'start',
+                x: 200,
+                y: 100,
+                screensetId: screensetId,
+                transitionTo: '',
+                createdAt: new Date()
+            });
+        }
         
-        var templateConnections = ScreenConnections.find({
+        var templateConnections = NodeConnections.find({
             screensetId: templateId
         }).fetch();
         
@@ -102,9 +117,9 @@ Meteor.methods({
             var attributes = _.omit(templateConnection.attributes, '_id');
             attributes.screensetId = screensetId;
             attributes.createdAt = new Date();
-            attributes.sourceId = screensMap[attributes.sourceId];
-            attributes.targetId = screensMap[attributes.targetId];
-            ScreenConnections.insert(attributes);
+            attributes.sourceId = nodesMap[attributes.sourceId];
+            attributes.targetId = nodesMap[attributes.targetId];
+            NodeConnections.insert(attributes);
         });
         return screensetId;
     },
@@ -114,7 +129,7 @@ Meteor.methods({
         var self = this;
         
         console.log('removeScreens screensetId', screensetId);
-        var screens = Screens.find({screensetId: screensetId}).fetch();
+        var screens = Nodes.find({screensetId: screensetId}).fetch();
         _.each(screens, function(screen) {
             Meteor.call('removeScreen', screen._id);
         });
@@ -125,8 +140,8 @@ Meteor.methods({
 
         console.log('removeScreen screenId', screenId);
         // TODO permissions
-        ScreenConnections.remove({$or: [{sourceId: screenId},{targetId: screenId}]});
-        Screens.remove(screenId);
+        NodeConnections.remove({$or: [{sourceId: screenId},{targetId: screenId}]});
+        Nodes.remove(screenId);
     }
 });
 

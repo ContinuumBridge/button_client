@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {ReactMeteorData} from 'meteor/react-meteor-data';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 EditScreensetView = React.createClass({
    
@@ -19,25 +20,57 @@ EditScreensetView = React.createClass({
         }
         return data;
     },
-    
+
+    addNode: function(attrs) {
+
+        Nodes.insert(_.extend({
+            x: 200,
+            y: 100,
+            screensetId: this.data.screenset._id,
+            createdAt: new Date()
+        }, attrs));
+    },
+
     addScreen: function() {
         
         console.log('addScreen this.data.screenset._id', this.data.screenset._id);
-        
-        Screens.insert({
-            name: 'Test screen',
+
+        this.addNode({
+            type: 'screen',
             display: 'Test display',
-            x: 200,
-            y: 100,
             left: "",
             right: "",
             doubleLeft: "",
             doubleRight: "",
-            screensetId: this.data.screenset._id,
-            createdAt: new Date()
         });
     },
-    
+
+    addEmailAlert: function() {
+
+        console.log('addEmail this.data.screenset._id', this.data.screenset._id);
+
+        this.addNode({
+            type: 'emailAlert',
+            address: '',
+            message: '',
+            useScreensetDefault: false,
+            useButtonDefault: false
+        });
+    },
+
+    addSMSAlert: function() {
+
+        console.log('addEmail this.data.screenset._id', this.data.screenset._id);
+
+        this.addNode({
+            type: 'smsAlert',
+            number: '',
+            message: '',
+            useScreensetDefault: false,
+            useButtonDefault: false
+        });
+    },
+
     handleDestroy: function() {
 
         var screensetId = this.data.screenset && this.data.screenset._id;
@@ -48,8 +81,6 @@ EditScreensetView = React.createClass({
     },
         
     render: function() {
-        
-        console.log('edit screenset render this.data.screenset', this.data.screenset);
         
         var screenset = this.data.screenset;
         var name = screenset && screenset.get('name') || "";
@@ -78,6 +109,11 @@ EditScreensetView = React.createClass({
                             Add Screen
                         </button>
 
+                        <DropdownButton bsStyle="primary" title="Add Alert" id="addAlertDropdown">
+                            <MenuItem eventKey="1" onClick={this.addEmailAlert}>Email</MenuItem>
+                            <MenuItem eventKey="2" onClick={this.addSMSAlert}>Text Message</MenuItem>
+                        </DropdownButton>
+
                         <a className="js-delete-list nav-item" onClick={this.handleDestroy}>
                           <span className="icon-trash" title="Delete list"></span>
                         </a>
@@ -94,6 +130,13 @@ EditScreensetView = React.createClass({
         );
     }
 });
+
+/*
+<button className="btn-sm btn-primary btn-content dropdown-toggle">
+    Add Alert
+    <span class="caret"></span>
+</button>
+*/
 
 /*
                         {{#if screensReady}}

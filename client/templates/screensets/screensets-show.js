@@ -131,7 +131,7 @@ Template.screensetsShow.events({
 
     Modal.show('addScreensetModal');
     /*
-    Screens.insert({
+    Nodes.insert({
         name: 'Test',
         x: 50,
         y: 100,

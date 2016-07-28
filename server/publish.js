@@ -104,11 +104,11 @@ Meteor.publish('screensets', function() {
 });
 
 
-Meteor.publish('screens', function() {
+Meteor.publish('nodes', function() {
 
     if (this.userId) {
 
-        return Screens.find({});
+        return Nodes.find({});
         /*
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Screensets.find({});
@@ -123,11 +123,11 @@ Meteor.publish('screens', function() {
     }
 });
 
-Meteor.publish('screenConnections', function() {
+Meteor.publish('nodeConnections', function() {
 
     if (this.userId) {
 
-        return ScreenConnections.find({});
+        return NodeConnections.find({});
         /*
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Screensets.find({});

@@ -6,6 +6,19 @@
 }
 */
 
+.screen-inner .form-group {
+
+  &input[type="text"] {
+    border: solid;
+    border-color: black;
+  }
+}
+
+/*
+&input[type="email"],
+&input[type="password"] {
+*/
+
 #plumb .window {
   border: 1px solid #346789;
   box-shadow: 2px 2px 19px #aaa;
@@ -24,6 +37,7 @@
   text-align: center;
   z-index: 20;
   position: absolute;
+  /*background-color: #313236;*/
   background: white none;
   color: black;
   font-family: helvetica, sans-serif;
@@ -52,38 +66,42 @@
 }
 
 .screen {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .screen-inner {
-    float: left;
-    width: 100px;
-    height: 100px;
+  float: left;
+  /*width: 180px;
+  height: 110px;*/
 }
 
 .screen-inner > * {
-    pointer-events: all;
+  pointer-events: all;
 }
 
 .screen-inner .display {
-    width: 100px;
+  padding: 0px;
+  resize: none;
+
+  width: 222px;
+  height: 110px;
 }
 
 .screen-titlebar {
-    float: right;
-    pointer-events: all;
+  float: right;
+  pointer-events: all;
 }
 
 .screen-title-icon {
-    background: #F1F1F1;
-    color: @color-primary;
-    width: 20px;
-    height: 20px;
-    border-radius: 11px;
-    /* font-size: 25px; */
-    text-align: center;
-    /* margin-right: 10px; */
-    padding-top: 14.7%;
+  background: #F1F1F1;
+  color: @color-primary;
+  width: 20px;
+  height: 20px;
+  border-radius: 11px;
+  /* font-size: 25px; */
+  text-align: center;
+  /* margin-right: 10px; */
+  padding-top: 14.7%;
 }
 
 /*
