@@ -11,8 +11,8 @@ StartNodeView = React.createClass({
         
         var sourceEndpoints = [
             {
-                uuid: nodeId + "Default",
-                anchor: [0.5, 1, 1, 0, -200, 0],
+                uuid: nodeId + "TransitionTo",
+                anchor: [0.5, 1, 0, 1, -200, 0],
                 //label: "Double Right"
             }
         ];

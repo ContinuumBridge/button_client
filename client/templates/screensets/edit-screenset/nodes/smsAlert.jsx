@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-EmailAlertView = React.createClass({
+SMSAlertView = React.createClass({
 
     mixins: [ NodeDataMixin ],
    
@@ -38,9 +38,9 @@ EmailAlertView = React.createClass({
         return (
             <div className="screen-inner">
                 <div className="form-group">
-                    <label for="address">Email Address</label>
-                    <input name="address" value={node.get('address')}
-                           type="email" onChange={this.handleFieldChange} />
+                    <label for="number">SMS Number</label>
+                    <input name="number" value={node.get('number')}
+                           type="text" onChange={this.handleFieldChange} />
                 </div>
                 <div className="checkbox">
                     <input type="checkbox" name="useScreensetDefault" />

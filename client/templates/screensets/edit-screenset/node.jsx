@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 var InnerViews = {};
 InnerViews['screen'] = ScreenView;
 InnerViews['emailAlert'] = EmailAlertView;
+InnerViews['smsAlert'] = SMSAlertView;
 InnerViews['start'] = StartNodeView;
 //InnerViews['smsAlert'] = SMSAlertView;
 

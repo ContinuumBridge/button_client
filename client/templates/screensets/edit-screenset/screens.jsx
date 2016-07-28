@@ -91,69 +91,6 @@ ScreensView = React.createClass({
 
         var self = this;
 
-        //var screensetId = FlowRouter.getParam('postId');
-
-        //var query = Nodes.find({screensetId: this.data._id});
-        /*
-        var screensQuery = Nodes.find();
-        screensQuery.observeChanges({
-            added: function (id, fields) {
-                console.log('doc inserted', id, fields);
-            },
-            changed: function (id, fields) {
-                console.log('doc updated', id, fields);
-            },
-            removed: function (id) {
-                console.log('doc removed', id);
-            }
-        });
-        */
-
-        /*
-        var nodesList = this.props.nodes;
-        var nodes = this.state.nodes.slice();
-
-        var nodesListStream = Nodes.getStream(nodesList);
-        var connectionListStreams = {};
-        nodesListStream.onValue(function(update) {
-
-            var nodes = update.records;
-          
-            _.each(update.added, function(node) {
-
-                console.log('adding node', node);
-                var connectionListName = node.get('connections');
-                if (!connectionListName) return;
-                var connectionList = ds.record.getList(connectionListName);
-                connectionListStreams[connectionListName] = Connections.getStream(connectionList);
-            });
-
-            _.each(update.removed, function(node) {
-
-                console.log('removing node', node);
-                var connectionListName = node.get('connections');
-                if (!connectionListName) return;
-                var connectionList = ds.record.getList(connectionListName);
-                connectionList.unsubscribe();
-                delete connectionListStreams[connectionListName];
-            });
-
-            self.setState({
-                nodes: nodes
-            });
-
-            var connectionListsStream = Bacon.combineAsArray(_.values(connectionListStreams));
-
-            connectionListsStream.onValue(function(connectionLists) {
-
-                var connections = _.flatten(_.pluck(connectionLists, 'records'));
-                self.setState({
-                    connections: connections
-                });
-            });
-        });
-        */
-
         var plumbInitDeferred = this.state.plumbInitDeferred;
 
         var plumb = this.plumb = new Plumb("plumb", plumbInitDeferred);
