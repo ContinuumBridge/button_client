@@ -34,7 +34,7 @@ NodeView = React.createClass({
 
         var self = this;
         
-        console.log('componentWillUnmount 1');
+        console.log('node componentWillUnmount');
         var plumb = this.state.plumb;
         if (plumb) {
             var screenNode = ReactDOM.findDOMNode(this.refs['screen']);
@@ -49,7 +49,6 @@ NodeView = React.createClass({
             //self.initPlumb(plumb);
         }).done();
         */
-        console.log('componentWillUnmount 2');
     },
     
     setupEndpointsWrapper: function(sourceEndpoints, targetEndpoints) {

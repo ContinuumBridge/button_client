@@ -25,6 +25,17 @@ ScreensView = React.createClass({
 
     mixins: [ ReactMeteorData ],
 
+    getInitialState: function() {
+
+        return {
+            nodes: [],
+            connections: [],
+            renderedConnections: [],
+            plumbInitDeferred: Q.defer(),
+            plumb: false
+        }
+    },
+
     getMeteorData: function() {
         
         var self = this;
@@ -76,17 +87,6 @@ ScreensView = React.createClass({
         return data;
     },
 
-    getInitialState: function() {
-
-        console.log('screens getInitialState');
-        return {
-            nodes: [],
-            connections: [],
-            renderedConnections: [],
-            plumbInitDeferred: Q.defer()
-        }
-    },
-
     componentDidMount: function() {
 
         var self = this;
@@ -102,7 +102,8 @@ ScreensView = React.createClass({
         */
 
         plumbInitDeferred.promise.then(function(plumb) {
-
+            
+            
             plumb.bind('beforeDrop', function(connInfo, originalEvent) {
 
                 console.log('beforeDrop connInfo', connInfo);
@@ -114,7 +115,21 @@ ScreensView = React.createClass({
                 return self.onDisconnection(connInfo);
                 //updateConnections(info.connection, true);
             });
+
+            self.setState({plumb: plumb});
+            
         }).done();
+    },
+
+    componentWillUnmount: function() {
+
+        console.log('screens componentWillUnmount');
+
+        var plumb = this.state.plumb;
+        if (plumb) {
+            plumb.unbind();
+            plumb.reset();
+        }
     },
 
     onConnection: function(connInfo, remove) {
