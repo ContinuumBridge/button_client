@@ -20,7 +20,7 @@
 */
 
 #plumb .window {
-  border: 1px solid #346789;
+  border: 5px solid #313236;
   box-shadow: 2px 2px 19px #aaa;
   -o-box-shadow: 2px 2px 19px #aaa;
   -webkit-box-shadow: 2px 2px 19px #aaa;
@@ -49,6 +49,7 @@
   transition: box-shadow 0.15s ease-in;
 }
 
+/*
 #plumb .window:hover {
   box-shadow: 2px 2px 19px #444;
   -o-box-shadow: 2px 2px 19px #444;
@@ -56,6 +57,7 @@
   -moz-box-shadow: 2px 2px 19px #444;
   opacity: 0.6;
 }
+*/
 
 #plumb .active {
   border: 1px dotted green;
@@ -71,6 +73,7 @@
 
 .screen-inner {
   float: left;
+  margin-right: 4px;
   /*width: 180px;
   height: 110px;*/
 }
@@ -79,22 +82,64 @@
   pointer-events: all;
 }
 
-.screen-inner .display {
-  padding: 0px;
-  resize: none;
+.screen-inner {
 
+  input[role="combobox"] {
+    /* Duplicate bootstrap form-control for combobox */
+    display: block;
+    width: 100%;
+    height: 34px;
+    background-color: #fff;
+    background-image: none;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+  }
+
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[role="combobox"] {
+    /*width: 210px;*/
+    border: #313236;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 0.5em;
+    padding: 0px;
+    resize: none;
+  }
+
+  div {
+    display: block;
+  }
+
+  .form-group {
+    margin-bottom: 3px;
+
+    .control-label {
+      float: left;
+      margin-bottom: 1px;
+    }
+  }
+}
+
+.screen-inner .display {
   width: 222px;
   height: 110px;
 }
 
 .screen-titlebar {
+  margin: 0px 1px;
   float: right;
   pointer-events: all;
 }
 
+.screen-titlebar > div {
+  margin: 1px 0px;
+}
+
 .screen-title-icon {
-  background: #F1F1F1;
-  color: @color-primary;
+  background: @color-ancillary;
+  color: @color-tertiary;
   width: 20px;
   height: 20px;
   border-radius: 11px;

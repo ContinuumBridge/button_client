@@ -1,5 +1,7 @@
 
 import React from 'react';
+import {ControlLabel, FormControl, FormGroup} from 'react-bootstrap';
+import AddressView from '../../../_components/address-field';
 
 SMSAlertView = React.createClass({
 
@@ -34,24 +36,20 @@ SMSAlertView = React.createClass({
     render: function() {
         
         var node = this.data.node;
+        var sms = node.get('sms') || "";
 
         return (
             <div className="screen-inner">
-                <div className="form-group">
-                    <label for="number">SMS Number</label>
-                    <input name="number" value={node.get('number')}
-                           type="text" onChange={this.handleFieldChange} />
-                </div>
-                <div className="checkbox">
-                    <input type="checkbox" name="useScreensetDefault" />
-                    <label for="useScreensetDefault"></label>
-                    <div>Use screenset default</div>
-                </div>
-                <div className="checkbox">
-                    <input type="checkbox" name="useButtonDefault" />
-                    <label for="useButtonDefault"></label>
-                    <div>Use button default</div>
-                </div>
+                <FormGroup controlId={1}>
+                    <ControlLabel>SMS number</ControlLabel>
+                    <AddressView value={sms} onResize={this.props.onResize}
+                                 type='sms' onChange={this.handleFieldChange.bind(this, 'sms')} />
+                </FormGroup>
+                <FormGroup controlId={2}>
+                    <ControlLabel>Message</ControlLabel>
+                    <FormControl name="message" type="text" value={node.get('message')}
+                                 onChange={this.handleFieldChange.bind(this, 'message')}/>
+                </FormGroup>
             </div>
         )
     }

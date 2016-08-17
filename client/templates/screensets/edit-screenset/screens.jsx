@@ -39,13 +39,11 @@ ScreensView = React.createClass({
     getMeteorData: function() {
         
         var self = this;
-        console.log('screens getMeteorData');
         var data = {};
         //var postId = this.props.postId;
         var screensHandle = Meteor.subscribe('nodes');
         if (screensHandle.ready()) {
             var screensetId = FlowRouter.getParam('screensetId');
-            console.log('screensetId ', screensetId );
             var screens = Nodes.find({screensetId: screensetId});
             /*
             screens.observeChanges({
@@ -70,14 +68,14 @@ ScreensView = React.createClass({
                 var connections = NodeConnections.find({screensetId: screensetId});
                 connections.observeChanges({
                     added: function (id, fields) {
-                        console.log('connection inserted 1', id, fields);
+                        //console.log('connection inserted 1', id, fields);
                         self.addPlumbConnection(id, fields);
                     },
                     changed: function (id, fields) {
-                        console.log('connection updated', id, fields);
+                        //console.log('connection updated', id, fields);
                     },
                     removed: function (id) {
-                        console.log('connection removed', id);
+                        //console.log('connection removed', id);
                         self.removePlumbConnection(id);
                     }
                 });
@@ -123,7 +121,7 @@ ScreensView = React.createClass({
 
     componentWillUnmount: function() {
 
-        console.log('screens componentWillUnmount');
+        //console.log('screens componentWillUnmount');
 
         var plumb = this.state.plumb;
         if (plumb) {
@@ -134,9 +132,9 @@ ScreensView = React.createClass({
 
     onConnection: function(connInfo, remove) {
 
-        console.log('onConnection connInfo', connInfo);
+        //console.log('onConnection connInfo', connInfo);
         var sourceUUID = connInfo.connection.endpoints[0].getUuid();
-        console.log('sourceUUID ', sourceUUID );
+        //console.log('sourceUUID ', sourceUUID );
         //return true;
         var sourceId = sourceUUID.substring(0, 17);
         var targetId = connInfo.targetId;
@@ -144,7 +142,7 @@ ScreensView = React.createClass({
         //return false;
         if (sourceId == targetId) return false;
         var sourceAnchor = sourceUUID.substring(17);
-        console.log('this.props.screenset._id', this.props.screenset._id);
+        //console.log('this.props.screenset._id', this.props.screenset._id);
 
         var screenConnectionId = NodeConnections.insert({
             sourceId: sourceId,
@@ -168,21 +166,17 @@ ScreensView = React.createClass({
     addPlumbConnection: function(id, fields) {
 
         var plumbInitDeferred = this.state.plumbInitDeferred;
-        console.log('addPlumbConnection fields', fields);
-        console.log('id', id);
+        //console.log('addPlumbConnection fields', fields);
+        //console.log('id', id);
         
         plumbInitDeferred.promise.then(function(plumb) {
             
-            console.log('fields.sourceId', fields.sourceId);
-            console.log('fields.targetId', fields.targetId);
-            //console.log('fields.', fields.sourceId);
             var connection = plumb.connect({
                 uuids: [fields.sourceId + fields.sourceAnchor
                         , fields.targetId + fields.targetAnchor],
                 editable: true
             });
             connection.id = id;
-            console.log('addPlumbConnection connection ', connection );
         });
     },
 
@@ -199,14 +193,12 @@ ScreensView = React.createClass({
 
         var self = this;
         var screens = this.data.screens;
-        console.log('screens ', screens );
         
         if (screens.length > 0) {
 
             return screens.map(function (screen, index) {
 
                 var plumbInit = self.state.plumbInitDeferred.promise;
-                console.log('renderScreens screen', screen);
                 return <NodeView key={screen._id} 
                                    record={screen} plumbInitPromise={plumbInit} />;
             });
@@ -224,7 +216,7 @@ ScreensView = React.createClass({
 
         var self = this;
 
-        console.log('screens render this.data ', this.data);
+        //console.log('screens render this.data ', this.data);
 
         /*
         var nodes = this.state.nodes.map(function(node, index) {

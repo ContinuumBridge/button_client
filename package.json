@@ -15,6 +15,7 @@
     "react-addons-test-utils": "^0.14.8",
     "react-addons-transition-group": "^0.14.8",
     "react-addons-update": "^0.14.8",
+    "react-autosuggest": "^4.0.0",
     "react-bootstrap": "^0.30.0-rc.2",
     "react-dom": "^0.14.8",
     "react-mounter": "^1.2.0",

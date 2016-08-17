@@ -37,7 +37,7 @@ NodeView = React.createClass({
         console.log('node componentWillUnmount');
         var plumb = this.state.plumb;
         if (plumb) {
-            var screenNode = ReactDOM.findDOMNode(this.refs['screen']);
+            var screenNode = ReactDOM.findDOMNode(this.refs['node']);
             plumb.detachAllConnections(screenNode);
             plumb.removeAllEndpoints(screenNode)
         }
@@ -64,9 +64,9 @@ NodeView = React.createClass({
 
         var self = this;
 
-        var screen = this.props.record;
+        var node = this.props.record;
         //var screenUID = screen._id;
-        var screenNode = ReactDOM.findDOMNode(this.refs['screen']);
+        var nodeElement = ReactDOM.findDOMNode(this.refs['node']);
 
         // this is the paint style for the connecting lines..
         var connectorPaintStyle = {
@@ -93,7 +93,7 @@ NodeView = React.createClass({
             endpoint: "Dot",
             paintStyle: {
                 strokeStyle: "#0000C4",
-                fillStyle: "transparent",
+                fillStyle: "#f6f6f6",
                 radius: 7,
                 lineWidth: 3
             },
@@ -133,22 +133,35 @@ NodeView = React.createClass({
                     cssClass: "endpointSourceLabel"
                 }];
             */
-            plumb.addEndpoint(screenNode, sourceEndpoint, endpoint);
+            plumb.addEndpoint(nodeElement, sourceEndpoint, endpoint);
         });
 
         _.each(targetEndpoints, function(endpoint) {
-            plumb.addEndpoint(screenNode, targetEndpoint, endpoint);
+            plumb.addEndpoint(nodeElement, targetEndpoint, endpoint);
         });
 
         this.state.nodeElementDeferred.resolve({
             plumb: plumb,
-            element: this.refs.screen
+            element: this.refs.node
         });
+    },
+
+    redrawEndpoints: function() {
+        
+        var self = this;
+        
+        this.props.plumbInitPromise.then(function(plumb) {
+            
+            var nodeElement = ReactDOM.findDOMNode(self.refs['node']);
+            plumb.recalculateOffsets(nodeElement);
+            //plumb.repaint(nodeElement);
+            plumb.repaintEverything();
+        }).done();
     },
 
     handleMouseUp: function() {
 
-        var style = this.refs.screen.style;
+        var style = this.refs.node.style;
         Nodes.update(this.props.record._id, {
             $set: { x: parseInt(style.left, 10)
                   , y: parseInt(style.top, 10)}
@@ -180,7 +193,8 @@ NodeView = React.createClass({
         var innerView;
         if (InnerView) {
             //innerView = <InnerView record={node} engine={this.props.engine} nodes={this.props.nodes} />;
-            innerView = <InnerView record={node} setupEndpoints={this.setupEndpointsWrapper} />
+            innerView = <InnerView record={node} setupEndpoints={this.setupEndpointsWrapper}
+                            onResize={this.redrawEndpoints} />
         } else {
             innerView = <div></div>;
         }
@@ -192,7 +206,7 @@ NodeView = React.createClass({
         }
         var nodeElement = this.state.nodeElementDeferred.promise;
         return (
-            <div className="draggable-object window screen" style={style} id={node._id} ref="screen"
+            <div className="draggable-object window screen" style={style} id={node._id} ref="node"
                 onMouseUp={this.handleMouseUp} onClick={this.handleClick} >
                 {innerView}
                 <TitlebarView parentElementPromise={nodeElement} handleDestroy={this.handleDestroy} />
