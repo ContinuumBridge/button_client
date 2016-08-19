@@ -34,7 +34,6 @@ NodeView = React.createClass({
 
         var self = this;
         
-        console.log('node componentWillUnmount');
         var plumb = this.state.plumb;
         if (plumb) {
             var screenNode = ReactDOM.findDOMNode(this.refs['node']);
@@ -177,7 +176,6 @@ NodeView = React.createClass({
 
     handleDisplayChange: function(event) {
 
-        console.log('handleDisplayChange event', event.target.value);
         Nodes.update(this.props.record._id, {
             $set: { display: event.target.value },
         });
@@ -186,7 +184,6 @@ NodeView = React.createClass({
 
     render: function() {
 
-        console.log('render NodeView');
         var node = this.props.record;
         
         var InnerView = InnerViews[node.get('type')];

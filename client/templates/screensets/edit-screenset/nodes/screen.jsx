@@ -53,7 +53,7 @@ ScreenView = React.createClass({
         return (
             <div className="screen-inner">
                 <textarea name="display" className="display" value={node.get('display')}
-                          onChange={this.handleFieldChange} />
+                          onChange={this.handleFieldChange.bind(this, 'display')} />
             </div>
         )
     }

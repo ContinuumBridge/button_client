@@ -5,7 +5,8 @@ Meteor.methods({
 
     createAccountUser: function(attributes) {
 
-        console.log('attributes', attributes);
+        console.log('createAccountUser', userId );
+        
         // TODO Permissions
         var userId = Accounts.createUser(_.omit(attributes, 'isAdmin', 'organisationIds')/*, function(error) {
                 if (error) {
@@ -15,7 +16,6 @@ Meteor.methods({
         );
         
         Users.update({_id: userId}, {$set:{organisationIds: attributes.organisationIds}});
-        console.log('userId ', userId );
         if (attributes.isAdmin) {
             Roles.addUsersToRoles(userId, ['admin']);
         }
@@ -70,7 +70,6 @@ Meteor.methods({
         
         var user = Meteor.user();
         var organisationId = user.organisationIds && user.organisationIds[0];
-        console.log('organisationId ', organisationId );
         if (!organisationId) return;
         
         var screensetId = Screensets.insert({
@@ -80,23 +79,24 @@ Meteor.methods({
         });
         
         var templateNodes = Nodes.find({screensetId: templateId}).fetch();
-        var startNode = _.findWhere(templateNodes, {type: 'start'});
+        //var startNode = _.findWhere(templateNodes, {type: 'start'});
         
-        console.log('startNode ', startNode );
         
         // Key: template id. Value: instantiated id
         var nodesMap = {};
         
+        var hasStartNode = false;
+        
         _.each(templateNodes, function(templateNode) {
-            console.log('templateScreen', templateNode.attributes);
             var attributes = _.omit(templateNode.attributes, '_id');
             attributes.screensetId = screensetId;
             attributes.createdAt = new Date();
             var nodeId = Nodes.insert(attributes);
             nodesMap[templateNode._id] = nodeId;
+            if (attributes.type == 'start') hasStartNode = true;
         });
 
-        if (!startNode) {
+        if (!hasStartNode) {
             // Insert a start node if it doesn't exist in the template
             Nodes.insert({
                 type: 'start',
@@ -128,7 +128,7 @@ Meteor.methods({
 
         var self = this;
         
-        console.log('removeScreens screensetId', screensetId);
+        console.log('removeScreenset screensetId', screensetId);
         var screens = Nodes.find({screensetId: screensetId}).fetch();
         _.each(screens, function(screen) {
             Meteor.call('removeScreen', screen._id);

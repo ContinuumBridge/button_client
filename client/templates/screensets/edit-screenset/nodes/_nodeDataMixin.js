@@ -7,7 +7,6 @@ NodeDataMixin = {
 
     getMeteorData: function() {
 
-        console.log('screen getMeteorData', this.props);
         var nodeId = this.props.record._id;
         var node = Nodes.findOne(nodeId);
 
