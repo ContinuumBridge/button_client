@@ -33,7 +33,6 @@ Template.buttonsItem.helpers({
                 return 'off';
         }
     },
-
     ledLabel: function() {
 
         if (this.attributes.showCustom) return "Custom: " + this.attributes.customMessage;
@@ -67,11 +66,8 @@ Template.buttonsItem.helpers({
 
 Template.buttonsItem.events({
 
-    'change [type=checkbox]': function(event) {
-        var checked = $(event.target).is(':checked');
-        var data = {};
-        data[event.target.id] = checked;
-        Buttons.update(this._id, {$set: data});
+    'change .js-show-custom': function(event) {
+        Buttons.update(this._id, {$set: {showCustom: event.currentTarget.checked}});
     },
 
     'focus input[type=text]': function(event) {
@@ -84,22 +80,22 @@ Template.buttonsItem.events({
     },
 
     'keydown input[type=text]': function(event) {
-      // ESC or ENTER
-      if (event.which === 27 || event.which === 13) {
-        event.preventDefault();
-        event.target.blur();
-      }
+        // ESC or ENTER
+        if (event.which === 27 || event.which === 13) {
+          event.preventDefault();
+          event.target.blur();
+        }
     },
 
     // update the text of the item on keypress but throttle the event to ensure
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
     'keyup input[type=text]': _.throttle(function(event) {
-      //console.log('edit event', event);
-      var data = {};
-      data[event.target.id] = event.target.value;
-      Buttons.update(this._id, {$set: data});
-      //Buttons.update(this._id, {$set: {text: event.target.value}});
+        //console.log('edit event', event);
+        var data = {};
+        data[event.target.id] = event.target.value;
+        Buttons.update(this._id, {$set: data});
+        //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
     //'mousedown .js-button-action, click .js-button-action': function(event) {
@@ -129,7 +125,12 @@ Template.buttonsItem.events({
 
     'mousedown .js-button-config, click .js-button-config': function(event) {
 
-        Modal.show('buttonConfigModal', this);
+        // Don't use this._id directly, otherwise reactivness doesn't work :S
+        // https://github.com/PeppeL-G/bootstrap-3-modal/issues/5
+        var id = this._id;
+        Modal.show('buttonConfigModal', function() { 
+            return Buttons.findOne({_id: id});
+        });
     },
 
     // handle mousedown otherwise the blur handler above will swallow the click
@@ -146,6 +147,6 @@ Template.buttonsItem.onRendered(function() {
     // Activate the tooltip(s)
     var el = this.find('[data-toggle="tooltip"]');
     var $el = $(el);
-    console.log('buttonsItem onRendered el', $el);
+    //console.log('buttonsItem onRendered el', $el);
     $el.tooltip();
 });

@@ -1,0 +1,33 @@
+<template name="screensetItem">
+  <tr>
+  <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+    <td class="col-md-4"><input type="text" value="{{attributes.name}}" id="name" class="table-input" placeholder="ID"></td>
+    <td class="col-md-4">
+      <button class="js-edit-screenset btn-sm btn-default btn-content" id={{_id}} type="submit">
+          Edit
+      </button>
+    </td>
+    {{#if isInRole 'admin'}}
+        <td class="col-md-3">
+            <td class="col-md-2">
+            <div class="checkbox">
+                    <input id="{{_id}}showCustom" name="isTemplate" type="checkbox" checked="{{attributes.isTemplate}}" class="table-input js-is-template" >
+                    <label for="{{_id}}showCustom" class="isAdmin"></label>
+                </div>
+            </td>
+        </td>
+    {{else}}
+        <td class="col-md-3">
+        </td>
+    {{/if}}
+    <td class="col-md-1 delete-item-wrapper">
+      <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
+    </td>
+  <!--</div>-->
+  </tr>
+</template>
+
+<!--
+<a href="{{pathFor 'editScreenset' screensetId=_id}}" class="list-button {{activeListClass}}" title="{{name}}">
+</a>
+-->

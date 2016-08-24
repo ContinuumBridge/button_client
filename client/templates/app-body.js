@@ -26,12 +26,24 @@ Meteor.startup(function () {
   // Only show the connection error box if it has been 5 seconds since
   // the app started
   setTimeout(function () {
+    // FIXME
     // Launch screen handle created in lib/router.js
-    dataReadyHold.release();
+    //dataReadyHold.release();
 
     // Show the connection error box
     Session.set(SHOW_CONNECTION_ISSUE_KEY, true);
   }, CONNECTION_ISSUE_TIMEOUT);
+});
+
+Template.appBody.onCreated(function() {
+  var self = this;
+  self.autorun(function() {
+    //var postId = FlowRouter.getParam('postId');
+    self.subscribe('lists');
+    self.subscribe('organisations');
+    self.subscribe('screensets');
+    self.subscribe('users');
+  });
 });
 
 Template.appBody.onRendered(function() {
@@ -53,6 +65,17 @@ Template.appBody.onRendered(function() {
 });
 
 Template.appBody.helpers({
+ 
+  hasReactComponent: function() {
+      console.log('hasReactComponent');
+      console.log('FlowRouter.current().route', FlowRouter.current().route);
+      return !_.isUndefined(FlowRouter.current().route.options.reactComponent);
+  },
+  
+  reactComponent: function() {
+      console.log('FlowRouter.current().route.options.reactComponent()', FlowRouter.current().route.options.reactComponent());
+      return FlowRouter.current().route.options.reactComponent();
+  },
   // We use #each on an array of one item so that the "list" template is
   // removed and a new copy is added when changing lists, which is
   // important for animation purposes. #each looks at the _id property of it's
@@ -88,6 +111,7 @@ Template.appBody.helpers({
   lists: function() {
     //var organisationId = Session.get(ORGANISATION_KEY);
     var organisation = Meteor.getCurrentOrganisation();
+    console.log('getCurrentOrganisation organisation ', organisation );
     if (organisation) {
       return Lists.find({organisationId: organisation._id});
     } else {
@@ -95,10 +119,14 @@ Template.appBody.helpers({
     }
   },
   activeListClass: function() {
+    return;
+    // FIXME
+    /*
     var current = Router.current();
     if (current.route.name === 'listsShow' && current.params._id === this._id) {
       return 'active';
     }
+    */
   },
   connected: function() {
     if (Session.get(SHOW_CONNECTION_ISSUE_KEY)) {
@@ -132,7 +160,7 @@ Template.appBody.events({
   'click .js-logout': function() {
     Meteor.logout();
 
-    Router.go('signin');
+    Meteor.navigateTo('signin');
 
     // if we are on a private list, we'll need to go to a public one
     /*
@@ -148,6 +176,6 @@ Template.appBody.events({
     var list = {name: Lists.defaultName(), organisationId: Meteor.getCurrentOrganisation()._id};
     list._id = Lists.insert(list);
 
-    Router.go('listShow', list);
+    FlowRouter.go('listShow', list);
   }
 });

@@ -1,0 +1,68 @@
+<template name="screensetsShow">
+  <div class="page lists-show">
+      <nav class="js-title-nav">
+
+          <div class="nav-group">
+              <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+          </div>
+
+          <h1 class="js-edit-list title-page"><span class="title-wrapper">Screensets</span></h1>
+
+
+      </nav>
+
+    <table class="item-list table table-striped">
+      <thead>
+          <tr>
+          <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
+            <td class="col-md-4">Name</td>
+            <td class="col-md-4"></td>
+            {{#if isInRole 'admin'}}
+                <td class="col-md-3">Is Template</td>
+            {{else}}
+                <td class="col-md-3"></td>
+            {{/if}}
+            <td class="col-md-1"></td>
+          <!--</div>-->
+          </tr>
+      </thead>
+      <tbody>
+      <!--<div class="content-scrollable list-items">-->
+      {{#if Template.subscriptionsReady}}
+          {{#each screensets this}}
+            {{> screensetItem}}
+          {{else}}
+            <div class="wrapper-message">
+              <div class="title-message">No screensets here</div>
+              <div class="subtitle-message">Add new screensets using the button above</div>
+            </div>
+          {{/each}}
+      {{else}}
+          <div class="wrapper-message">
+            <div class="title-message">Loading screensets...</div>
+          </div>
+      {{/if}}
+      </tbody>
+    </table>
+
+    <form class="js-button-new button-new input-symbol">
+        <!--<span class="icon-add js-button-add"></span>-->
+        <button class="js-item-add btn-sm btn-primary" type="submit">
+            Add Screenset
+        </button>
+    </form>
+
+  </div>
+</template>
+
+<!--
+<div class="nav-group right">
+            {{#if isInRole 'admin'}}
+              <div>
+                <button class="js-edit-defaults btn-sm btn-primary btn-default" type="submit">
+                    Edit Templates
+                </button>
+              </div>
+            {{/if}}
+          </div>
+          -->

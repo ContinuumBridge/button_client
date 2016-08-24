@@ -1,13 +1,66 @@
 <template name="addUserModal">
-    <form class="input-symbol">
-        <td><input type="text" class="email" placeholder="Email"></td>
-        <td><input type="password" class="password" placeholder="Password"></td>
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Add a user</h4>
+                </div>
+
+                <form class="input-symbol modal-form">
+                    <div class="modal-body">
+                        <div class="well">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input name="email" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input name="password" type="password">
+                            </div>
+                            <div class="form-group hold-height">
+                                <div class="checkbox">
+                                    <input id="isAdmin" type="checkbox" name="isAdmin">
+                                    <label for="isAdmin"></label>
+                                    <div>Is Admin</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        {{organisationName}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        {{#each organisations}}
+                                            <li><a href="#" class="js-select-organisation" user={{../_id}} id={{_id}}>{{attributes.name}}</a></li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button submit" class="js-add-button btn btn-default">Add User</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<!--
+    <form class="modal-form">
+        <td><input type="text" class="email field" placeholder="Email"></td>
+        <td><input type="password" class="password field" placeholder="Password"></td>
         <td>
-            <label class="checkbox">
-                <input type="checkbox" class="isAdmin table-input" name="enabled">
-                <!--<span class="checkbox-custom"></span>-->
-            </label>
+            <span class="field">
+                <input type="checkbox" class="isAdmin" name="enabled">
+                <label>Is Admin</label>
+            </span>
         </td>
-        <!--<td><span class="icon-add js-button-add"></span></td>-->
     </form>
 </template>
+-->

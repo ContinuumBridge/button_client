@@ -6,7 +6,20 @@ var firstRender = true;
 var organisationRenderHold = LaunchScreen.hold();
 organisationFadeInHold = null;
 
+Template.organisationsShow.onCreated(function() {
+  /*
+    var self = this;
+    self.autorun(function() {
+        var listId = FlowRouter.getParam('listId');
+        console.log('listId ', listId );
+        self.subscribe('buttons', listId);
+        self.subscribe('lists', listId);
+    });
+  */
+});
+
 Template.organisationsShow.onRendered(function() {
+  /*
   if (firstRender) {
     // Released in app-body.js
     organisationFadeInHold = LaunchScreen.hold();
@@ -16,6 +29,7 @@ Template.organisationsShow.onRendered(function() {
 
     firstRender = false;
   }
+  */
 
   this.find('.js-title-nav')._uihooks = {
     insertElement: function(node, next) {
@@ -37,9 +51,11 @@ Template.organisationsShow.helpers({
     return Session.get(EDITING_KEY);
   },
 
+  /*
   organisationsReady: function() {
     return Router.current().organisationsHandle.ready();
   },
+  */
 
   organisations: function(organisationId) {
     return Organisations.find({});

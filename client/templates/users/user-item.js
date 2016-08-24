@@ -17,10 +17,13 @@ Template.userItem.helpers({
         return this.state == 'Pressed' ? 'green' : '';
     },
     organisationName: function() {
-        console.log('this', Users.build(this));
-        //console.log('this.organisations.findOne().name', Users.build(this).organisations.findOne().name);
-        var organisation = Users.build(this).organisations.findOne();
-        return organisation ? organisation.get('name') : "None";
+        var organisationId = this.organisationIds && this.organisationIds[0];
+        console.log('organisationName organisationId ', organisationId );
+        if (organisationId) {
+            return Organisations.findOne(organisationId).get('name');
+        } else {
+            return "Organisation";
+        }
     },
     organisations: function() {
         return Organisations.find({});
@@ -57,9 +60,8 @@ Template.userItem.events({
         //Buttons.update(this._id, {$set: {text: event.target.value}});
     }, 300),
 
-    'change #isAdmin':function(e){
+    'change .js-is-admin':function(e){
     //'change input[type=checkbox]':function(e){
-        console.log('e', e.currentTarget.checked);
         if (e.currentTarget.checked) {
             Roles.addUsersToRoles(this._id, ['admin']);
         } else {
@@ -107,6 +109,6 @@ Template.userItem.events({
     // handle mousedown otherwise the blur handler above will swallow the click
     // on iOS, we still require the click event so handle both
     'mousedown .js-delete-item, click .js-delete-item': function() {
-      Users.remove(this._id);
+        Users.remove(this._id);
     }
 });

@@ -1,0 +1,39 @@
+{
+  "name": "button_client",
+  "version": "1.0.0",
+  "description": "A ContinuumBridge client for Button App (button_app)",
+  "main": "mobile-config.js",
+  "dependencies": {
+    "meteor-node-stubs": "^0.2.3",
+    "q": "^1.4.1",
+    "react": "^0.14.8",
+    "react-addons-create-fragment": "^0.14.8",
+    "react-addons-css-transition-group": "^0.14.8",
+    "react-addons-linked-state-mixin": "^0.14.8",
+    "react-addons-perf": "^0.14.8",
+    "react-addons-pure-render-mixin": "^0.14.8",
+    "react-addons-test-utils": "^0.14.8",
+    "react-addons-transition-group": "^0.14.8",
+    "react-addons-update": "^0.14.8",
+    "react-autosuggest": "^4.0.0",
+    "react-bootstrap": "^0.30.0-rc.2",
+    "react-dom": "^0.14.8",
+    "react-mounter": "^1.2.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContinuumBridge/button_client.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ContinuumBridge/button_client/issues"
+  },
+  "homepage": "https://github.com/ContinuumBridge/button_client#readme"
+}

@@ -1,0 +1,9 @@
+<template name="main">
+    <div>
+        {{#if hasReactComponent}}
+            <div>{{> React component=reactComponent app_data=app_data}}</div>
+        {{else}}
+            {{> Template.dynamic template=page}}
+        {{/if}}
+    </div>
+</template>

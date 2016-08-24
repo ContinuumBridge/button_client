@@ -1,36 +1,38 @@
 <template name="listShow">
   <div class="page lists-show">
       <nav class="js-title-nav">
-          {{#if editing}}
-            <form class="js-edit-form list-edit-form">
-              <input type="text" name="name" value="{{attributes.name}}">
-              <div class="nav-group right">
-                <a href="#" class="js-cancel nav-item"><span class="icon-close js-cancel" title="Cancel"></span></a>
-              </div>
-            </form>
-          {{else}}
-            <div class="nav-group">
-              <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
-            </div>
+          {{#if Template.subscriptionsReady}}
+              {{#if editing}}
+                <form class="js-edit-form list-edit-form">
+                  <input type="text" name="name" value="{{list.attributes.name}}">
+                  <div class="nav-group right">
+                    <a href="#" class="js-cancel nav-item"><span class="icon-close js-cancel" title="Cancel"></span></a>
+                  </div>
+                </form>
+              {{else}}
+                <div class="nav-group">
+                  <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
+                </div>
 
-            <h1 class="js-edit-list title-page"><span class="title-wrapper">{{attributes.name}}</span></h1>
+                <h1 class="js-edit-list title-page"><span class="title-wrapper">{{list.attributes.name}}</span></h1>
 
-            <div class="nav-group right">
-              <div class="nav-item options-mobile">
-                <select class="list-edit">
-                  <option value="delete">Delete</option>
-                </select>
-                <span class="icon-cog"></span>
-              </div>
-              <div class="options-web">
-                <button class="js-edit-defaults btn-sm btn-primary btn-default" type="submit">
-                    Defaults
-                </button>
-                <a class="js-delete-list nav-item">
-                  <span class="icon-trash" title="Delete list"></span>
-                </a>
-              </div>
-            </div>
+                <div class="nav-group right">
+                  <div class="nav-item options-mobile">
+                    <select class="list-edit">
+                      <option value="delete">Delete</option>
+                    </select>
+                    <span class="icon-cog"></span>
+                  </div>
+                  <div class="options-web">
+                    <button class="js-edit-defaults btn-sm btn-primary btn-default" type="submit">
+                        Defaults
+                    </button>
+                    <a class="js-delete-list nav-item">
+                      <span class="icon-trash" title="Delete list"></span>
+                    </a>
+                  </div>
+                </div>
+              {{/if}}
           {{/if}}
 
       </nav>
@@ -39,8 +41,7 @@
             <tr>
             <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
                 <td class="col-md-1">Status</td>
-                <td class="col-md-4">Name</td>
-                <td class="col-md-2">Show Custom</td>
+                <td class="col-md-6">Name</td>
                 <td class="col-md-2">Signal</td>
                 <td class="col-md-2"></td>
                 <td class="col-md-1"></td>
@@ -49,13 +50,13 @@
         </thead>
       <tbody>
       <!--<div class="content-scrollable list-items">-->
-      {{#if buttonsReady}}
-        {{#with _id}} {{! Establish new data context with only the '_id'
+      {{#if Template.subscriptionsReady}}
+        {{#with list._id}} {{! Establish new data context with only the '_id'
                           field. This way, when the 'incompleteCount' field
                           changes, we don't re-render the list contents }}
-          {{#each buttons this}}
-            {{> buttonsItem}}
-          {{else}}
+            {{#each buttons this}}
+              {{> buttonsItem}}
+            {{else}}
             <div class="wrapper-message">
               <div class="title-message">No buttons here</div>
               <div class="subtitle-message">Add new buttons using the button above</div>
@@ -72,7 +73,7 @@
 
     <form class="js-button-new button-new input-symbol">
         <!--<span class="icon-add js-button-add"></span>-->
-        <button class="js-item-add btn-sm btn-default btn-primary" type="submit">
+        <button class="js-item-add btn-sm btn-primary" type="submit">
             Add Button
         </button>
     </form>

@@ -3,19 +3,31 @@ Session.setDefault(EDITING_KEY, false);
 
 // Track if this is the first time the list template is rendered
 var firstRender = true;
-var listRenderHold = LaunchScreen.hold();
-listFadeInHold = null;
+//var listRenderHold = LaunchScreen.hold();
+//listFadeInHold = null;
+
+Template.listShow.onCreated(function() {
+    var self = this;
+    self.autorun(function() {
+        var listId = FlowRouter.getParam('listId');
+        console.log('listId ', listId );
+        self.subscribe('buttons', listId);
+        self.subscribe('lists', listId);
+    });
+});
 
 Template.listShow.onRendered(function() {
+    /*
   if (firstRender) {
     // Released in app-body.js
-    listFadeInHold = LaunchScreen.hold();
+    //listFadeInHold = LaunchScreen.hold();
 
     // Handle for launch screen defined in app-body.js
-    listRenderHold.release();
+    //listRenderHold.release();
 
     firstRender = false;
   }
+     */
 
   this.find('.js-title-nav')._uihooks = {
     insertElement: function(node, next) {
@@ -33,19 +45,22 @@ Template.listShow.onRendered(function() {
 });
 
 Template.listShow.helpers({
-  editing: function() {
-    return Session.get(EDITING_KEY);
-  },
-
-  buttonsReady: function() {
-    return Router.current().listHandle.ready();
-  },
-
-  buttons: function(listId) {
-    //return Lists.
-    console.log('Buttons.find({listId: listId}, {sort: {name : 1}})', Buttons.find({listId: listId}, {sort: {name : 1}}));
-    return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
-  }
+    
+    editing: function() {
+      return Session.get(EDITING_KEY);
+    },
+    
+    list: function() {
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        return list;
+    },
+    
+    buttons: function() {
+        
+        var listId = FlowRouter.getParam('listId');
+        return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
+        //return Buttons.find({listId: listId, listDefault: {$ne: true}}, {sort: {name : 1}});
+    }
 });
 
 var editList = function(list, template) {
@@ -56,9 +71,11 @@ var editList = function(list, template) {
   template.$('.js-edit-form input[type=text]').focus();
 };
 
-var saveList = function(list, template) {
-  Session.set(EDITING_KEY, false);
-  Lists.update(list._id, {$set: {name: template.$('[name=name]').val()}});
+var saveList = function(template) {
+    Session.set(EDITING_KEY, false);
+    console.log('$([name=name]).val()', $('[name=name]').val());
+    var listId = FlowRouter.getParam('listId');
+    Lists.update(listId, {$set: {name: template.$('[name=name]').val()}});
 }
 
 var deleteList = function(list) {
@@ -68,16 +85,19 @@ var deleteList = function(list) {
     return alert("Sorry, you cannot delete the final public list!");
   }
   */
+    console.log('deleteList', list);
 
-  var message = "Are you sure you want to delete the list " + list.name + "?";
+  var message = "Are you sure you want to delete this list?";
   if (confirm(message)) {
-    // we must remove each item individually from the client
+      Meteor.call('removeList', list._id);
+      /*
     Buttons.find({listId: list._id}).forEach(function(button) {
       Buttons.remove(button._id);
     });
     Lists.remove(list._id);
+       */
 
-    Router.go('home');
+    FlowRouter.go('home');
     return true;
   } else {
     return false;
@@ -120,12 +140,12 @@ Template.listShow.events({
     'blur input[type=text]': function(event, template) {
         // if we are still editing (we haven't just clicked the cancel button)
         if (Session.get(EDITING_KEY))
-          saveList(this, template);
+          saveList(template);
     },
 
     'submit .js-edit-form': function(event, template) {
         event.preventDefault();
-        saveList(this, template);
+        saveList(template);
     },
 
     // handle mousedown otherwise the blur handler above will swallow the click
@@ -159,28 +179,20 @@ Template.listShow.events({
 
     'mousedown .js-edit-defaults': function(event) {
 
-        var defaultButton = this.getDefaultButton(this);
-        console.log('defaultButton ', defaultButton );
-        Modal.show('buttonDefaultsModal', defaultButton);
+        //var defaultButton = this.getDefaultButton(this);
+        //var list = Lists.findOne(FlowRouter.getParam('listId'));
+        //console.log('defaultButton ', defaultButton );
+        //Modal.show('buttonDefaultsModal', list.getDefaultButton());
+        //var id = this._id;
+        Modal.show('buttonDefaultsModal', function() {
+            return Lists.findOne(FlowRouter.getParam('listId')).getDefaultButton();
+        });
     },
-
-    /*
-    'mousedown .js-edit-config': function(event) {
-
-        var defaultButton = this.getDefaultButton(this);
-        Modal.show('buttonConfigDefaultsModal', defaultButton);
-    },
-    */
 
     'click .js-delete-list': function(event, template) {
-        deleteList(this, template);
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        deleteList(list, template);
     },
-
-    /*
-    'click .js-button-add': function(event, template) {
-      template.$('.js-button-new input').focus();
-    },
-    */
 
     'click .js-item-add': function(event) {
 
@@ -188,47 +200,11 @@ Template.listShow.events({
 
         event.preventDefault();
 
-        var defaultButton = this.getDefaultButton()
+        var list = Lists.findOne(FlowRouter.getParam('listId'));
+        console.log('list ', list );
+        var defaultButton = list.getDefaultButton();
         console.log('defaultButton ', defaultButton );
-        //var defaultData = defaultButton.attributes;
-        //var button = Buttons.insert(_.omit(defaultData, '_id', 'listId'));
-        //console.log('button ', button );
-        //if (!button) button = this.buttons.insert({});
-
-        Modal.show('addButtonModal', defaultButton);
-        /*
-        var modalBody = Template.addItemModal.renderFunction().value;
-        console.log('modal body', modalBody);
-        bootbox.formModal({
-          title: "Add a button",
-          value: modalBody,
-          fields: {
-              id: 'text',
-              name: 'text',
-              email: 'email',
-              sms: 'text'
-          },
-          callback: function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              console.log('submitted', result);
-              console.log('self._id', self._id);
-              var buttonId = Buttons.insert({
-                listId: self._id,
-                enabled: true,
-                id: result.id,
-                name: result.name,
-                email: result.email,
-                sms: result.sms,
-                createdAt: new Date()
-              });
-              console.log('buttonId ', buttonId );
-              //Lists.update(this._id, {$inc: {incompleteCount: 1}});
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          }
-        });
-        */
+       
+        Modal.show('addButtonModal', list.getDefaultButton());
     }
 });
