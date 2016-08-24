@@ -18,58 +18,124 @@ Meteor.publish('organisations', function() {
 
     if (this.userId) {
 
+        var user = Users.findOne(this.userId);
+
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Organisations.find({});
-        } else {
-            var user = Users.build(Users.findOne(this.userId));
-            //console.log('user.organisations.find()', user.organisations.find());
-            return user.organisations.find();
-            //return Organisations.find({_id: this.userId});
+        } else if (user.organisationIds && user.organisationIds[0]) {
+            return Organisations.find({_id: user.organisationIds[0]});
         }
-    } else {
-
-        this.ready();
     }
+
+    this.ready();
 });
 
 Meteor.publish('lists', function() {
 
-    //console.log('publish lists this.userId', this.userId);
     if (this.userId) {
-        var user = Users.build(Users.findOne(this.userId));
+        var user = Users.findOne(this.userId);
         //if (!user) return;
-        var organisation = user.organisations.findOne();
+        var organisationId = user.organisationIds && user.organisationIds[0];
         if (Roles.userIsInRole(this.userId, ['admin'])) {
             return Lists.find({});
-        } else {
-            return Lists.find({organisationId: organisation._id});
+        } else if (organisationId) {
+            return Lists.find({organisationId: organisationId});
         }
-    } else {
-
-        this.ready();
     }
+
+    this.ready();
+
     //return Lists.find({});
 });
 
 Meteor.publish('buttons', function(listId) {
 
-    console.log('publish buttons', listId);
     if (this.userId) {
 
-        var user = Users.build(Users.findOne(this.userId));
-        var organisation = user.organisations.findOne();
-        var lists = Lists.find({organisationId: organisation._id}).fetch();
-        var listIds = _.pluck(lists, '_id');
-        var index = listIds.indexOf(listId);
+        // For the python client
+        if (!listId && Roles.userIsInRole(this.userId, ['admin']))
+            return Buttons.find({});
+        
+        var user = Users.findOne(this.userId);
+        var organisationId = user.organisationIds && user.organisationIds[0];
+        
+        if (organisationId) {
 
-        if (index >= 0) {
+            
+            var organisation = Organisations.findOne(organisationId);
+            var lists = Lists.find({organisationId: organisation._id}).fetch();
+            var listIds = _.pluck(lists, '_id');
+            var index = listIds.indexOf(listId);
 
-            return Buttons.find({listId: listId});
-        //} else if (Roles.userIsInRole(this.userId, ['admin'])) {
+            if (index >= 0) {
 
-        } else {
-            this.ready();
+                return Buttons.find({listId: listId});
+
+            } else {
+                this.ready();
+            }
         }
+    } else {
+
+        this.ready();
+    }
+});
+
+Meteor.publish('screensets', function() {
+
+    if (this.userId) {
+
+        //return Screensets.find({});
+        if (Roles.userIsInRole(this.userId, ['admin'])) {
+            return Screensets.find({});
+        } else {
+            
+            // Let users access their screensets and templates
+            var user = Users.findOne(this.userId);
+            var organisationId = user.organisationIds && user.organisationIds[0];
+            return organisationId ? Screensets.find(
+                {$or: [{isTemplate: true}, {organisationId: organisationId}]})
+                : Screensets.find({isTemplate: true});
+        }
+    } else {
+
+        this.ready();
+    }
+});
+
+
+Meteor.publish('nodes', function() {
+
+    if (this.userId) {
+
+        return Nodes.find({});
+        /*
+        if (Roles.userIsInRole(this.userId, ['admin'])) {
+            return Screensets.find({});
+        } else {
+            var user = Users.build(Users.findOne(this.userId));
+            return user.organisations.find();
+        }
+        */
+    } else {
+
+        this.ready();
+    }
+});
+
+Meteor.publish('nodeConnections', function() {
+
+    if (this.userId) {
+
+        return NodeConnections.find({});
+        /*
+        if (Roles.userIsInRole(this.userId, ['admin'])) {
+            return Screensets.find({});
+        } else {
+            var user = Users.build(Users.findOne(this.userId));
+            return user.organisations.find();
+        }
+        */
     } else {
 
         this.ready();

@@ -14,44 +14,42 @@ Template.organisationItem.helpers({
 
 Template.organisationItem.events({
 
-  'focus input[type=text]': function(event) {
-    Session.set(EDITING_KEY, this._id);
-  },
+    'focus input[type=text]': function(event) {
+        Session.set(EDITING_KEY, this._id);
+    },
+    
+    'blur input[type=text]': function(event) {
+        if (Session.equals(EDITING_KEY, this._id))
+          Session.set(EDITING_KEY, null);
+    },
+    
+    'keydown input[type=text]': function(event) {
+        // ESC or ENTER
+        if (event.which === 27 || event.which === 13) {
+          event.preventDefault();
+          event.target.blur();
+        }
+    },
+    
+    // update the text of the item on keypress but throttle the event to ensure
+    // we don't flood the server with updates (handles the event at most once 
+    // every 300ms)
+    'keyup input[type=text]': _.throttle(function(event) {
+        var data = {};
+        data[event.target.id] = event.target.value;
+        Organisations.update(this._id, {$set: data});
+    }, 300),
   
-  'blur input[type=text]': function(event) {
-    if (Session.equals(EDITING_KEY, this._id))
-      Session.set(EDITING_KEY, null);
-  },
+    'mousedown .js-view-lists, click': function(event) {
   
-  'keydown input[type=text]': function(event) {
-    // ESC or ENTER
-    if (event.which === 27 || event.which === 13) {
-      event.preventDefault();
-      event.target.blur();
-    }
-  },
+        var user = Users.build(Meteor.user());
+        user.setOrganisation(this);
+    },
   
-  // update the text of the item on keypress but throttle the event to ensure
-  // we don't flood the server with updates (handles the event at most once 
-  // every 300ms)
-  'keyup input[type=text]': _.throttle(function(event) {
-    console.log('organisation edit event', event);
-    var data = {};
-    data[event.target.id] = event.target.value;
-    Organisations.update(this._id, {$set: data});
-    //Buttons.update(this._id, {$set: {text: event.target.value}});
-  }, 300),
-
-  'mousedown .js-view-lists, click': function(event) {
-
-    console.log('view-lists', event.target);
-    var user = Users.build(Meteor.user());
-    user.setOrganisation(this);
-  },
-
-  // handle mousedown otherwise the blur handler above will swallow the click
-  // on iOS, we still require the click event so handle both
-  'mousedown .js-delete-item, click .js-delete-item': function() {
-    Organisations.remove(this._id);
+    // handle mousedown otherwise the blur handler above will swallow the click
+    // on iOS, we still require the click event so handle both
+    'mousedown .js-delete-item, click .js-delete-item': function() {
+        Meteor.call('removeOrganisation', this._id);
+        //Organisations.remove(this._id);
   }
 });

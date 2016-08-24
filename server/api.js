@@ -1,4 +1,7 @@
 
+//import CollectionAPI from 'collection-api';
+
+/*
 if (Meteor.isServer) {
     Meteor.startup(function () {
 
@@ -62,3 +65,4 @@ if (Meteor.isServer) {
         collectionApi.start();
     });
 }
+*/
