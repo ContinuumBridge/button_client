@@ -124,16 +124,9 @@ var AddressView = React.createClass({
         
         const { value, addresses } = this.state;
         var address = this.props.value;
-        console.log('address-field value ', address);
-        //var addresses = getAddresses(this.props.type);
-        console.log('addresses ', addresses );
         var presetAddress = _.findWhere(addresses, {value: address});
-        console.log('presetAddress ', presetAddress );
         var placeholder = presetAddress &&  "Using " + presetAddress.label || "";
-        console.log('placeholder ', placeholder );
         var addressText = placeholder ? "" : address || "";
-        
-        console.log('addressText', addressText);
         
         const inputProps = {
             placeholder: placeholder,

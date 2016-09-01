@@ -251,31 +251,4 @@ ScreensView = React.createClass({
         )
     }
 });
-
-/*
- <div className="jtk-demo-canvas canvas-wide flowchart-demo jtk-surface jtk-surface-nopan" id="canvas">
- </div>
-var TopbarView = React.createClass({
-    
-    addScreen: function () {
-
-        Nodes.insert({
-            name: 'Test screen',
-            display: 'Test display',
-            x: 200,
-            y: 100,
-            screensetId: this.props.screensetId,
-            createdAt: new Date()
-        });
-    },
-    
-    render: function() {
-        return (
-            <button class="btn-sm btn-default btn-content" onClick={this.addScreen}>
-                Add Screen
-            </button>
-        );
-    }
-});
-*/
-        
+   

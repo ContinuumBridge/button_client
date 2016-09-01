@@ -1,17 +1,17 @@
 
 import React from 'react';
 import {ControlLabel, FormControl, FormGroup} from 'react-bootstrap';
-import AddressView from '../../../_components/address-field';
+import CounterView from '../../../_components/counter';
 //import { getStates, matchStateToTerm, sortStates, styles } from 'react-autocomplete';
 
-EmailAlertView = React.createClass({
+DelayView = React.createClass({
 
     mixins: [ NodeDataMixin ],
     
     getInitialState: function() {
         
         return {
-            email: '',
+            delay: 0,
             message: ''
         }
     },
@@ -62,18 +62,19 @@ EmailAlertView = React.createClass({
         
         var node = this.data.node;
         var email = node.get('email') || "";
-        
+
         return (
             <div className="screen-inner">
                 <FormGroup controlId={1}>
-                    <ControlLabel>Email address</ControlLabel>
-                    <AddressView value={email} onResize={this.props.onResize} 
-                                 type='email' onChange={this.handleFieldChange.bind(this, 'email')} />
+                    <ControlLabel>Delay (seconds)</ControlLabel>
+                    <CounterView value={node.get('delay')}
+                                 displayScale={1000}
+                                 onChange={this.handleFieldChange.bind(this, 'delay', {})} />
                 </FormGroup>
                 <FormGroup controlId={2}>
-                    <ControlLabel>Message</ControlLabel>
-                    <FormControl name="message" type="text" value={node.get('message')}
-                                 onChange={this.handleFieldChange.bind(this, 'message')}/>
+                    <ControlLabel>Display</ControlLabel>
+                    <FormControl name="display" type="text" value={node.get('display')}
+                                 onChange={this.handleFieldChange.bind(this, 'display')}/>
                 </FormGroup>
             </div>
         )

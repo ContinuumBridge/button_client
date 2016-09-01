@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 
 var InnerViews = {};
 InnerViews['screen'] = ScreenView;
+InnerViews['delay'] = DelayView;
 InnerViews['emailAlert'] = EmailAlertView;
 InnerViews['smsAlert'] = SMSAlertView;
 InnerViews['start'] = StartNodeView;
@@ -40,6 +41,7 @@ NodeView = React.createClass({
             plumb.detachAllConnections(screenNode);
             plumb.removeAllEndpoints(screenNode)
         }
+        
         /*
         this.props.plumbInitPromise.then(function(plumb) {
             

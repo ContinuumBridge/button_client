@@ -16,7 +16,7 @@ NodeDataMixin = {
     handleFieldChange: function(field, event, value) {
 
         var update = {};
-        update[field] = value ? value : event.target.value;
+        update[field] = value != undefined ? value : event.target.value;
         //update[event.target.attributes.getNamedItem('name').value] = event.target.value;
         
         // For some mysterious reason this stops the UI cursor jumping to the end on change

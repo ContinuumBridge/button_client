@@ -45,13 +45,24 @@ EditScreensetView = React.createClass({
         });
     },
 
+    addDelay: function() {
+
+        console.log('addDelay this.data.screenset._id', this.data.screenset._id);
+
+        this.addNode({
+            type: 'delay',
+            delay: 0,
+            message: ''
+        });
+    },
+
     addEmailAlert: function() {
 
         console.log('addEmail this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'emailAlert',
-            address: '',
+            email: '',
             message: '',
             useScreensetDefault: false,
             useButtonDefault: false
@@ -64,7 +75,7 @@ EditScreensetView = React.createClass({
 
         this.addNode({
             type: 'smsAlert',
-            number: '',
+            sms: '',
             message: '',
             useScreensetDefault: false,
             useButtonDefault: false
@@ -109,6 +120,10 @@ EditScreensetView = React.createClass({
                             Add Screen
                         </button>
 
+                        <DropdownButton bsStyle="primary" title="Add Function" id="addAlertDropdown">
+                            <MenuItem eventKey="1" onClick={this.addDelay}>Delay</MenuItem>
+                        </DropdownButton>
+                          
                         <DropdownButton bsStyle="primary" title="Add Alert" id="addAlertDropdown">
                             <MenuItem eventKey="1" onClick={this.addEmailAlert}>Email</MenuItem>
                             <MenuItem eventKey="2" onClick={this.addSMSAlert}>Text Message</MenuItem>
