@@ -6,7 +6,7 @@ Template.addScreensetModal.helpers({
         var templateId = Session.get(TEMPLATE_ID);
         return templateId 
                 ? Screensets.findOne(templateId).get('name')
-                : "None"
+                : "None";
     },
     templates: function() {
         return Screensets.find({});
