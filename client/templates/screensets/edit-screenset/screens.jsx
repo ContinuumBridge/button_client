@@ -199,7 +199,7 @@ ScreensView = React.createClass({
             return screens.map(function (screen, index) {
 
                 var plumbInit = self.state.plumbInitDeferred.promise;
-                return <NodeView key={screen._id} 
+                return <NodeView key={screen._id} screenset={self.props.screenset}
                                    record={screen} plumbInitPromise={plumbInit} />;
             });
         } else {

@@ -1,10 +1,17 @@
 <template name="buttonsItem">
-    <tr>
+    <tr class="button-item">
     <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
         <td class="col-md-1">
+            <div class="status-led-container">
+                {{#each leds this}}
+                    <img class="status-led" src="/img/led-{{colour}}.png"/>
+                {{/each}}
+            </div>
+            <!--
             <a href="#" data-toggle="tooltip" title data-original-title="{{ledLabel}}">
                 <img class="status-led" src="/img/led-{{ledColour}}.png"/>
             </a>
+            -->
             <!--<span class="label label-default">{{attributes.status}}</span>
             <input type="text" value="{{attributes.status}}" id="status" class="table-input state {{statusColour}}" placeholder="Status" readonly>-->
         </td>

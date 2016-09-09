@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 var InnerViews = {};
 InnerViews['screen'] = ScreenView;
 InnerViews['delay'] = DelayView;
+InnerViews['led'] = LEDScreenView;
 InnerViews['emailAlert'] = EmailAlertView;
 InnerViews['smsAlert'] = SMSAlertView;
 InnerViews['start'] = StartNodeView;
@@ -193,7 +194,7 @@ NodeView = React.createClass({
         if (InnerView) {
             //innerView = <InnerView record={node} engine={this.props.engine} nodes={this.props.nodes} />;
             innerView = <InnerView record={node} setupEndpoints={this.setupEndpointsWrapper}
-                            onResize={this.redrawEndpoints} />
+                            onResize={this.redrawEndpoints} screenset={this.props.screenset} />
         } else {
             innerView = <div></div>;
         }

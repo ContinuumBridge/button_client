@@ -94,17 +94,32 @@ Bridge-App Client
 
 -----------------
 
-Screen schema
+Button Schema
+-----------------
+{
+    _id: <id string>,
+    id: <string>
+    name: <string>
+    enabled: <bool>
+    screenId: <id string of screen the button is currently displaying>
+    listId: <id string of the list this button belongs to>
+}
+
+Node Schema
 -----------------
 {
     _id: <id string>,
     display: <svg string>,
     x: <int>,
     y: <int>,
-    screensetId: <screenset id string>
+    screensetId: <id string of screenset the node belongs to>
 }
 
-ScreenConnection schema
+Delay Schema, includes Node fields
+
+LED Schema, includes Node fields
+
+NodeConnection Schema
 -----------------
 {
     _id: <id string>,

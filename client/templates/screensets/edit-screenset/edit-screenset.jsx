@@ -23,7 +23,7 @@ EditScreensetView = React.createClass({
 
     addNode: function(attrs) {
 
-        Nodes.insert(_.extend({
+        return Nodes.insert(_.extend({
             x: 200,
             y: 100,
             screensetId: this.data.screenset._id,
@@ -45,9 +45,29 @@ EditScreensetView = React.createClass({
         });
     },
 
-    addDelay: function() {
+    addLED: function() {
 
-        console.log('addDelay this.data.screenset._id', this.data.screenset._id);
+        var initialColour = "green";
+
+        var nodeId = this.addNode({
+            type: 'led',
+            colour: initialColour,
+            display: ''
+        });
+
+        var screenset = this.data.screenset;
+        screenset.updateLEDs(nodeId, initialColour);
+        /*
+        var leds = screenset.get('leds');
+        if (leds.indexOf(initialColour) == -1) {
+            Screensets.update(screenset._id, {
+                $set: { leds: leds.push(initialColour)}
+            });
+        }
+        */
+    },
+
+    addDelay: function() {
 
         this.addNode({
             type: 'delay',
@@ -90,12 +110,18 @@ EditScreensetView = React.createClass({
             Meteor.call('removeScreenset', screensetId);
         FlowRouter.go('/screensets');
     },
-        
+    
     render: function() {
         
         var screenset = this.data.screenset;
         var name = screenset && screenset.get('name') || "";
-        
+
+        /*
+        <button className="btn-sm btn-primary btn-content" onClick={this.addScreen}>
+            Add Screen
+        </button>
+        */
+
         return (
             <div className="page lists-show">
                 <nav className="js-title-nav">
@@ -116,12 +142,10 @@ EditScreensetView = React.createClass({
                       </div>
                       <div className="options-web">
 
-                        <button className="btn-sm btn-primary btn-content" onClick={this.addScreen}>
-                            Add Screen
-                        </button>
-
-                        <DropdownButton bsStyle="primary" title="Add Function" id="addAlertDropdown">
-                            <MenuItem eventKey="1" onClick={this.addDelay}>Delay</MenuItem>
+                        <DropdownButton bsStyle="primary" title="Add Screen" id="addAlertDropdown">
+                            <MenuItem eventKey="1" onClick={this.addScreen}>Normal</MenuItem>
+                            <MenuItem eventKey="2" onClick={this.addDelay}>With Delay</MenuItem>
+                            <MenuItem eventKey="3" onClick={this.addLED}>With LED</MenuItem>
                         </DropdownButton>
                           
                         <DropdownButton bsStyle="primary" title="Add Alert" id="addAlertDropdown">

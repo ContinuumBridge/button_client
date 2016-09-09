@@ -1,23 +1,37 @@
 var EDITING_KEY = 'EDITING_TODO_ID';
 
 Template.buttonsItem.helpers({
-    /*
-    buttonAction: function() {
-        switch (this.attributes.status) {
-            case 'normal':
-                return 'Press';
-                break;
-            case 'pressed':
-                return 'Override';
-                break;
-            case 'acknowledged':
-                return 'Reset';
-                break;
-            default:
-                return '';
-        }
+    
+    leds: function() {
+        
+        var screenset = Screensets.findOne(this.attributes.screensetId);
+        console.log('leds screenset', screenset);
+        console.log('this.attributes', this.attributes);
+        var leds = screenset.get('leds');
+        if (!leds) return [];
+        var colours = _.values(leds);
+        var activeColour = leds[this.attributes.screenId];
+        
+        var displayLEDs = [];
+        
+        _.each(['red', 'amber', 'green'], function(colour) {
+            
+            if (colours.indexOf(colour) != -1) {
+
+                var ledClass = colour == activeColour ? colour : 'off';
+                displayLEDs.push({
+                    colour: ledClass
+                });
+            }
+        });
+        
+        return displayLEDs;
+        
+        
+        //var colours = _.uniq(_.values(leds).sort(), true);
+        
+        console.log('colours ', colours );
     },
-    */
     ledColour: function() {
 
         if (this.attributes.showCustom) return "green";

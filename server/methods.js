@@ -5,7 +5,7 @@ Meteor.methods({
 
     createAccountUser: function(attributes) {
 
-        console.log('createAccountUser', userId );
+        //console.log('createAccountUser', userId );
         
         // TODO Permissions
         var userId = Accounts.createUser(_.omit(attributes, 'isAdmin', 'organisationIds')/*, function(error) {
@@ -59,14 +59,14 @@ Meteor.methods({
 
     removeList: function(listId) {
 
-        console.log('removeList', listId);
+        //console.log('removeList', listId);
         Buttons.remove({listId: listId});
         Lists.remove({_id: listId});
     },
     
     createScreensetFromTemplate: function(templateId, name) {
         
-        console.log('createScreensetFromTemplate templateId', templateId);
+        //console.log('createScreensetFromTemplate templateId', templateId);
         
         var user = Meteor.user();
         var organisationId = user.organisationIds && user.organisationIds[0];
@@ -140,6 +140,14 @@ Meteor.methods({
 
         console.log('removeScreen screenId', screenId);
         // TODO permissions
+        
+        var node = Nodes.findOne(screenId);
+        //console.log('removeScreen node ', node );
+        if (node.get('type') == 'led') {
+            var screenset = Screensets.findOne(node.get('screensetId'));
+            screenset.updateLEDs(node._id, '', true);
+            //console.log('removeScreen screenset ', screenset );
+        }
         NodeConnections.remove({$or: [{sourceId: screenId},{targetId: screenId}]});
         Nodes.remove(screenId);
     }

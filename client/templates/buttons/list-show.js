@@ -13,6 +13,7 @@ Template.listShow.onCreated(function() {
         console.log('listId ', listId );
         self.subscribe('buttons', listId);
         self.subscribe('lists', listId);
+        self.subscribe('screensets');
     });
 });
 
