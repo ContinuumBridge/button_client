@@ -68,13 +68,15 @@ DelayView = React.createClass({
                 <FormGroup controlId={1}>
                     <ControlLabel>Delay (seconds)</ControlLabel>
                     <CounterView value={node.get('delay')}
-                                 displayScale={1000}
-                                 onChange={this.handleFieldChange.bind(this, 'delay', {})} />
+                                 displayScale={1000} step={2000} 
+                                 onChange={this.handleFieldChange.bind(this, 'delay')} />
                 </FormGroup>
                 <FormGroup controlId={2}>
-                    <ControlLabel>Display</ControlLabel>
-                    <FormControl name="display" type="text" value={node.get('display')}
-                                 onChange={this.handleFieldChange.bind(this, 'display')}/>
+                    <div>
+                        <ControlLabel>Display</ControlLabel>
+                    </div>
+                    <textarea name="display" className="display" value={node.get('display')}
+                              onChange={this.handleFieldChange.bind(this, 'display')} />
                 </FormGroup>
             </div>
         )
@@ -83,6 +85,8 @@ DelayView = React.createClass({
 
 /*
 
+ <FormControl name="display" type="text" value={node.get('display')}
+ onChange={this.handleFieldChange.bind(this, 'display')}/>
 
  <Autocomplete value={node.get('address')} items={[{abbr: 'tes', name: 'test'}]}
  className="form-control"
