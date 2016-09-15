@@ -89,8 +89,14 @@ Template.buttonsItem.events({
     },
 
     'blur input[type=text]': function(event) {
+        
+        var data = {};
+        data[event.target.id] = event.target.value;
+        Buttons.update(this._id, {$set: data});
+        
         if (Session.equals(EDITING_KEY, this._id))
             Session.set(EDITING_KEY, null);
+
     },
 
     'keydown input[type=text]': function(event) {
@@ -104,6 +110,7 @@ Template.buttonsItem.events({
     // update the text of the item on keypress but throttle the event to ensure
     // we don't flood the server with updates (handles the event at most once
     // every 300ms)
+    /*
     'keyup input[type=text]': _.throttle(function(event) {
         //console.log('edit event', event);
         var data = {};
@@ -113,7 +120,6 @@ Template.buttonsItem.events({
     }, 300),
 
     //'mousedown .js-button-action, click .js-button-action': function(event) {
-    /*
     'mousedown .js-button-action': function(event) {
 
         console.log('js-button-action this', this);
