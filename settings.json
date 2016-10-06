@@ -1,7 +1,7 @@
 {
   "galaxy.meteor.com": {
     "env": {
-      "MONGO_URL": "mongodb://spur:5hxMfM9@ds051056-a0.mlab.com:51056,ds051056-a1.mlab.com:51056/spur-1?replicaSet=rs-ds051056"
+      "MONGO_URL": "mongodb://spur:5hxMfM9@ds051316-a0.mlab.com:51316,ds051316-a1.mlab.com:51316/spur-1?replicaSet=rs-ds051316"
     }
   }
 }
