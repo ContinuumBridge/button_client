@@ -39,6 +39,8 @@ body {
   background: @color-tertiary;
   opacity: 1;
 
+  overflow: scroll;
+
   @media screen and (min-width: 40em) {
     left: @menu-width;
     /*margin-left: @menu-width;*/
@@ -57,11 +59,13 @@ body {
     opacity: .85;
     left: 0;
 
+
     @media screen and (min-width: 40em) {
       // Show menu on desktop, negate .menu-open
       .transform(translate3d(0, 0, 0)); //reset transform and use position properties instead
       opacity: 1;
       left: @menu-width;
+
     }
   }
 }
