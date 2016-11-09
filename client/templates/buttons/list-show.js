@@ -53,6 +53,8 @@ Template.listShow.helpers({
     
     list: function() {
         var list = Lists.findOne(FlowRouter.getParam('listId'));
+        if (list && list.organisation()._id != Meteor.getCurrentOrganisationId())
+            FlowRouter.go('/lists/');
         return list;
     },
     
