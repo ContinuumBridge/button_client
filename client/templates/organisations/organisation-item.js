@@ -44,6 +44,7 @@ Template.organisationItem.events({
   
         var user = Users.build(Meteor.user());
         user.setOrganisation(this);
+        FlowRouter.go('/lists');
     },
   
     // handle mousedown otherwise the blur handler above will swallow the click
