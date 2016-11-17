@@ -1,22 +1,4 @@
 
-/*
-var _ = require('underscore');
-//var Bacon = require('baconjs');
-var util = require('util');
-//var Plumb = require('./plumb');
-var Q = require('q');
-var React = require('react');
-
-var Node = require('../../methods/node');
-var Nodes = require('../../methods/nodes');
-var Connections = require('../../methods/connections');
-
-var NodeView = require('./nodes/node');
-//var MenuView = require('./menu');
-
-var ConnectorOverlayView = require('../components/connectorOverlay');
-var CounterView = require('../components/counter');
-*/
 import Q from 'q';
 import React from 'react';
 import {ReactMeteorData} from 'meteor/react-meteor-data';

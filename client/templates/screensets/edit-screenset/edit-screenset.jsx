@@ -123,7 +123,7 @@ EditScreensetView = React.createClass({
         */
 
         return (
-            <div className="page lists-show">
+            <div className="page screenset-show">
                 <nav className="js-title-nav">
                     <div className="nav-group">
                         <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
@@ -134,12 +134,6 @@ EditScreensetView = React.createClass({
                         </span>
                     </h1>
                     <div className="nav-group right">
-                      <div className="nav-item options-mobile">
-                        <select class="list-edit">
-                          <option value="delete">Delete</option>
-                        </select>
-                        <span className="icon-cog"></span>
-                      </div>
                       <div className="options-web">
 
                         <DropdownButton bsStyle="primary" title="Add Screen" id="addAlertDropdown">
@@ -169,29 +163,3 @@ EditScreensetView = React.createClass({
         );
     }
 });
-
-/*
-<button className="btn-sm btn-primary btn-content dropdown-toggle">
-    Add Alert
-    <span class="caret"></span>
-</button>
-*/
-
-/*
-                        {{#if screensReady}}
-                            {{#with _id}}
-                                {{#each screens this}}
-                                  {{> screenNode}}
-                                {{else}}
-                                  <div class="wrapper-message">
-                                    <div class="title-message">No screens here</div>
-                                    <div class="subtitle-message">Add new screens using the button above</div>
-                                  </div>
-                                {{/each}}
-                            {{/with}}
-                        {{else}}
-                            <div class="wrapper-message">
-                              <div class="title-message">Loading screenset...</div>
-                            </div>
-                        {{/if}}
- */

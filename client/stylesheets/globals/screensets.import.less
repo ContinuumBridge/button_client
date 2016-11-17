@@ -5,6 +5,45 @@
   touch-action:none;
 }
 */
+.page.screenset-show {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+.page.screenset-show nav {
+  background-color: #F0F0F0;
+  height: 3em;
+  text-align: center;
+}
+
+#plumb {
+
+  /*
+  position: absolute;
+  left: 0px;
+  @media screen and (min-width: 40em) {
+    left: @menu-width;
+  }
+  */
+
+  .jsplumb-endpoint {
+    margin-left: 0px;
+    @media screen and (min-width: 40em) {
+      margin-left: -1 * @menu-width;
+    }
+  }
+
+  > svg {
+    margin-left: 0px;
+    @media screen and (min-width: 40em) {
+      margin-left: -1 * @menu-width;
+    }
+  }
+}
 
 .screen-inner .form-group {
 
@@ -178,6 +217,15 @@
 }
 */
 
+/*
+#plumb {
+  position: absolute;
+  left: 100px;
+  width: 100%;
+  height: 100%;
+}
+*/
+
 #plumb .jsplumb-connector {
   z-index: 4;
 }
@@ -188,6 +236,8 @@
 }
 
 #plumb .aLabel {
+  visibility: hidden;
+  /*
   background-color: white;
   padding: 0.4em;
   font: 12px sans-serif;
@@ -196,6 +246,7 @@
   border: 1px dotted gray;
   opacity: 0.8;
   cursor: pointer;
+  */
 }
 
 #plumb .aLabel.jsplumb-hover {

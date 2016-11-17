@@ -135,10 +135,12 @@ NodeView = React.createClass({
                     cssClass: "endpointSourceLabel"
                 }];
             */
+            //endpoint.anchor[4] -= 200;
             plumb.addEndpoint(nodeElement, sourceEndpoint, endpoint);
         });
 
         _.each(targetEndpoints, function(endpoint) {
+            //endpoint.anchor[4] -= 200;
             plumb.addEndpoint(nodeElement, targetEndpoint, endpoint);
         });
 
