@@ -5,8 +5,8 @@ Template.buttonsItem.helpers({
     leds: function() {
         
         var screenset = Screensets.findOne(this.attributes.screensetId);
-        console.log('leds screenset', screenset);
-        console.log('this.attributes', this.attributes);
+        if (!screenset) return [];
+        
         var leds = screenset.get('leds');
         if (!leds) return [];
         var colours = _.values(leds);
@@ -26,12 +26,8 @@ Template.buttonsItem.helpers({
         });
         
         return displayLEDs;
-        
-        
-        //var colours = _.uniq(_.values(leds).sort(), true);
-        
-        console.log('colours ', colours );
     },
+    
     ledColour: function() {
 
         if (this.attributes.showCustom) return "green";
@@ -47,6 +43,7 @@ Template.buttonsItem.helpers({
                 return 'off';
         }
     },
+    
     ledLabel: function() {
 
         if (this.attributes.showCustom) return "Custom: " + this.attributes.customMessage;
