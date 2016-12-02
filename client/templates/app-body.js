@@ -67,13 +67,13 @@ Template.appBody.onRendered(function() {
 Template.appBody.helpers({
  
   hasReactComponent: function() {
-      console.log('hasReactComponent');
-      console.log('FlowRouter.current().route', FlowRouter.current().route);
+      //console.log('hasReactComponent');
+      //console.log('FlowRouter.current().route', FlowRouter.current().route);
       return !_.isUndefined(FlowRouter.current().route.options.reactComponent);
   },
   
   reactComponent: function() {
-      console.log('FlowRouter.current().route.options.reactComponent()', FlowRouter.current().route.options.reactComponent());
+      //console.log('FlowRouter.current().route.options.reactComponent()', FlowRouter.current().route.options.reactComponent());
       return FlowRouter.current().route.options.reactComponent();
   },
   // We use #each on an array of one item so that the "list" template is
@@ -111,7 +111,7 @@ Template.appBody.helpers({
   lists: function() {
     //var organisationId = Session.get(ORGANISATION_KEY);
     var organisation = Meteor.getCurrentOrganisation();
-    console.log('getCurrentOrganisation organisation ', organisation );
+    //console.log('getCurrentOrganisation organisation ', organisation );
     if (organisation) {
       return Lists.find({organisationId: organisation._id});
     } else {
@@ -172,7 +172,7 @@ Template.appBody.events({
   },
 
   'click .js-new-list': function() {
-    console.log('Meteor.getCurrentOrganisation()._id', Meteor.getCurrentOrganisation()._id);
+    //console.log('Meteor.getCurrentOrganisation()._id', Meteor.getCurrentOrganisation()._id);
     var list = {name: Lists.defaultName(), organisationId: Meteor.getCurrentOrganisation()._id};
     list._id = Lists.insert(list);
 

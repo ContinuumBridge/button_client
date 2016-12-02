@@ -13,9 +13,14 @@
           <tr>
           <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
             <td class="col-md-4">Email</td>
-            <td class="col-md-1">Admin</td>
-            <td class="col-md-4">Organisation</td>
-              <td class="col-md-2"></td>
+            <td class="col-md-1">Read Only</td>
+            {{#if isInRole 'admin'}}
+                <td class="col-md-1">Admin</td>
+                <td class="col-md-3">Organisation</td>
+            {{else}}
+                <td class="col-md-4"></td>
+            {{/if}}
+            <td class="col-md-2"></td>
             <td class="col-md-1"></td>
           <!--</div>-->
           </tr>

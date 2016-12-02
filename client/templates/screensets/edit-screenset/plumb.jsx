@@ -104,15 +104,16 @@ Plumb = function(elementName, initDeferred) {
          });
          */
     });
-    
+
+    /*
     var _updateOffset = instance.updateOffset;
 
     instance.updateOffset = function (params) {
 
-        console.log('updateOffset params', params );
+        //console.log('updateOffset params', params );
         
         var o = _updateOffset(params);
-        console.log('o ', o );
+        //console.log('o ', o );
         return o;
     };
 
@@ -154,12 +155,10 @@ Plumb = function(elementName, initDeferred) {
         console.log('el.className', el.className);
         console.log('out', out);
         //out.left += 200;
-        /*
-        if (el.className.substring(0,16) == 'jsplumb-endpoint') {
-            console.log('el.className.substring(0,16)', el.className.substring(0,16));
-            out.left -= 200;
-        }
-        */
+        //if (el.className.substring(0,16) == 'jsplumb-endpoint') {
+        //    console.log('el.className.substring(0,16)', el.className.substring(0,16));
+        //    out.left -= 200;
+        //}
 
         // if container is scrolled and the element (or its offset parent) is not absolute or fixed, adjust accordingly.
         if (container != null && !relativeToRoot && (container.scrollTop > 0 || container.scrollLeft > 0)) {
@@ -173,6 +172,7 @@ Plumb = function(elementName, initDeferred) {
         console.log('out 2', out);
         return out;
     }
+    */
     //jsPlumb.fire("jsPlumbDemoLoaded", instance);
 
     return instance;

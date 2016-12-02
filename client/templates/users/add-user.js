@@ -50,6 +50,7 @@ Template.addUserModal.events({
             email: target.email.value,
             password: target.password.value,
             isAdmin: target.isAdmin.checked,
+            isReadOnly: target.isReadOnly.checked,
             organisationIds: [Session.get(ORGANISATION_KEY)]
         }
         

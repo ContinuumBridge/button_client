@@ -10,7 +10,7 @@ EditScreensetView = React.createClass({
     getMeteorData: function() {
         
         var self = this;
-        console.log('screenset getMeteorData');
+        //console.log('screenset getMeteorData');
         var data = {};
         //var postId = this.props.postId;
         var handle = Meteor.subscribe('screensets');
@@ -33,7 +33,7 @@ EditScreensetView = React.createClass({
 
     addScreen: function() {
         
-        console.log('addScreen this.data.screenset._id', this.data.screenset._id);
+        //console.log('addScreen this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'screen',
@@ -78,7 +78,7 @@ EditScreensetView = React.createClass({
 
     addEmailAlert: function() {
 
-        console.log('addEmail this.data.screenset._id', this.data.screenset._id);
+        //console.log('addEmail this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'emailAlert',
@@ -91,7 +91,7 @@ EditScreensetView = React.createClass({
 
     addSMSAlert: function() {
 
-        console.log('addEmail this.data.screenset._id', this.data.screenset._id);
+        //console.log('addEmail this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'smsAlert',
@@ -105,7 +105,7 @@ EditScreensetView = React.createClass({
     handleDestroy: function() {
 
         var screensetId = this.data.screenset && this.data.screenset._id;
-        console.log('screensetId ', screensetId );
+        //console.log('screensetId ', screensetId );
         if (screensetId)
             Meteor.call('removeScreenset', screensetId);
         FlowRouter.go('/screensets');

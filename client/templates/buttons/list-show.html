@@ -17,20 +17,22 @@
                 <h1 class="js-edit-list title-page"><span class="title-wrapper">{{list.attributes.name}}</span></h1>
 
                 <div class="nav-group right">
-                  <div class="nav-item options-mobile">
-                    <select class="list-edit">
-                      <option value="delete">Delete</option>
-                    </select>
-                    <span class="icon-cog"></span>
-                  </div>
-                  <div class="options-web">
-                    <button class="js-edit-defaults btn-sm btn-primary btn-default" type="submit">
-                        Defaults
-                    </button>
-                    <a class="js-delete-list nav-item">
-                      <span class="icon-trash" title="Delete list"></span>
-                    </a>
-                  </div>
+                  {{#unless isInRole 'readOnly'}}
+                      <div class="nav-item options-mobile">
+                        <select class="list-edit">
+                          <option value="delete">Delete</option>
+                        </select>
+                        <span class="icon-cog"></span>
+                      </div>
+                      <div class="options-web">
+                        <button class="js-edit-defaults btn-sm btn-primary btn-default" type="submit">
+                            Defaults
+                        </button>
+                        <a class="js-delete-list nav-item">
+                          <span class="icon-trash" title="Delete list"></span>
+                        </a>
+                      </div>
+                  {{/unless}}
                 </div>
               {{/if}}
           {{/if}}
@@ -42,10 +44,15 @@
             <!--<div class="list-item {{checkedClass}} {{editingClass}}">-->
                 <td class="col-md-1">Status</td>
                 <td class="col-md-6">Name</td>
+                {{#if isInRole 'readOnly'}}
+                    <td class="col-md-3"></td>
+                {{/if}}
                 <td class="col-md-2">Signal</td>
-                <td class="col-md-2"></td>
-                <td class="col-md-1"></td>
-            <!--</div>-->
+                {{#unless isInRole 'readOnly'}}
+                    <td class="col-md-2"></td>
+                    <td class="col-md-1"></td>
+                {{/unless}}
+                <!--</div>-->
             </tr>
         </thead>
       <tbody>
@@ -71,11 +78,13 @@
       </tbody>
     </table>
 
-    <form class="js-button-new button-new input-symbol">
-        <!--<span class="icon-add js-button-add"></span>-->
-        <button class="js-item-add btn-sm btn-primary" type="submit">
-            Add Button
-        </button>
-    </form>
+    {{#unless isInRole 'readOnly'}}
+        <form class="js-button-new button-new input-symbol">
+            <!--<span class="icon-add js-button-add"></span>-->
+            <button class="js-item-add btn-sm btn-primary" type="submit">
+                Add Button
+            </button>
+        </form>
+    {{/unless}}
   </div>
 </template>

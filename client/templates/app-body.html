@@ -7,11 +7,13 @@
       {{#if currentUser}}
         {{#if Template.subscriptionsReady}}
           <div class="btns-group-vertical nav-btns-group">
-              {{#if isInRole 'admin'}}
+              {{#unless isInRole 'readOnly'}}
                   {{#linkTo 'usersShow' }}<div class="btn-secondary">Users</div>{{/linkTo}}
-                  {{#linkTo 'organisationsShow' }}<div class="btn-secondary">Organisations</div>{{/linkTo}}
-              {{/if}}
-              {{#linkTo 'screensetsShow' }}<div class="btn-secondary">Screensets</div>{{/linkTo}}
+                  {{#if isInRole 'admin'}}
+                      {{#linkTo 'organisationsShow' }}<div class="btn-secondary">Organisations</div>{{/linkTo}}
+                  {{/if}}
+                  {{#linkTo 'screensetsShow' }}<div class="btn-secondary">Screensets</div>{{/linkTo}}
+              {{/unless}}
               <a class="js-logout btn-secondary">Signout</a>
           </div>
           <div class="btns-group-vertical current-organisation">
