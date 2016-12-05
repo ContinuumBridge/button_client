@@ -8,9 +8,29 @@ var firstRender = true;
 
 Template.listShow.onCreated(function() {
     var self = this;
+    var listId = FlowRouter.getParam('listId');
+   
     self.autorun(function() {
         var listId = FlowRouter.getParam('listId');
         console.log('listId ', listId );
+        var buttons = Buttons.find({listId: listId});
+        buttons.observeChanges({
+            changed: function(id, fields) {
+                console.log('fields', fields);
+                var screenId = fields.screenId;
+                if (!screenId) return;
+                
+                var button = Buttons.findOne(id);
+                var screenset = Screensets.findOne(button.get('screensetId'));
+                if (!screenset) return;
+                
+                console.log('screenset ', screenset );
+                var leds = screenset.get('leds');
+                // If the button screen has been changed to one with an led, play bell sound
+                if (leds && leds[screenId]) 
+                    playBellSound();
+            }
+        });
         self.subscribe('buttons', listId);
         self.subscribe('lists', listId);
         self.subscribe('screensets');

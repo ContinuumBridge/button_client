@@ -24,15 +24,20 @@
             </div>
         </td>
         -->
+        {{#if isInRole 'readOnly'}}
+            <td class="col-md-3"></td>
+        {{/if}}
         <td class="col-md-2"><img class="signal" src="/img/signal_{{signal}}.png"/></td>
-        <td class="col-md-2">
-            <button class="js-button-config btn-sm btn-default btn-content btn-row" id={{_id}} type="submit">
-                Config
-            </button>
-        </td>
-        <td class="col-md-1 delete-item-wrapper">
-          <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
-        </td>
+        {{#unless isInRole 'readOnly'}}
+            <td class="col-md-2">
+                <button class="js-button-config btn-sm btn-default btn-content btn-row" id={{_id}} type="submit">
+                    Config
+                </button>
+            </td>
+            <td class="col-md-1 delete-item-wrapper">
+              <div class="js-delete-item delete-item" href="#"><span class="icon-trash"></span></div>
+            </td>
+        {{/unless}}
     <!--</div>-->
     </tr>
 </template>

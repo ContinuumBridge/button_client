@@ -20,24 +20,33 @@
                             </div>
                             <div class="form-group hold-height">
                                 <div class="checkbox">
-                                    <input id="isAdmin" type="checkbox" name="isAdmin">
-                                    <label for="isAdmin"></label>
-                                    <div>Is Admin</div>
+                                    <input id="isReadOnly" type="checkbox" name="isReadOnly">
+                                    <label for="isReadOnly"></label>
+                                    <div>Is Read Only</div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="dropdown">
-                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        {{organisationName}}
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                        {{#each organisations}}
-                                            <li><a href="#" class="js-select-organisation" user={{../_id}} id={{_id}}>{{attributes.name}}</a></li>
-                                        {{/each}}
-                                    </ul>
+                            {{#if isInRole 'admin'}}
+                                <div class="form-group hold-height">
+                                    <div class="checkbox">
+                                        <input id="isAdmin" type="checkbox" name="isAdmin">
+                                        <label for="isAdmin"></label>
+                                        <div>Is Admin</div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            {{organisationName}}
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            {{#each organisations}}
+                                                <li><a href="#" class="js-select-organisation" user={{../_id}} id={{_id}}>{{attributes.name}}</a></li>
+                                            {{/each}}
+                                        </ul>
+                                    </div>
+                                </div>
+                            {{/if}}
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button type="button submit" class="js-add-button btn btn-default">Add User</button>

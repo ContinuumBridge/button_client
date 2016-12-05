@@ -1,22 +1,4 @@
 
-/*
-var _ = require('underscore');
-//var Bacon = require('baconjs');
-var util = require('util');
-//var Plumb = require('./plumb');
-var Q = require('q');
-var React = require('react');
-
-var Node = require('../../methods/node');
-var Nodes = require('../../methods/nodes');
-var Connections = require('../../methods/connections');
-
-var NodeView = require('./nodes/node');
-//var MenuView = require('./menu');
-
-var ConnectorOverlayView = require('../components/connectorOverlay');
-var CounterView = require('../components/counter');
-*/
 import Q from 'q';
 import React from 'react';
 import {ReactMeteorData} from 'meteor/react-meteor-data';
@@ -104,12 +86,12 @@ ScreensView = React.createClass({
             
             plumb.bind('beforeDrop', function(connInfo, originalEvent) {
 
-                console.log('beforeDrop connInfo', connInfo);
+                //console.log('beforeDrop connInfo', connInfo);
                 return self.onConnection(connInfo, false);
             });
 
             plumb.bind("connectionDetached", function (connInfo, originalEvent) {
-                console.log('plumb connectionDetached', connInfo);
+                //console.log('plumb connectionDetached', connInfo);
                 return self.onDisconnection(connInfo);
                 //updateConnections(info.connection, true);
             });
@@ -186,6 +168,11 @@ ScreensView = React.createClass({
 
         plumbInitDeferred.promise.then(function(plumb) {
             
+            plumb.select().each(function(connection) {
+
+                if (connection.id && connection.id == id)
+                    plumb.detach(connection);
+            });
         });
     },
     
@@ -216,30 +203,6 @@ ScreensView = React.createClass({
 
         var self = this;
 
-        //console.log('screens render this.data ', this.data);
-
-        /*
-        var nodes = this.state.nodes.map(function(node, index) {
-
-            var plumbInit = self.state.plumbInitDeferred.promise;
-
-            return (
-                <NodeView node={node} nodes={self.props.nodes} engine={self.props.engine}
-                          key={node.name} plumbInitPromise={plumbInit} />
-            )
-        });
-
-        this.renderConnections();
-        */
-
-        /*
-        return (
-            <div id="wells" className="wells" ref="nodes">
-                Nodes
-                {this.data.screens ? this.renderScreens() : <div>Loading</div>}
-            </div>
-        )
-        */
         return (
             <div id="plumb" className="plumb" ref="plumb">
                     {this.data.screens ? this.renderScreens() : 

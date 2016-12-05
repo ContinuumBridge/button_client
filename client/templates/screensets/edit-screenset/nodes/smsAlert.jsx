@@ -14,7 +14,7 @@ SMSAlertView = React.createClass({
         var sourceEndpoints = [
             {
                 uuid: nodeId + "TransitionTo",
-                anchor: [0.5, 1, 0, 1, -200, 0],
+                anchor: [0.5, 1, 0, 1, 0, 0],
                 //label: "Double Right"
             }
         ];
@@ -24,7 +24,7 @@ SMSAlertView = React.createClass({
                 isTarget: true,
                 maxConnections: 5,
                 uuid: nodeId + "Main",
-                anchor: [0.5, 0, 0, -1, -200, 0],
+                anchor: [0.5, 0, 0, -1, 0, 0],
                 //anchor: "Continuous",
                 dropOptions: { hoverClass: "hover" }
             }

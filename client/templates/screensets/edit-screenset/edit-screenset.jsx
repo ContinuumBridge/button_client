@@ -10,7 +10,7 @@ EditScreensetView = React.createClass({
     getMeteorData: function() {
         
         var self = this;
-        console.log('screenset getMeteorData');
+        //console.log('screenset getMeteorData');
         var data = {};
         //var postId = this.props.postId;
         var handle = Meteor.subscribe('screensets');
@@ -33,7 +33,7 @@ EditScreensetView = React.createClass({
 
     addScreen: function() {
         
-        console.log('addScreen this.data.screenset._id', this.data.screenset._id);
+        //console.log('addScreen this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'screen',
@@ -78,7 +78,7 @@ EditScreensetView = React.createClass({
 
     addEmailAlert: function() {
 
-        console.log('addEmail this.data.screenset._id', this.data.screenset._id);
+        //console.log('addEmail this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'emailAlert',
@@ -91,7 +91,7 @@ EditScreensetView = React.createClass({
 
     addSMSAlert: function() {
 
-        console.log('addEmail this.data.screenset._id', this.data.screenset._id);
+        //console.log('addEmail this.data.screenset._id', this.data.screenset._id);
 
         this.addNode({
             type: 'smsAlert',
@@ -105,7 +105,7 @@ EditScreensetView = React.createClass({
     handleDestroy: function() {
 
         var screensetId = this.data.screenset && this.data.screenset._id;
-        console.log('screensetId ', screensetId );
+        //console.log('screensetId ', screensetId );
         if (screensetId)
             Meteor.call('removeScreenset', screensetId);
         FlowRouter.go('/screensets');
@@ -123,7 +123,7 @@ EditScreensetView = React.createClass({
         */
 
         return (
-            <div className="page lists-show">
+            <div className="page screenset-show">
                 <nav className="js-title-nav">
                     <div className="nav-group">
                         <a href="#" class="js-menu nav-item"><span class="icon-list-unordered" title="Show menu"></span></a>
@@ -134,12 +134,6 @@ EditScreensetView = React.createClass({
                         </span>
                     </h1>
                     <div className="nav-group right">
-                      <div className="nav-item options-mobile">
-                        <select class="list-edit">
-                          <option value="delete">Delete</option>
-                        </select>
-                        <span className="icon-cog"></span>
-                      </div>
                       <div className="options-web">
 
                         <DropdownButton bsStyle="primary" title="Add Screen" id="addAlertDropdown">
@@ -169,29 +163,3 @@ EditScreensetView = React.createClass({
         );
     }
 });
-
-/*
-<button className="btn-sm btn-primary btn-content dropdown-toggle">
-    Add Alert
-    <span class="caret"></span>
-</button>
-*/
-
-/*
-                        {{#if screensReady}}
-                            {{#with _id}}
-                                {{#each screens this}}
-                                  {{> screenNode}}
-                                {{else}}
-                                  <div class="wrapper-message">
-                                    <div class="title-message">No screens here</div>
-                                    <div class="subtitle-message">Add new screens using the button above</div>
-                                  </div>
-                                {{/each}}
-                            {{/with}}
-                        {{else}}
-                            <div class="wrapper-message">
-                              <div class="title-message">Loading screenset...</div>
-                            </div>
-                        {{/if}}
- */

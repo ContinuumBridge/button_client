@@ -43,7 +43,6 @@ body {
 
   @media screen and (min-width: 40em) {
     left: @menu-width;
-    /*margin-left: @menu-width;*/
   }
 
   .content-scrollable {
@@ -81,5 +80,9 @@ body {
   }
 
   // Hide overlay on desktop
+  @media screen and (min-width: 40em) { display: none; }
+}
+
+.show-mobile {
   @media screen and (min-width: 40em) { display: none; }
 }

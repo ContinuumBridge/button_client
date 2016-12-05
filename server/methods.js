@@ -1,14 +1,46 @@
 
 
+var userOrganisationsMatch = function(user1, user2) {
+    var organisationId1 = user1.organisationIds 
+        && user1.organisationIds.length == 1 && user1.organisationIds[0];
+    var organisationId2 = user2.organisationIds 
+        && user2.organisationIds.length == 1 && user2.organisationIds[0];
+    return organisationId1 == organisationId2;
+}
+
+userCanModifyUser = function(subject, object) {
+
+    var subjectIsReadOnly = subject._id ? Roles.userIsInRole(subject._id, ['readOnly']) : subject.isReadOnly;
+    var subjectIsAdmin = subject._id ? Roles.userIsInRole(subject._id, ['admin']) : subject.isAdmin;
+    //var objectIsReadOnly = object._id ? Roles.userIsInRole(object._id, ['readOnly']) : object.isReadOnly;
+    var objectIsAdmin = object._id ? Roles.userIsInRole(object._id, ['admin']) : object.isAdmin;
+    
+    var organisationsMatch = userOrganisationsMatch(subject, object);
+
+    if (!organisationsMatch && !subjectIsAdmin)
+        throw new Meteor.Error('Unauthorized: Only an admin can modify a user from another organisation');
+
+    if (subjectIsReadOnly)
+        throw new Meteor.Error('Unauthorized: Readonly users cannot modify other users');
+    
+    if (!subjectIsAdmin && objectIsAdmin)
+        throw new Meteor.Error('Unauthorized: Only admin can modify an admin user');
+
+    return true;
+}
 
 Meteor.methods({
 
     createAccountUser: function(attributes) {
 
-        //console.log('createAccountUser', userId );
+        console.log('createAccountUser attributes', attributes );
         
-        // TODO Permissions
-        var userId = Accounts.createUser(_.omit(attributes, 'isAdmin', 'organisationIds')/*, function(error) {
+        var loggedInUser = Users.findOne(this.userId);
+        if (!loggedInUser)
+            throw new Meteor.Error('Unauthorized: User not logged in');
+        userCanModifyUser(loggedInUser, attributes);
+        
+        var userId = Accounts.createUser(_.omit(attributes, 'isAdmin', 'isReadOnly', 'organisationIds')/*, function(error) {
                 if (error) {
                     return Session.set(ERRORS_KEY, {'none': error.reason});
                 }
@@ -16,14 +48,22 @@ Meteor.methods({
         );
         
         Users.update({_id: userId}, {$set:{organisationIds: attributes.organisationIds}});
-        if (attributes.isAdmin) {
+        if (attributes.isReadOnly)
+            Roles.addUsersToRoles(userId, ['readOnly']);
+        if (attributes.isAdmin && Roles.userIsInRole(this.userId, ['admin']))
             Roles.addUsersToRoles(userId, ['admin']);
-        }
         return userId;
     },
     
     changeUserPassword: function (userId, newPassword) {
 
+        var loggedInUser = Users.findOne(this.userId);
+        if (!loggedInUser)
+            throw new Meteor.Error('Unauthorized: User not logged in');
+        var user = Users.findOne(userId);
+        
+        userCanModifyUser(loggedInUser, user);
+        
         var future = new Future();
 
         var error = false;
@@ -45,6 +85,10 @@ Meteor.methods({
      
     removeOrganisation: function(organisationId) {
 
+        //var user = Meteor.user();
+
+        organisationAccessAllowed(this.userId, organisationId);
+
         var lists = Lists.find({organisationId: organisationId}).fetch();
         _.each(lists, function() {
             Meteor.call('removeScreenset', screenset._id);
@@ -59,14 +103,16 @@ Meteor.methods({
 
     removeList: function(listId) {
 
+        listAccessAllowed(this.userId, listId);
         //console.log('removeList', listId);
         Buttons.remove({listId: listId});
         Lists.remove({_id: listId});
     },
     
     createScreensetFromTemplate: function(templateId, name) {
-        
-        //console.log('createScreensetFromTemplate templateId', templateId);
+
+        if (Roles.userIsInRole(this.userId, ['readOnly']))
+            throw new Meteor.Error('Unauthorized: Readonly users may not modify anything');
         
         var user = Meteor.user();
         var organisationId = user.organisationIds && user.organisationIds[0];
@@ -79,8 +125,6 @@ Meteor.methods({
         });
         
         var templateNodes = Nodes.find({screensetId: templateId}).fetch();
-        //var startNode = _.findWhere(templateNodes, {type: 'start'});
-        
         
         // Key: template id. Value: instantiated id
         var nodesMap = {};
@@ -126,7 +170,7 @@ Meteor.methods({
     
     removeScreenset: function(screensetId) {
 
-        var self = this;
+        screensetAccessAllowed(this.userId, screensetId);
         
         console.log('removeScreenset screensetId', screensetId);
         var screens = Nodes.find({screensetId: screensetId}).fetch();
@@ -139,7 +183,7 @@ Meteor.methods({
     removeScreen: function(screenId) {
 
         console.log('removeScreen screenId', screenId);
-        // TODO permissions
+        nodeAccessAllowed(this.userId, screenId);
         
         var node = Nodes.findOne(screenId);
         //console.log('removeScreen node ', node );

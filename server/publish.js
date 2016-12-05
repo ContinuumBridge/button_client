@@ -3,11 +3,28 @@ Meteor.publish('users', function() {
 
     if (this.userId) {
 
-        if (Roles.userIsInRole(this.userId, ['admin'])) {
-            return Users.find({});
+        if (!Roles.userIsInRole(this.userId, ['readOnly'])) {
+
+            if (Roles.userIsInRole(this.userId, ['admin'])) {
+                // Admins can see all users
+                return Users.find({});
+            } else {
+                var user = Users.findOne(this.userId);
+                var organisationId = user.organisationIds && user.organisationIds[0];
+                if (!organisationId) {
+                    return Users.find({_id: this.userId});
+                } else {
+                    // Normal users can see all the users in their organisation except for admins
+                    return Users.find({$and: [
+                        {organisationIds: {$in: [organisationId]}},
+                        {roles: {$not: {$in: ['admin']}}}
+                    ]});
+                }
+            }
         } else {
             return Users.find({_id: this.userId});
         }
+
     } else {
 
         this.ready();

@@ -4,6 +4,9 @@ Template.userItem.helpers({
     primaryEmail: function() {
         return this.primaryEmail();
     },
+    isReadOnly: function() {
+        return Roles.userIsInRole(this._id, ['readOnly']);
+    },
     isAdmin: function() {
         return Roles.userIsInRole(this._id, ['admin']);
     },
@@ -69,6 +72,14 @@ Template.userItem.events({
         }
     },
 
+    'change .js-is-readonly':function(e){
+        if (e.currentTarget.checked) {
+            Roles.addUsersToRoles(this._id, ['readOnly']);
+        } else {
+            Roles.removeUsersFromRoles(this._id, ['readOnly']);
+        }
+    },
+    
     'mousedown .js-select-organisation, click .js-select-organisation': function(event) {
 
         var userId = event.currentTarget.getAttribute('user');
