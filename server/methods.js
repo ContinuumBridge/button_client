@@ -85,9 +85,8 @@ Meteor.methods({
      
     removeOrganisation: function(organisationId) {
 
-        //var user = Meteor.user();
-
-        organisationAccessAllowed(this.userId, organisationId);
+        var organisation = Organisations.findOne(organisationId);
+        organisationAccessAllowed(this.userId, organisation);
 
         var lists = Lists.find({organisationId: organisationId}).fetch();
         _.each(lists, function() {
@@ -103,7 +102,8 @@ Meteor.methods({
 
     removeList: function(listId) {
 
-        listAccessAllowed(this.userId, listId);
+        var list = Lists.findOne(listId);
+        listAccessAllowed(this.userId, list);
         //console.log('removeList', listId);
         Buttons.remove({listId: listId});
         Lists.remove({_id: listId});
@@ -170,7 +170,8 @@ Meteor.methods({
     
     removeScreenset: function(screensetId) {
 
-        screensetAccessAllowed(this.userId, screensetId);
+        var screenset = Screensets.findOne(screensetId);
+        screensetAccessAllowed(this.userId, screenset);
         
         console.log('removeScreenset screensetId', screensetId);
         var screens = Nodes.find({screensetId: screensetId}).fetch();
@@ -183,9 +184,9 @@ Meteor.methods({
     removeScreen: function(screenId) {
 
         console.log('removeScreen screenId', screenId);
-        nodeAccessAllowed(this.userId, screenId);
         
         var node = Nodes.findOne(screenId);
+        nodeAccessAllowed(this.userId, node);
         //console.log('removeScreen node ', node );
         if (node.get('type') == 'led') {
             var screenset = Screensets.findOne(node.get('screensetId'));
